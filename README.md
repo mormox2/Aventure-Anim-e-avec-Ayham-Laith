@@ -97,20 +97,6 @@ Le projet est d'une simplicité et d'une légèreté remarquables :
 Toutes les icônes, les stickers et les personnages peints sont intégrés sous forme de vecteurs **SVG natifs** directement imbriqués dans le code d'index.html, ce qui évite les requêtes HTTP réseau superflues et permet un affichage d'une netteté absolue sur les écrans Retina ou 4K !
 
 ---
-
-## 🌐 Déployer sur GitHub Pages en 30 secondes / كيف تنشر موقعك على صفحات جيت هاب
-
-Pour que vos enfants puissent jouer sur leur tablette ou téléphone portable, hébergez le site gratuitement sur **GitHub Pages** en suivant ces étapes simples :
-
-1. Allez sur votre dépôt GitHub : [mormox2/Aventure-Anim-e-avec-Ayham-Laith](https://github.com/mormox2/Aventure-Anim-e-avec-Ayham-Laith).
-2. Cliquez sur l'onglet ⚙️ **Settings** (Paramètres) en haut à droite.
-3. Dans la barre latérale gauche, cliquez sur 🌐 **Pages**.
-4. Sous la section **Build and deployment** :
-   * **Source** : Laissez sur *Deploy from a branch*.
-   * **Branch** : Sélectionnez `main` (ou la branche par défaut), puis laissez le dossier sur `/ (root)`.
-5. Cliquez sur **Save** (Enregistrer).
-6. Attendez environ 30 secondes, rafraîchissez la page : GitHub vous affichera fièrement un lien sécurisé `https://<votre-pseudo>.github.io/Aventure-Anim-e-avec-Ayham-Laith/` accessible partout dans le monde ! 🎉
-
 ---
 
 ## 💖 Dédicace Spéciale / إهداء خاص وأصيل
