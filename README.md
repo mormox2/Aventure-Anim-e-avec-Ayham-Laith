@@ -29,7 +29,21 @@
 
 ## 🚀 Démo Live & Déploiement / التجربة الحية والتشغيل
 
-Puisque ce projet est une **Single Page Application (SPA)** entièrement écrite en HTML, CSS et JavaScript pur, vous pouvez y jouer instantanément sans aucune installation !
+Le projet est une **Single Page Application (SPA)** écrite en HTML, CSS et JavaScript, avec Vite comme serveur de développement et bundler de production. La version publiée reste directement accessible depuis GitHub Pages.
+
+### Développement local
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Pour produire une version optimisée :
+
+```bash
+pnpm run build
+pnpm preview
+```
 
 > [!TIP]
 > **Jouer tout de suite :** Si vous avez activé les **GitHub Pages** sur votre dépôt, votre jeu est accessible à l'adresse suivante :
@@ -88,14 +102,15 @@ Derrière cette app extrêmement fluide et réactive se cache une ingénierie so
 Le projet reste une **Single Page Application statique**, mais son code est maintenant organisé par responsabilité afin de faciliter la maintenance et les évolutions :
 
 ```bash
-├── index.html                    # Structure de l'interface et points d'entrée des assets
+├── index.html                    # Structure de l'interface et point d'entrée Vite
+├── public/
+│   └── tailwind-config.js         # Configuration Tailwind servie comme asset statique
 ├── assets/
 │   ├── css/
 │   │   ├── base.css              # Réinitialisation, layout global et typographie
 │   │   ├── animations.css         # Animations et arrière-plans
 │   │   └── components.css         # Contrôles personnalisés et styles partagés
 │   ├── js/
-│   │   ├── tailwind-config.js     # Configuration du CDN Tailwind
 │   │   ├── synth.js               # Moteur audio Web Audio API
 │   │   ├── data.js                # Données SVG, palettes et messages
 │   │   ├── state.js               # État partagé de l'application
@@ -114,7 +129,7 @@ Le projet reste une **Single Page Application statique**, mais son code est main
 └── .github/workflows/             # Déploiement automatique vers GitHub Pages
 ```
 
-Les icônes, stickers et personnages restent intégrés sous forme de vecteurs **SVG natifs** dans les modules de données et le markup nécessaire. Cette organisation conserve le déploiement sans build tout en rendant chaque domaine fonctionnel plus simple à localiser, tester et modifier. Elle conserve également l'ordre de chargement des scripts classiques afin de rester compatible avec les callbacks inline existants.
+Les icônes, stickers et personnages restent intégrés sous forme de vecteurs **SVG natifs** dans les modules de données et le markup nécessaire. Vite regroupe les sources JavaScript et CSS dans `dist/`, tandis que `public/` contient les fichiers servis tels quels. Le pont global généré conserve la compatibilité avec les callbacks inline existants.
 
 ---
 ---

@@ -16,11 +16,8 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;600;800&display=swap" rel="stylesheet" />
 
-        <script src="assets/js/tailwind-config.js"></script>
+        <script vite-ignore src="%BASE_URL%tailwind-config.js"></script>
 
-        <link rel="stylesheet" href="assets/css/base.css" />
-        <link rel="stylesheet" href="assets/css/animations.css" />
-        <link rel="stylesheet" href="assets/css/components.css" />
     </head>
 
     <body
@@ -1087,18 +1084,7 @@
             </div>
         </div>
 
-        <!-- JAVASCRIPT MODULES -->
-        <script src="assets/js/synth.js"></script>
-        <script src="assets/js/data.js"></script>
-        <script src="assets/js/state.js"></script>
-        <script src="assets/js/lifecycle.js"></script>
-        <script src="assets/js/drawing.js"></script>
-        <script src="assets/js/stickers.js"></script>
-        <script src="assets/js/animations.js"></script>
-        <script src="assets/js/audio-controls.js"></script>
-        <script src="assets/js/utilities-gallery.js"></script>
-        <script src="assets/js/settings.js"></script>
-        <script src="assets/js/export-particles.js"></script>
-        <script src="assets/js/voice-duo.js"></script>
+        <!-- Vite entry: source modules are bundled into one production asset. -->
+        <script type="module" src="./src/generated/app.js"></script>
     </body>
 </html>
