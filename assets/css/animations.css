@@ -1,0 +1,247 @@
+/* Background, control and canvas animation definitions extracted from index.html. */
+            /* Background animations */
+            .rainbow-bg-glow {
+                background: linear-gradient(
+                    120deg,
+                    #ff9a9e 0%,
+                    #fecfef 20%,
+                    #a1c4fd 40%,
+                    #c2e9fb 60%,
+                    #d4fc79 80%,
+                    #96e6a1 100%
+                );
+                background-size: 300% 300%;
+                animation: rainbowGlow 20s ease infinite;
+            }
+
+            .night-bg-glow {
+                background: linear-gradient(120deg, #0f172a 0%, #1e1b4b 30%, #311042 60%, #0f172a 100%);
+                background-size: 300% 300%;
+                animation: rainbowGlow 20s ease infinite;
+            }
+
+            @keyframes rainbowGlow {
+                0% {
+                    background-position: 0% 50%;
+                }
+
+                50% {
+                    background-position: 100% 50%;
+                }
+
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+
+            /* Floating Clouds Animation */
+            .cloud-flow {
+                animation: floatCloud 25s linear infinite;
+            }
+
+            @keyframes floatCloud {
+                0% {
+                    transform: translateX(110vw);
+                }
+
+                100% {
+                    transform: translateX(-20vw);
+                }
+            }
+
+            /* Floating Stars & Sparkles */
+            .sparkle-slow {
+                animation: sparkle 3s ease-in-out infinite alternate;
+            }
+
+            @keyframes sparkle {
+                0% {
+                    transform: scale(0.8) rotate(0deg);
+                    opacity: 0.5;
+                }
+
+                100% {
+                    transform: scale(1.2) rotate(15deg);
+                    opacity: 1;
+                }
+            }
+
+            /* Neo-Brutalism Cartoon Buttons */
+            .bubble-btn {
+                transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+
+            .bubble-btn:hover {
+                transform: translateY(-2px);
+            }
+
+            .bubble-btn:active {
+                transform: translate(2px, 2px);
+                box-shadow: 1px 1px 0px 0px #2d3748 !important;
+            }
+
+            /* Animations for the Drawing Board */
+            .anim-dance {
+                animation: dance calc(1s / var(--anim-speed-factor, 1)) ease-in-out infinite alternate;
+            }
+
+            @keyframes dance {
+                0% {
+                    transform: rotate(-5deg) translateY(0);
+                }
+
+                50% {
+                    transform: rotate(5deg) translateY(-10px);
+                }
+
+                100% {
+                    transform: rotate(-5deg) translateY(0);
+                }
+            }
+
+            .anim-jump {
+                animation: jump calc(0.6s / var(--anim-speed-factor, 1)) cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+            }
+
+            @keyframes jump {
+                0%,
+                100% {
+                    transform: translateY(0) scaleY(1);
+                }
+
+                40% {
+                    transform: translateY(-40px) scaleY(1.05);
+                }
+
+                70% {
+                    transform: translateY(0) scaleY(0.9);
+                }
+            }
+
+            .anim-spin {
+                animation: spin calc(1.5s / var(--anim-speed-factor, 1)) cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .anim-shake {
+                animation: shake calc(0.3s / var(--anim-speed-factor, 1)) linear infinite;
+            }
+
+            @keyframes shake {
+                0%,
+                100% {
+                    transform: translateX(0);
+                }
+
+                20%,
+                60% {
+                    transform: translateX(-8px);
+                }
+
+                40%,
+                80% {
+                    transform: translateX(8px);
+                }
+            }
+
+            .anim-grow {
+                animation: grow calc(1.5s / var(--anim-speed-factor, 1)) ease-in-out infinite alternate;
+            }
+
+            @keyframes grow {
+                0% {
+                    transform: scale(1);
+                }
+
+                100% {
+                    transform: scale(1.15);
+                }
+            }
+
+            .anim-shrink {
+                animation: shrink calc(1.5s / var(--anim-speed-factor, 1)) ease-in-out infinite alternate;
+            }
+
+            @keyframes shrink {
+                0% {
+                    transform: scale(1);
+                }
+
+                100% {
+                    transform: scale(0.85);
+                }
+            }
+
+            .anim-bounce-squish {
+                animation: bounceSquish calc(1.2s / var(--anim-speed-factor, 1)) ease-in-out infinite;
+            }
+
+            @keyframes bounceSquish {
+                0%,
+                100% {
+                    transform: scale(1, 1) translateY(0);
+                }
+
+                30% {
+                    transform: scale(0.9, 1.2) translateY(-25px);
+                }
+
+                50% {
+                    transform: scale(1.05, 0.95) translateY(0);
+                }
+
+                57% {
+                    transform: scale(1, 1) translateY(-5px);
+                }
+
+                64% {
+                    transform: scale(1, 1) translateY(0);
+                }
+            }
+
+            /* Give Life Floating Mode */
+            .anim-float-alive {
+                animation: floatAlive calc(3s / var(--anim-speed-factor, 1)) ease-in-out infinite;
+            }
+
+            @keyframes floatAlive {
+                0%,
+                100% {
+                    transform: translateY(0) rotate(0deg);
+                }
+
+                25% {
+                    transform: translateY(-8px) rotate(-1deg);
+                }
+
+                75% {
+                    transform: translateY(8px) rotate(1deg);
+                }
+            }
+
+            /* Eye blink animation */
+            .blink-eye {
+                animation: blink 4s infinite;
+            }
+
+            @keyframes blink {
+                0%,
+                90%,
+                100% {
+                    transform: scaleY(1);
+                }
+
+                95% {
+                    transform: scaleY(0.1);
+                }
+            }
+
