@@ -48,3 +48,7 @@
                     showEncouragement("تم إلغاء وضع الرسام الثنائي! 🛑");
                 }
             }
+
+
+/* ESM exports */
+export { speakArabic, toggleSplitMode };

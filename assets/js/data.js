@@ -987,3 +987,9 @@
                 "رسمتكما سحرية يا أيهم و ليث! ✨🪄",
             ];
 
+
+
+/* ESM exports */
+
+export { stickersData, stampTemplates, superheroes, colors, positiveQuotes, aliveMessages };
+Object.assign(globalThis, { stickersData, stampTemplates, superheroes, colors, positiveQuotes, aliveMessages });

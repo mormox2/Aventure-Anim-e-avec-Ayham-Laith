@@ -861,3 +861,7 @@
                 });
             }
 
+
+
+/* ESM exports */
+export { renderColors, selectColor, selectEraser, startDrawing, draw, drawSpray, stopDrawing, selectFillTool, performFloodFill, toggleMirror, toggleStampsModal, renderStampsGallery, selectStamp, placeStamp, selectCanvasBg, drawCanvasBackground, clearCanvas, saveState, undo, redo, updateUndoRedoButtons, restoreCanvas, selectSpray, selectCustomColor, renderMobileColors, toggleMobileDrawer, handleBackdropClick, downloadDrawingPNG };

@@ -268,3 +268,7 @@
                 isRotating = false;
             });
 
+
+
+/* ESM exports */
+export { renderStickers, filterStickers, addStickerToCanvas, deselectAllStickers, setupStickerPointerData };

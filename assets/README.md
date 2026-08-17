@@ -19,4 +19,4 @@ L’application est une SPA statique construite avec Vite. Les fichiers sources 
 - `js/export-particles.js` : export PNG et particules.
 - `js/voice-duo.js` : synthèse vocale et mode duo.
 
-Le script `scripts/generate-entry.mjs` concatène les sources JavaScript dans `src/generated/app.js` et ajoute un pont global pour préserver les callbacks inline existants. Vite transforme ensuite cette entrée en bundle de production dans `dist/`.
+Le script `scripts/generate-entry.mjs` génère `src/main.js` avec des instructions `import` explicites et ajoute un pont global temporaire pour préserver les callbacks inline existants. Vite analyse ensuite le graphe ES modules et produit le bundle optimisé dans `dist/`.

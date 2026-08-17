@@ -102,7 +102,9 @@ Derrière cette app extrêmement fluide et réactive se cache une ingénierie so
 Le projet reste une **Single Page Application statique**, mais son code est maintenant organisé par responsabilité afin de faciliter la maintenance et les évolutions :
 
 ```bash
-├── index.html                    # Structure de l'interface et point d'entrée Vite
+├── index.html                    # Structure de l'interface
+├── src/
+│   └── main.js                   # Entrée ES modules générée pour Vite
 ├── public/
 │   └── tailwind-config.js         # Configuration Tailwind servie comme asset statique
 ├── assets/
@@ -129,7 +131,7 @@ Le projet reste une **Single Page Application statique**, mais son code est main
 └── .github/workflows/             # Déploiement automatique vers GitHub Pages
 ```
 
-Les icônes, stickers et personnages restent intégrés sous forme de vecteurs **SVG natifs** dans les modules de données et le markup nécessaire. Vite regroupe les sources JavaScript et CSS dans `dist/`, tandis que `public/` contient les fichiers servis tels quels. Le pont global généré conserve la compatibilité avec les callbacks inline existants.
+Les icônes, stickers et personnages restent intégrés sous forme de vecteurs **SVG natifs** dans les modules de données et le markup nécessaire. `scripts/generate-entry.mjs` génère `src/main.js` avec des imports ES explicites ; Vite analyse ensuite le graphe des modules et produit le bundle optimisé dans `dist/`, tandis que `public/` contient les fichiers servis tels quels. Le pont global généré conserve temporairement la compatibilité avec les callbacks inline existants.
 
 ---
 ---

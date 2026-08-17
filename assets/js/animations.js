@@ -253,3 +253,7 @@
                 }
             }
 
+
+
+/* ESM exports */
+export { stopAllAnimations, triggerAnimation, toggleGiveLife, cycleSpeechMessages, toggleTheme };

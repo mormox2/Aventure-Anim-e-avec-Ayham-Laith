@@ -438,3 +438,7 @@
             // Init synth on first user action anywhere
             window.addEventListener("pointerdown", () => synth.init(), { once: true });
 
+
+
+/* ESM exports */
+export { KidSynth, synth };

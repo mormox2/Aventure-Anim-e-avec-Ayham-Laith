@@ -158,3 +158,7 @@
                 _resizeTimer = setTimeout(setupCanvasDimensions, 200);
             }
 
+
+
+/* ESM exports */
+export { setupCanvasDimensions, handleWindowResize };

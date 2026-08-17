@@ -112,3 +112,13 @@
                 }
             }
 
+
+
+/* ESM exports */
+
+Object.defineProperty(globalThis, "animationSpeed", {
+  configurable: true,
+  get: () => animationSpeed,
+  set: (value) => { animationSpeed = value; },
+});
+export { animationSpeed, setAnimationSpeed, setTemplateOpacity, toggleHelpModal, animalReact, showEncouragement, triggerConfetti };

@@ -21,3 +21,7 @@
                 });
             }
 
+
+
+/* ESM exports */
+export { toggleMusic };

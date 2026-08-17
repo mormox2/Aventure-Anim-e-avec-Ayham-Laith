@@ -237,3 +237,7 @@
                 ctx.restore();
             }
 
+
+
+/* ESM exports */
+export { saveDrawing, initParticles, resizeParticlesCanvas, spawnParticles, updateParticles, drawStar };

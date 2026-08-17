@@ -561,3 +561,7 @@
                 }
             }
 
+
+
+/* ESM exports */
+export { resetApp, toggleHeroModal, renderHeroesGallery, filterTemplates, loadSuperhero, getSavedDrawings, saveDrawingToGallery, deleteDrawingFromGallery, renderGalleryGrid, loadDrawingFromGallery, saveCurrentDrawingToGallery, toggleGalleryModal, celebrateName, getFriends, saveFriends, addFriend, removeFriend, resetFriends, addSampleFriends, renderFriendBadges, renderFriendList, toggleFriendsModal };
