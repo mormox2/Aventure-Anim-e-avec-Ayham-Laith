@@ -114,9 +114,9 @@ Le projet reste une **Single Page Application statique**, mais son code est main
 │   │   └── components.css         # Contrôles personnalisés et styles partagés
 │   ├── js/
 │   │   ├── synth.js               # Moteur audio Web Audio API
-│   │   ├── data.js                # Données SVG, palettes et messages
+│   │   ├── data.js                # Palettes, stickers, tampons et messages légers
+│   │   │   └── data/heroes.js     # SVG héros et dinosaures chargé à la demande
 │   │   ├── state.js               # État partagé de l'application
-│   │   ├── services.js            # Façade d'exports intermodules
 │   │   ├── ui.js                  # Écouteurs addEventListener et délégation UI
 │   │   ├── lifecycle.js           # Initialisation et dimensionnement
 │   │   ├── drawing.js             # Outils de dessin et historique

@@ -1,5 +1,6 @@
-import { state } from "./state.js";
-import * as services from "./services.js";
+import { positiveQuotes } from "./data.js";
+import { toggleModal } from "./drawing.js";
+import { synth } from "./synth.js";
 
 /* Animation settings, help, encouragement and confetti helpers. */
             /************************************************************
@@ -9,7 +10,7 @@ import * as services from "./services.js";
 
             function setAnimationSpeed(speed) {
                 animationSpeed = speed;
-                services.synth.playPop();
+                synth.playPop();
 
                 const slowBtn = document.getElementById("speed-slow");
                 const normalBtn = document.getElementById("speed-normal");
@@ -68,7 +69,7 @@ import * as services from "./services.js";
 
             // Peeking Animals Fun interactions
             function animalReact(animal) {
-                services.synth.playBoing();
+                synth.playBoing();
                 triggerConfetti();
 
                 let bubble;

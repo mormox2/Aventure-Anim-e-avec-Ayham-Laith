@@ -1,5 +1,6 @@
+import { stickersData } from "./data.js";
+import { synth } from "./synth.js";
 import { state } from "./state.js";
-import * as services from "./services.js";
 
 /* Sticker placement, selection, drag, resize and rotation. */
             /************************************************************
@@ -9,7 +10,7 @@ import * as services from "./services.js";
                 const container = document.getElementById("stickers-gallery");
                 container.innerHTML = "";
 
-                const filtered = services.stickersData.filter((st) => category === "all" || st.category === category);
+                const filtered = stickersData.filter((st) => category === "all" || st.category === category);
 
                 filtered.forEach((sticker) => {
                     const item = document.createElement("div");
@@ -22,7 +23,7 @@ import * as services from "./services.js";
             }
 
             function filterStickers(category) {
-                services.synth.playClick();
+                synth.playClick();
                 // Reset active tab button colors
                 const tabStyles = {
                     all: {
@@ -56,21 +57,21 @@ import * as services from "./services.js";
             }
 
             function addStickerToCanvas(stickerId) {
-                const stickerInfo = services.stickersData.find((s) => s.id === stickerId);
+                const stickerInfo = stickersData.find((s) => s.id === stickerId);
                 if (!stickerInfo) {
-                    services.synth.playPop();
+                    synth.playPop();
                     return;
                 }
 
                 // Play interactive Premium Sound Effects based on specific Sticker Category
                 if (stickerInfo.category === "hats" || stickerInfo.category === "magic") {
-                    services.synth.playMagicChime();
+                    synth.playMagicChime();
                 } else if (stickerInfo.category === "eyes") {
-                    services.synth.playFunnyGlissando();
+                    synth.playFunnyGlissando();
                 } else if (stickerInfo.category === "dino" || stickerInfo.category === "space") {
-                    services.synth.playMiniGrowl();
+                    synth.playMiniGrowl();
                 } else {
-                    services.synth.playPop();
+                    synth.playPop();
                 }
 
                 const layer = document.getElementById("stickers-layer");
@@ -115,7 +116,7 @@ import * as services from "./services.js";
                 deleteBtn.title = "حذف الملصق";
                 deleteBtn.addEventListener("click", (e) => {
                     e.stopPropagation();
-                    services.synth.playBoing();
+                    synth.playBoing();
                     stickerDiv.remove();
                     state.activeSticker = null;
                 });
@@ -171,13 +172,13 @@ import * as services from "./services.js";
                     if (!isAlreadyActive) {
                         const cat = stickerDiv.dataset.category;
                         if (cat === "hats" || cat === "magic") {
-                            services.synth.playMagicChime();
+                            synth.playMagicChime();
                         } else if (cat === "eyes") {
-                            services.synth.playFunnyGlissando();
+                            synth.playFunnyGlissando();
                         } else if (cat === "dino" || cat === "space") {
-                            services.synth.playMiniGrowl();
+                            synth.playMiniGrowl();
                         } else {
-                            services.synth.playPop();
+                            synth.playPop();
                         }
                     }
                 });

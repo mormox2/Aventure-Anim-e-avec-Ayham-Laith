@@ -1,14 +1,17 @@
+import { showEncouragement, triggerConfetti } from "./settings.js";
+import { deselectAllStickers } from "./stickers.js";
+import { synth } from "./synth.js";
+import { saveCurrentDrawingToGallery } from "./utilities-gallery.js";
 import { state } from "./state.js";
-import * as services from "./services.js";
 
 /* PNG export and pointer particle effects. */
             /************************************************************
              * 13. Export Composite Drawing (Canvas + Stickers) as PNG
              ************************************************************/
             function saveDrawing() {
-                services.deselectAllStickers(); // Clear outlines for final save
-                services.synth.playTada();
-                services.showEncouragement("جاري تحضير صورتك الجميلة... ⏱️✨");
+                deselectAllStickers(); // Clear outlines for final save
+                synth.playTada();
+                showEncouragement("جاري تحضير صورتك الجميلة... ⏱️✨");
 
                 const exportCanvas = document.createElement("canvas");
                 const exportCtx = exportCanvas.getContext("2d");
@@ -104,10 +107,10 @@ import * as services from "./services.js";
                         document.body.removeChild(link);
 
                         // Save a thumbnail to gallery automatically
-                        services.saveCurrentDrawingToGallery();
+                        saveCurrentDrawingToGallery();
 
-                        services.triggerConfetti();
-                        services.showEncouragement("رائع! تم تحميل الرسمة بنجاح 🎉📥");
+                        triggerConfetti();
+                        showEncouragement("رائع! تم تحميل الرسمة بنجاح 🎉📥");
                     } catch (err) {
                         console.error(err);
                         alert("حدث خطأ ما أثناء حفظ الصورة. حاول مرة أخرى!");

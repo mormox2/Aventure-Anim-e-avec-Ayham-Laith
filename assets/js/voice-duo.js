@@ -1,5 +1,6 @@
+import { showEncouragement } from "./settings.js";
+import { synth } from "./synth.js";
 import { state } from "./state.js";
-import * as services from "./services.js";
 
 /* Arabic speech synthesis and duo mode. */
             /************************************************************
@@ -33,7 +34,7 @@ import * as services from "./services.js";
              * 17. Duo Split Artist Mode (Ayham & Laith Split Canvas) 👦🤝👦
              ************************************************************/
             function toggleSplitMode() {
-                services.synth.playPop();
+                synth.playPop();
                 state.isSplitMode = !state.isSplitMode;
                 const overlay = document.getElementById("split-screen-overlay");
                 const btn = document.getElementById("btn-split-mode");
@@ -42,13 +43,13 @@ import * as services from "./services.js";
                     overlay.classList.remove("hidden");
                     btn.classList.remove("bg-gradient-to-r", "from-amber-400", "to-cyan-400");
                     btn.classList.add("bg-yellow-400", "ring-4", "ring-yellow-400", "scale-105");
-                    services.showEncouragement("👦🤝👦 وضع الرسام الثنائي نشط! أيهم على اليسار وليث على اليمين!");
+                    showEncouragement("👦🤝👦 وضع الرسام الثنائي نشط! أيهم على اليسار وليث على اليمين!");
                     speakArabic("رائع! وضع الرسام الثنائي نشط، أيهم وليث يرسمان معاً!");
                 } else {
                     overlay.classList.add("hidden");
                     btn.classList.add("bg-gradient-to-r", "from-amber-400", "to-cyan-400");
                     btn.classList.remove("bg-yellow-400", "ring-4", "ring-yellow-400", "scale-105");
-                    services.showEncouragement("تم إلغاء وضع الرسام الثنائي! 🛑");
+                    showEncouragement("تم إلغاء وضع الرسام الثنائي! 🛑");
                 }
             }
 

@@ -1,40 +1,95 @@
-import * as actions from "./services.js";
+import {
+  clearCanvas,
+  downloadDrawingPNG,
+  redo,
+  selectCanvasBg,
+  selectCustomColor,
+  selectEraser,
+  selectFillTool,
+  selectSpray,
+  toggleMirror,
+  toggleMobileDrawer,
+  toggleStampsModal,
+  undo,
+} from "./drawing.js";
+import { toggleMusic } from "./audio-controls.js";
+import { toggleGiveLife, toggleTheme, triggerAnimation } from "./animations.js";
+import { filterStickers } from "./stickers.js";
+import {
+  addFriend,
+  addSampleFriends,
+  celebrateName,
+  filterTemplates,
+  resetApp,
+  resetFriends,
+  toggleFriendsModal,
+  toggleGalleryModal,
+  toggleHeroModal,
+} from "./utilities-gallery.js";
+import { animalReact, setAnimationSpeed, setTemplateOpacity, toggleHelpModal } from "./settings.js";
+import { saveDrawing } from "./export-particles.js";
+import { toggleSplitMode } from "./voice-duo.js";
 import { state } from "./state.js";
 
-const mobileTools = {
-  "select-eraser": "selectEraser",
-  "select-spray": "selectSpray",
-  "select-fill-tool": "selectFillTool",
-  "toggle-mirror": "toggleMirror",
-  "clear-canvas": "clearCanvas",
-  "download-drawing-png": "downloadDrawingPNG",
-};
+const actions = Object.freeze({
+  "add-friend": addFriend,
+  "add-sample-friends": addSampleFriends,
+  "clear-canvas": clearCanvas,
+  "download-drawing-png": downloadDrawingPNG,
+  "filter-templates": filterTemplates,
+  redo,
+  "reset-app": resetApp,
+  "reset-friends": resetFriends,
+  "save-drawing": saveDrawing,
+  "select-canvas-bg": selectCanvasBg,
+  "select-eraser": selectEraser,
+  "select-fill-tool": selectFillTool,
+  "select-spray": selectSpray,
+  "toggle-friends-modal": toggleFriendsModal,
+  "toggle-gallery-modal": toggleGalleryModal,
+  "toggle-give-life": toggleGiveLife,
+  "toggle-help-modal": toggleHelpModal,
+  "toggle-hero-modal": toggleHeroModal,
+  "toggle-mirror": toggleMirror,
+  "toggle-mobile-drawer": toggleMobileDrawer,
+  "toggle-music": toggleMusic,
+  "toggle-split-mode": toggleSplitMode,
+  "toggle-stamps-modal": toggleStampsModal,
+  "toggle-theme": toggleTheme,
+  undo,
+});
 
-function kebabToCamel(value) {
-  return value.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+const mobileTools = Object.freeze({
+  "select-eraser": selectEraser,
+  "select-spray": selectSpray,
+  "select-fill-tool": selectFillTool,
+  "toggle-mirror": toggleMirror,
+  "clear-canvas": clearCanvas,
+  "download-drawing-png": downloadDrawingPNG,
+});
+
+function getActionValue(element) {
+  const value = element.dataset.uiValue;
+  if (value === "true" || value === "false") return value === "true";
+  return undefined;
 }
 
 function invokeAction(name, element) {
-  const action = actions[kebabToCamel(name)];
+  const action = actions[name];
   if (typeof action !== "function") {
     console.warn(`Unknown UI action: ${name}`);
     return;
   }
 
-  const value = element.dataset.uiValue;
-  if (value === "true" || value === "false") {
-    action(value === "true");
-  } else {
-    action();
-  }
+  const value = getActionValue(element);
+  if (value === undefined) action();
+  else action(value);
 }
 
 function handleMobileTool(element) {
-  const method = mobileTools[element.dataset.uiTool];
-  if (method && typeof actions[method] === "function") {
-    actions[method]();
-  }
-  actions.toggleMobileDrawer();
+  const action = mobileTools[element.dataset.uiTool];
+  if (typeof action === "function") action();
+  toggleMobileDrawer();
 }
 
 function handleClick(event) {
@@ -43,19 +98,19 @@ function handleClick(event) {
 
   const action = element.dataset.uiClick;
   if (action === "celebrate-name") {
-    actions.celebrateName(element.dataset.uiName);
+    celebrateName(element.dataset.uiName);
   } else if (action === "trigger-animation") {
-    actions.triggerAnimation(element.dataset.uiAnimation, element.dataset.uiSelf ? element : null);
+    triggerAnimation(element.dataset.uiAnimation, element.dataset.uiSelf ? element : null);
   } else if (action === "set-animation-speed") {
-    actions.setAnimationSpeed(Number(element.dataset.uiSpeed));
+    setAnimationSpeed(Number(element.dataset.uiSpeed));
   } else if (action === "filter-stickers") {
-    actions.filterStickers(element.dataset.uiCategory);
+    filterStickers(element.dataset.uiCategory);
   } else if (action === "filter-templates") {
-    actions.filterTemplates(element.dataset.uiCategory);
+    filterTemplates(element.dataset.uiCategory);
   } else if (action === "animal-react") {
-    actions.animalReact(element.dataset.uiAnimal);
+    animalReact(element.dataset.uiAnimal);
   } else if (action === "select-canvas-bg") {
-    actions.selectCanvasBg(element.dataset.uiBg);
+    selectCanvasBg(element.dataset.uiBg);
   } else if (action === "mobile-tool") {
     handleMobileTool(element);
   } else {
@@ -69,10 +124,10 @@ function handleInput(event) {
 
   switch (element.dataset.uiInput) {
     case "custom-color":
-      actions.selectCustomColor(element.value);
+      selectCustomColor(element.value);
       break;
     case "template-opacity":
-      actions.setTemplateOpacity(Number.parseInt(element.value, 10) / 100);
+      setTemplateOpacity(Number.parseInt(element.value, 10) / 100);
       break;
     case "mobile-brush-size":
       state.brushSize = Number.parseInt(element.value, 10);
@@ -91,7 +146,7 @@ function handleBackdropClick(event) {
   const content = backdrop.querySelector('[id$="-content"], .absolute.bottom-0');
   if (content && content.contains(event.target)) return;
 
-  const closeAction = actions[kebabToCamel(backdrop.dataset.uiClose)];
+  const closeAction = actions[backdrop.dataset.uiClose];
   if (typeof closeAction === "function") closeAction(false);
 }
 
@@ -102,7 +157,7 @@ function bindFriendInput() {
   input.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      actions.addFriend();
+      addFriend();
     }
   });
 }

@@ -1,12 +1,16 @@
+import { stopAllAnimations, toggleTheme } from "./animations.js";
+import { toggleMusic } from "./audio-controls.js";
+import { renderColors, saveState, toggleModal } from "./drawing.js";
+import { showEncouragement, triggerConfetti } from "./settings.js";
+import { synth } from "./synth.js";
 import { state } from "./state.js";
-import * as services from "./services.js";
 
 /* Reset, templates, gallery and friends persistence. */
             /************************************************************
              * 12. App Utilities: Reset, Save, Help, Animal Interactivities
              ************************************************************/
             function resetApp() {
-                services.synth.playTada();
+                synth.playTada();
                 if (confirm("هل تريد مسح اللوحة والملصقات وإعادة ضبط كل شيء؟ 🥳")) {
                     state.ctx.save();
                     state.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -31,23 +35,23 @@ import * as services from "./services.js";
                     document.getElementById("btn-eraser").classList.add("bg-pink-300");
 
                     // Reset all animations and live states cleanly using stopAllAnimations
-                    services.stopAllAnimations();
+                    stopAllAnimations();
 
                     // Reset theme & music
                     if (state.currentTheme === "night") {
-                        services.toggleTheme();
+                        toggleTheme();
                     }
-                    if (services.synth.isPlayingMusic) {
-                        services.toggleMusic();
+                    if (synth.isPlayingMusic) {
+                        toggleMusic();
                     }
 
                     state.undoStack = [];
                     state.redoStack = [];
-                    services.saveState();
+                    saveState();
 
-                    services.renderColors();
-                    services.triggerConfetti();
-                    services.showEncouragement("تم تصفير لوحتك السحرية بنجاح! جاهز للإبداع؟ 🚀");
+                    renderColors();
+                    triggerConfetti();
+                    showEncouragement("تم تصفير لوحتك السحرية بنجاح! جاهز للإبداع؟ 🚀");
                 }
             }
 
@@ -55,23 +59,31 @@ import * as services from "./services.js";
              * Superheroes Modal & Template Loader
              ************************************************************/
             let heroesGalleryRendered = false;
+let heroesDataPromise;
 
-            function toggleHeroModal(show) {
+function loadHeroesData() {
+    heroesDataPromise ??= import("./data/heroes.js");
+    return heroesDataPromise.then(({ superheroes }) => superheroes);
+}
+
+            async function toggleHeroModal(show) {
                 if (show && !heroesGalleryRendered) {
-                    renderHeroesGallery("all");
+                    await renderHeroesGallery("all");
                     heroesGalleryRendered = true;
                 }
-                services.toggleModal("hero-modal", "hero-modal-content", show);
+                toggleModal("hero-modal", "hero-modal-content", show);
             }
 
             let currentTemplateFilter = "all";
 
-            function renderHeroesGallery(filterCat) {
+            async function renderHeroesGallery(filterCat) {
                 const cat = filterCat || "all";
                 const container = document.getElementById("heroes-gallery");
+                container.innerHTML = "<div class=\"col-span-full py-8 text-center text-slate-500\">جاري تحميل الرسومات...</div>";
+                const superheroes = await loadHeroesData();
                 container.innerHTML = "";
 
-                const filtered = cat === "all" ? services.superheroes : services.superheroes.filter((h) => h.category === cat);
+                const filtered = cat === "all" ? superheroes : superheroes.filter((h) => h.category === cat);
 
                 filtered.forEach((hero) => {
                     const card = document.createElement("button");
@@ -106,8 +118,8 @@ import * as services from "./services.js";
                 });
             }
 
-            function filterTemplates(category) {
-                services.synth.playClick();
+            async function filterTemplates(category) {
+                synth.playClick();
                 currentTemplateFilter = category;
 
                 // Update tab styles
@@ -132,14 +144,15 @@ import * as services from "./services.js";
                     }
                 });
 
-                renderHeroesGallery(category);
+                await renderHeroesGallery(category);
             }
 
-            function loadSuperhero(heroId) {
-                const hero = services.superheroes.find((h) => h.id === heroId);
+            async function loadSuperhero(heroId) {
+                const superheroes = await loadHeroesData();
+                const hero = superheroes.find((h) => h.id === heroId);
                 if (!hero) return;
 
-                services.synth.playTada();
+                synth.playTada();
 
                 // Confirm clearing existing canvas
                 const hasContent = state.undoStack.length > 1;
@@ -150,7 +163,7 @@ import * as services from "./services.js";
                 }
 
                 // Save current state for undo
-                services.saveState();
+                saveState();
 
                 // Clear the canvas first
                 state.ctx.save();
@@ -190,12 +203,12 @@ import * as services from "./services.js";
                     URL.revokeObjectURL(url);
 
                     // Save the new state with the hero loaded
-                    services.saveState();
+                    saveState();
 
                     // Close the modal & celebrate
                     toggleHeroModal(false);
-                    services.triggerConfetti();
-                    services.showEncouragement(`رائع! لوّن ${hero.name} بألوانك المفضلة! ${hero.emoji}✨`);
+                    triggerConfetti();
+                    showEncouragement(`رائع! لوّن ${hero.name} بألوانك المفضلة! ${hero.emoji}✨`);
                 };
                 img.onerror = () => {
                     alert("حدث خطأ أثناء تحميل البطل. حاول مرة أخرى!");
@@ -233,7 +246,7 @@ import * as services from "./services.js";
                 try {
                     localStorage.setItem(GALLERY_KEY, JSON.stringify(drawings));
                 } catch (e) {
-                    services.showEncouragement("مساحة التخزين ممتلئة! احذف بعض الرسومات القديمة.");
+                    showEncouragement("مساحة التخزين ممتلئة! احذف بعض الرسومات القديمة.");
                 }
             }
 
@@ -291,7 +304,7 @@ import * as services from "./services.js";
             }
 
             function loadDrawingFromGallery(dataUrl) {
-                services.synth.playBoing();
+                synth.playBoing();
                 if (confirm("هل تريد تحميل هذه الرسمة؟ سيتم حفظ الرسمة الحالية أولاً.")) {
                     // Save current drawing first
                     saveCurrentDrawingToGallery();
@@ -306,8 +319,8 @@ import * as services from "./services.js";
                         state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
                         state.ctx.restore();
                         state.ctx.drawImage(img, 0, 0, layoutW, layoutH);
-                        services.saveState();
-                        services.showEncouragement("🖼️ تم تحميل الرسمة من المعرض!");
+                        saveState();
+                        showEncouragement("🖼️ تم تحميل الرسمة من المعرض!");
                     };
                     img.src = dataUrl;
                 }
@@ -320,14 +333,14 @@ import * as services from "./services.js";
 
             function toggleGalleryModal(show) {
                 if (show) renderGalleryGrid();
-                services.toggleModal("gallery-modal", "gallery-modal-content", show);
+                toggleModal("gallery-modal", "gallery-modal-content", show);
             }
 
             function celebrateName(name) {
                 if (window.synth) {
-                    services.synth.playTada();
+                    synth.playTada();
                 }
-                services.showEncouragement(`✨ بطلنا الخارق ${name}! ✨`);
+                showEncouragement(`✨ بطلنا الخارق ${name}! ✨`);
                 speakArabic("أهلاً بالبطل " + name);
 
                 if (typeof confetti === "function") {
@@ -392,11 +405,11 @@ import * as services from "./services.js";
 
                 const friends = getFriends();
                 if (friends.includes(name)) {
-                    services.showEncouragement(`🤔 ${name} موجود بالفعل!`);
+                    showEncouragement(`🤔 ${name} موجود بالفعل!`);
                     return;
                 }
                 if (friends.length >= 15) {
-                    services.showEncouragement("⚠️ الحد الأقصى 15 صديقاً!");
+                    showEncouragement("⚠️ الحد الأقصى 15 صديقاً!");
                     return;
                 }
 
@@ -404,8 +417,8 @@ import * as services from "./services.js";
                 saveFriends(friends);
                 input.value = "";
                 input.focus();
-                services.synth.playPop();
-                services.showEncouragement(`🎉 مرحباً ${name}! أنت الآن صديق أيهم وليث!`);
+                synth.playPop();
+                showEncouragement(`🎉 مرحباً ${name}! أنت الآن صديق أيهم وليث!`);
                 speakArabic("مرحباً " + name + "! أنت الآن صديق أيهم وليث!");
             }
 
@@ -413,15 +426,15 @@ import * as services from "./services.js";
                 let friends = getFriends();
                 friends = friends.filter((f) => f !== name);
                 saveFriends(friends);
-                services.synth.playBoing();
-                services.showEncouragement(`👋 وداعاً ${name}! سنشتاق إليك!`);
+                synth.playBoing();
+                showEncouragement(`👋 وداعاً ${name}! سنشتاق إليك!`);
             }
 
             function resetFriends() {
                 if (confirm("هل تريد حذف جميع الأصدقاء؟")) {
                     saveFriends([]);
-                    services.synth.playBoing();
-                    services.showEncouragement("🗑️ تم حذف جميع الأصدقاء!");
+                    synth.playBoing();
+                    showEncouragement("🗑️ تم حذف جميع الأصدقاء!");
                 }
             }
 
@@ -439,10 +452,10 @@ import * as services from "./services.js";
 
                 if (addedCount > 0) {
                     saveFriends(friends);
-                    services.synth.playTada();
-                    services.showEncouragement(`🎉 تم إضافة ${addedCount} أصدقاء جدد!`);
+                    synth.playTada();
+                    showEncouragement(`🎉 تم إضافة ${addedCount} أصدقاء جدد!`);
                 } else {
-                    services.showEncouragement("🤗 جميع الأصدقاء موجودون بالفعل!");
+                    showEncouragement("🤗 جميع الأصدقاء موجودون بالفعل!");
                 }
             }
 
@@ -531,7 +544,7 @@ import * as services from "./services.js";
             }
 
             function toggleFriendsModal(show) {
-                services.synth.playClick();
+                synth.playClick();
                 const modal = document.getElementById("friends-modal");
                 const content = document.getElementById("friends-modal-content");
 

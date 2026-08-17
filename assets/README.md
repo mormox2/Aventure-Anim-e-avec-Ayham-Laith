@@ -7,9 +7,10 @@ L’application est une SPA statique construite avec Vite. Les fichiers sources 
 - `css/components.css` : contrôles personnalisés et styles de secours.
 - `../public/tailwind-config.js` : configuration du CDN Tailwind servie telle quelle par Vite.
 - `js/synth.js` : moteur Web Audio.
-- `js/data.js` : données SVG, palettes et messages.
+- `js/data.js` : palettes, stickers, tampons et messages légers.
+- `js/data/heroes.js` : SVG des héros et dinosaures chargé dynamiquement par la galerie.
 - `js/state.js` : état partagé exporté sous forme d’objet `state`.
-- `js/services.js` : façade d’exports utilisée pour les dépendances interdomaines.
+Les modules utilisent désormais des imports nommés directs et ne dépendent plus d’une façade globale interdomaines.
 - `js/lifecycle.js` : initialisation et dimensionnement.
 - `js/drawing.js` : outils de dessin et historique.
 - `js/stickers.js` : stickers et manipulations.
@@ -21,4 +22,4 @@ L’application est une SPA statique construite avec Vite. Les fichiers sources 
 - `js/voice-duo.js` : synthèse vocale et mode duo.
 - `js/ui.js` : délégation des clics et entrées via `addEventListener`.
 
-Le script `scripts/generate-entry.mjs` génère `src/main.js` avec des imports explicites, puis initialise `ui.js`. Les attributs HTML inline et le pont `globalThis` ont été supprimés ; les interactions sont désormais câblées depuis les modules.
+Le script `scripts/generate-entry.mjs` génère `src/main.js` avec des imports explicites, puis initialise `ui.js`. Les attributs HTML inline et le pont `globalThis` ont été supprimés ; les interactions sont désormais câblées depuis les modules. Les SVG héros et dinosaures sont chargés par `import()` seulement lorsque la galerie est ouverte.
