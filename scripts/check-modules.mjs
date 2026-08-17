@@ -5,7 +5,7 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const run = promisify(execFile);
-const root = resolve(new URL("..", import.meta.url).pathname);
+const root = fileURLToPath(new URL("..", import.meta.url));
 const sourceDir = resolve(root, "assets/js");
 const moduleFiles = (await readdir(sourceDir))
   .filter((file) => file.endsWith(".js"))
