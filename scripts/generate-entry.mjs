@@ -11,6 +11,7 @@ import "../assets/css/base.css";
 import "../assets/css/animations.css";
 import "../assets/css/components.css";
 import { initializeUI } from "../assets/js/ui.js";
+import "../assets/js/lifecycle.js";
 
 initializeUI();
 `;

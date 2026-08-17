@@ -1,5 +1,9 @@
+import { aliveMessages } from "./data.js";
+import { animationSpeed, showEncouragement, triggerConfetti } from "./settings.js";
+import { deselectAllStickers } from "./stickers.js";
+import { synth } from "./synth.js";
+import { speakArabic } from "./voice-duo.js";
 import { state } from "./state.js";
-import * as services from "./services.js";
 
 /* Drawing animations, Give Life mode and day/night theme. */
             /************************************************************
@@ -68,17 +72,17 @@ import * as services from "./services.js";
             }
 
             function triggerAnimation(animName, buttonEl) {
-                const speed = services.animationSpeed || 1;
-                if (animName === "dance") services.synth.playDanceMelody(speed);
-                else if (animName === "jump") services.synth.playJumpSound(speed);
-                else if (animName === "spin") services.synth.playSpinSound(speed);
-                else if (animName === "shake") services.synth.playShakeSound(speed);
-                else if (animName === "grow") services.synth.playGrowSound(speed);
-                else if (animName === "shrink") services.synth.playShrinkSound(speed);
-                else if (animName === "bounce-squish") services.synth.playBounceSound(speed);
-                else services.synth.playBoing(speed);
+                const speed = animationSpeed || 1;
+                if (animName === "dance") synth.playDanceMelody(speed);
+                else if (animName === "jump") synth.playJumpSound(speed);
+                else if (animName === "spin") synth.playSpinSound(speed);
+                else if (animName === "shake") synth.playShakeSound(speed);
+                else if (animName === "grow") synth.playGrowSound(speed);
+                else if (animName === "shrink") synth.playShrinkSound(speed);
+                else if (animName === "bounce-squish") synth.playBounceSound(speed);
+                else synth.playBoing(speed);
 
-                services.deselectAllStickers(); // Make it cleaner for animation
+                deselectAllStickers(); // Make it cleaner for animation
 
                 const drawingArea = document.getElementById("canvas-anim-container");
                 if (!drawingArea) return;
@@ -87,7 +91,7 @@ import * as services from "./services.js";
                 // 1. If this animation is already active, we stop it (toggle off)
                 if (activeAnimationName === animName) {
                     stopAllAnimations();
-                    services.showEncouragement("توقفت الحركة! 🛑");
+                    showEncouragement("توقفت الحركة! 🛑");
                     return;
                 }
 
@@ -98,13 +102,13 @@ import * as services from "./services.js";
                 void drawingArea.offsetWidth;
 
                 // 4. Apply speed multiplier before adding class
-                if (services.animationSpeed !== 1) {
+                if (animationSpeed !== 1) {
                     // Remove and re-add the class after speed is set
                     const baseDuration = 1; // Base duration in seconds (relative)
-                    const durationMultiplier = 1 / services.animationSpeed;
-                    drawingArea.style.setProperty("--anim-speed-factor", services.animationSpeed);
+                    const durationMultiplier = 1 / animationSpeed;
+                    drawingArea.style.setProperty("--anim-speed-factor", animationSpeed);
                     // Apply a data attribute for CSS to use
-                    drawingArea.dataset.speed = services.animationSpeed;
+                    drawingArea.dataset.speed = animationSpeed;
                 } else {
                     drawingArea.dataset.speed = "1";
                 }
@@ -119,8 +123,8 @@ import * as services from "./services.js";
                 }
 
                 // Play Confetti and motivational quote
-                services.showEncouragement();
-                services.triggerConfetti();
+                showEncouragement();
+                triggerConfetti();
             }
 
             /************************************************************
@@ -129,8 +133,8 @@ import * as services from "./services.js";
             let aliveBubbleInterval;
 
             function toggleGiveLife() {
-                services.synth.playTada();
-                services.deselectAllStickers();
+                synth.playTada();
+                deselectAllStickers();
 
                 const btn = document.getElementById("btn-give-life");
                 const textSpan = document.getElementById("give-life-text");
@@ -160,36 +164,36 @@ import * as services from "./services.js";
                     aliveGlow.classList.remove("hidden");
 
                     // Confetti burst
-                    services.triggerConfetti();
+                    triggerConfetti();
 
                     // Start cycling quotes
                     cycleSpeechMessages();
                     aliveBubbleInterval = setInterval(cycleSpeechMessages, 5000);
 
-                    services.showEncouragement("أيهم و ليث، رسمتكما السحرية تتحرك الآن! 💫👾");
+                    showEncouragement("أيهم و ليث، رسمتكما السحرية تتحرك الآن! 💫👾");
                 } else {
                     // Turn off Alive mode simply using stopAllAnimations
                     stopAllAnimations();
-                    services.showEncouragement("توقفت الحركة! 🛑");
+                    showEncouragement("توقفت الحركة! 🛑");
                 }
             }
 
             function cycleSpeechMessages() {
                 if (!state.isAlive) return;
                 const textEl = document.getElementById("speech-text");
-                const randomMsg = services.aliveMessages[Math.floor(Math.random() * services.aliveMessages.length)];
+                const randomMsg = aliveMessages[Math.floor(Math.random() * aliveMessages.length)];
                 textEl.textContent = randomMsg;
 
                 // Cute bubble synth sound
-                services.synth.playPop();
-                services.speakArabic(randomMsg);
+                synth.playPop();
+                speakArabic(randomMsg);
             }
 
             /************************************************************
              * 10. Day & Night Mode Toggle
              ************************************************************/
             function toggleTheme() {
-                services.synth.playPop();
+                synth.playPop();
                 const body = document.body;
                 const title = document.getElementById("app-title");
                 const subtitle = document.getElementById("app-subtitle");
@@ -227,7 +231,7 @@ import * as services from "./services.js";
                     decoNight.classList.remove("opacity-0");
                     decoNight.classList.add("opacity-100");
 
-                    services.showEncouragement("أيهم و ليث، مرحباً بالوضع الليلي الجميل! 🌌🌠");
+                    showEncouragement("أيهم و ليث، مرحباً بالوضع الليلي الجميل! 🌌🌠");
                 } else {
                     state.currentTheme = "day";
                     // Apply Day Theme
@@ -252,7 +256,7 @@ import * as services from "./services.js";
                     decoNight.classList.remove("opacity-100");
                     decoNight.classList.add("opacity-0");
 
-                    services.showEncouragement("أيهم و ليث، أهلاً بالنهار والغيوم اللطيفة! ☀️🌈");
+                    showEncouragement("أيهم و ليث، أهلاً بالنهار والغيوم اللطيفة! ☀️🌈");
                 }
             }
 

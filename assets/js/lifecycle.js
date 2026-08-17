@@ -1,5 +1,9 @@
+import { draw, redo, renderColors, renderMobileColors, saveState, startDrawing, stopDrawing, toggleMobileDrawer, undo } from "./drawing.js";
+import { initParticles } from "./export-particles.js";
+import { setAnimationSpeed, showEncouragement, triggerConfetti } from "./settings.js";
+import { deselectAllStickers, renderStickers } from "./stickers.js";
+import { renderFriendBadges, saveCurrentDrawingToGallery } from "./utilities-gallery.js";
 import { state } from "./state.js";
-import * as services from "./services.js";
 
 /* DOM lifecycle, canvas sizing and application bootstrap. */
             /************************************************************
@@ -13,11 +17,11 @@ import * as services from "./services.js";
                 setupCanvasDimensions();
 
                 // Render color buttons
-                services.renderColors();
-                services.renderMobileColors(); // populate mobile drawer palette too
+                renderColors();
+                renderMobileColors(); // populate mobile drawer palette too
 
                 // Render stickers gallery
-                services.renderStickers("all");
+                renderStickers("all");
 
                 // Add Canvas drawing event listeners (Pointer Events)
                 state.canvas.addEventListener("pointerdown", startDrawing);
@@ -27,14 +31,14 @@ import * as services from "./services.js";
                     stopDrawing();
                     if (state.isDrawing === false && !state.isFillMode && !state.activeStamp) {
                         // stroke just finished — save undo state
-                        services.saveState();
+                        saveState();
                     }
                 });
                 state.canvas.addEventListener("pointerleave", () => {
                     if (state.isDrawing) {
                         state.isDrawing = false;
                         state.ctx.globalCompositeOperation = "source-over";
-                        services.saveState();
+                        saveState();
                     }
                 });
 
@@ -63,21 +67,21 @@ import * as services from "./services.js";
                 window.addEventListener("resize", handleWindowResize);
 
                 // Save initial canvas state (blank canvas)
-                services.saveState();
+                saveState();
 
                 // Initialize default speed button highlight
                 setTimeout(() => {
-                    services.setAnimationSpeed(1);
+                    setAnimationSpeed(1);
                 }, 100);
 
                 // Sparkly confetti on startup to cheer up kids
                 setTimeout(() => {
-                    services.triggerConfetti();
+                    triggerConfetti();
                 }, 500);
 
                 // Personal welcome message for the kids
                 setTimeout(() => {
-                    services.showEncouragement("أهلاً أيهم و ليث! 🎨✨ هيا نبدأ مغامرة الرسم الممتعة!");
+                    showEncouragement("أهلاً أيهم و ليث! 🎨✨ هيا نبدأ مغامرة الرسم الممتعة!");
                 }, 1200);
 
                 // Render guest badges from localStorage
@@ -113,7 +117,7 @@ import * as services from "./services.js";
                 }, 30000);
 
                 // Initialize particle trail system
-                services.initParticles();
+                initParticles();
             });
 
 

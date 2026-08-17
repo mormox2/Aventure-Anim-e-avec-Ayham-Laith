@@ -1,5 +1,9 @@
+import { stopAllAnimations } from "./animations.js";
+import { colors, stampTemplates } from "./data.js";
+import { showEncouragement, triggerConfetti } from "./settings.js";
+import { synth } from "./synth.js";
+import { speakArabic } from "./voice-duo.js";
 import { state } from "./state.js";
-import * as services from "./services.js";
 
 /* Canvas tools, history, flood fill, backgrounds, dialogs and mobile tools. */
             /************************************************************
@@ -9,7 +13,7 @@ import * as services from "./services.js";
                 const palette = document.getElementById("color-palette");
                 palette.innerHTML = "";
 
-                services.colors.forEach((color) => {
+                colors.forEach((color) => {
                     const btn = document.createElement("button");
                     btn.type = "button";
                     btn.title = color.name;
@@ -34,7 +38,7 @@ import * as services from "./services.js";
             }
 
             function selectColor(colorValue, buttonEl) {
-                services.synth.playPop();
+                synth.playPop();
                 state.isEraser = false;
 
                 // Update state
@@ -70,7 +74,7 @@ import * as services from "./services.js";
             }
 
             function selectEraser() {
-                services.synth.playPop();
+                synth.playPop();
                 state.isEraser = true;
                 state.isRainbowBrush = false;
                 state.isSprayMode = false;
@@ -103,7 +107,7 @@ import * as services from "./services.js";
              ************************************************************/
             function startDrawing(e) {
                 // Instantly stop animations to allow stable, accurate drawing coordinates
-                services.stopAllAnimations();
+                stopAllAnimations();
 
                 // Prevent scrolling or zooming on iOS touch devices while drawing
                 if (e.pointerType === "touch") {
@@ -138,7 +142,7 @@ import * as services from "./services.js";
                 spawnParticles(clickX, clickY);
 
                 // Play soft drawing start sound
-                services.synth.playClick();
+                synth.playClick();
             }
 
             function draw(e) {
@@ -159,7 +163,7 @@ import * as services from "./services.js";
                     drawSpray(currentX, currentY);
                     state.lastX = currentX;
                     state.lastY = currentY;
-                    if (Math.random() < 0.005) services.showEncouragement();
+                    if (Math.random() < 0.005) showEncouragement();
                     return;
                 }
 
@@ -241,7 +245,7 @@ import * as services from "./services.js";
 
                 // Periodic check to trigger motivational speech bubble while drawing
                 if (Math.random() < 0.005) {
-                    services.showEncouragement();
+                    showEncouragement();
                 }
             }
 
@@ -303,7 +307,7 @@ import * as services from "./services.js";
              * Fill Bucket (Flood Fill) - 🪣
              ************************************************************/
             function selectFillTool() {
-                services.synth.playPop();
+                synth.playPop();
                 state.isFillMode = !state.isFillMode;
                 state.isEraser = false;
                 state.isSprayMode = false;
@@ -318,7 +322,7 @@ import * as services from "./services.js";
                     // Deactivate eraser
                     document.getElementById("btn-eraser").classList.remove("bg-yellow-400", "scale-105");
                     document.getElementById("btn-eraser").classList.add("bg-pink-300");
-                    services.showEncouragement("🪣 اضغط على أي منطقة في الرسم لملئها بلونك السحري!");
+                    showEncouragement("🪣 اضغط على أي منطقة في الرسم لملئها بلونك السحري!");
                 } else {
                     btn.classList.remove("bg-yellow-400", "scale-105");
                     btn.classList.add("bg-purple-300");
@@ -347,9 +351,9 @@ import * as services from "./services.js";
 
                 // Prevent filling active outline/black/very dark lines
                 if (srcR < 45 && srcG < 45 && srcB < 45 && srcA > 200) {
-                    services.showEncouragement("🪣 خطوط الرسم السوداء تحميك! لوّن داخل الفراغات! 🛡️🖤");
-                    services.speakArabic("خطوط الرسم السوداء تحميك، لوّن داخل الفراغات يا بطل!");
-                    services.synth.playBoing();
+                    showEncouragement("🪣 خطوط الرسم السوداء تحميك! لوّن داخل الفراغات! 🛡️🖤");
+                    speakArabic("خطوط الرسم السوداء تحميك، لوّن داخل الفراغات يا بطل!");
+                    synth.playBoing();
                     return;
                 }
 
@@ -413,22 +417,22 @@ import * as services from "./services.js";
                 }
 
                 state.ctx.putImageData(imageData, 0, 0);
-                services.synth.playPop();
-                services.showEncouragement("🪣 تم ملء المنطقة بنجاح! رائع!");
+                synth.playPop();
+                showEncouragement("🪣 تم ملء المنطقة بنجاح! رائع!");
             }
 
             /************************************************************
              * Mirror Mode - 🪞
              ************************************************************/
             function toggleMirror() {
-                services.synth.playPop();
+                synth.playPop();
                 state.isMirrorMode = !state.isMirrorMode;
 
                 const btn = document.getElementById("btn-mirror");
                 if (state.isMirrorMode) {
                     btn.classList.remove("bg-teal-300");
                     btn.classList.add("bg-yellow-400", "scale-105");
-                    services.showEncouragement("🪞 وضع المرآة السحرية نشط! ارسم على اليسار يظهر على اليمين!");
+                    showEncouragement("🪞 وضع المرآة السحرية نشط! ارسم على اليسار يظهر على اليمين!");
                 } else {
                     btn.classList.remove("bg-yellow-400", "scale-105");
                     btn.classList.add("bg-teal-300");
@@ -442,7 +446,7 @@ import * as services from "./services.js";
 
             // #13: Generic modal toggle helper — eliminates repeated show/hide boilerplate
             function toggleModal(modalId, contentId, show) {
-                services.synth.playClick();
+                synth.playClick();
                 const modal = document.getElementById(modalId);
                 const content = document.getElementById(contentId);
                 if (!modal || !content) return;
@@ -476,7 +480,7 @@ import * as services from "./services.js";
                 const container = document.getElementById("stamps-gallery");
                 container.innerHTML = "";
 
-                services.stampTemplates.forEach((stamp) => {
+                stampTemplates.forEach((stamp) => {
                     const btn = document.createElement("button");
                     btn.type = "button";
                     btn.className =
@@ -488,13 +492,13 @@ import * as services from "./services.js";
             }
 
             function selectStamp(stampId) {
-                const stamp = services.stampTemplates.find((s) => s.id === stampId);
+                const stamp = stampTemplates.find((s) => s.id === stampId);
                 if (!stamp) return;
 
                 state.activeStamp = stamp;
-                services.synth.playPop();
+                synth.playPop();
                 toggleStampsModal(false);
-                services.showEncouragement(`⭐ اضغط على اللوحة لوضع ${stamp.name}! يمكنك تغيير حجمها بالفرشاة!`);
+                showEncouragement(`⭐ اضغط على اللوحة لوضع ${stamp.name}! يمكنك تغيير حجمها بالفرشاة!`);
             }
 
             function placeStamp(clientX, clientY) {
@@ -514,7 +518,7 @@ import * as services from "./services.js";
                     state.ctx.drawImage(img, x - size / 2, y - size / 2, size, size);
                     URL.revokeObjectURL(url);
                     saveState();
-                    services.synth.playPop();
+                    synth.playPop();
                 };
                 img.src = url;
             }
@@ -529,7 +533,7 @@ import * as services from "./services.js";
                 saveState();
 
                 state.currentBg = bgId;
-                services.synth.playPop();
+                synth.playPop();
 
                 // Update button highlights
                 document.querySelectorAll(".bg-selector-btn").forEach((btn) => {
@@ -543,7 +547,7 @@ import * as services from "./services.js";
                 // Redraw background
                 drawCanvasBackground();
 
-                services.showEncouragement(`🎨 تم تغيير خلفية اللوحة!`);
+                showEncouragement(`🎨 تم تغيير خلفية اللوحة!`);
             }
 
             function drawCanvasBackground() {
@@ -595,7 +599,7 @@ import * as services from "./services.js";
             }
 
             function clearCanvas() {
-                services.synth.playBoing();
+                synth.playBoing();
                 if (confirm("هل أنت متأكد أنك تريد مسح اللوحة بالكامل والبدء من جديد؟ 🧹")) {
                     // Save state before clearing
                     saveState();
@@ -615,8 +619,8 @@ import * as services from "./services.js";
                         toggleGiveLife();
                     }
 
-                    services.triggerConfetti();
-                    services.showEncouragement("بداية جديدة مرحة! 🌟🎨");
+                    triggerConfetti();
+                    showEncouragement("بداية جديدة مرحة! 🌟🎨");
                 }
             }
 
@@ -645,7 +649,7 @@ import * as services from "./services.js";
                         updateUndoRedoButtons();
                     }, "image/webp", 0.85);
                     restoreCanvas(prevState);
-                    services.synth.playPop();
+                    synth.playPop();
                 }
                 updateUndoRedoButtons();
             }
@@ -658,7 +662,7 @@ import * as services from "./services.js";
                         updateUndoRedoButtons();
                     }, "image/webp", 0.85);
                     restoreCanvas(nextState);
-                    services.synth.playPop();
+                    synth.playPop();
                 }
                 updateUndoRedoButtons();
             }
@@ -703,7 +707,7 @@ import * as services from "./services.js";
 
             // #7: Spray tool selector
             function selectSpray() {
-                services.synth.playPop();
+                synth.playPop();
                 state.isSprayMode = !state.isSprayMode;
                 state.isEraser = false;
                 state.isFillMode = false;
@@ -717,7 +721,7 @@ import * as services from "./services.js";
                     document.getElementById("btn-eraser").classList.add("bg-pink-300");
                     const fillBtn = document.getElementById("btn-fill");
                     if (fillBtn) { fillBtn.classList.remove("bg-yellow-400","scale-105"); fillBtn.classList.add("bg-purple-300"); }
-                    services.showEncouragement("🫧 وضع البخاخ! ارسم وستجد تأثيراً رائعاً!");
+                    showEncouragement("🫧 وضع البخاخ! ارسم وستجد تأثيراً رائعاً!");
                 } else {
                     btn.classList.remove("bg-yellow-400", "scale-105");
                     btn.classList.add("bg-emerald-300");
@@ -726,7 +730,7 @@ import * as services from "./services.js";
 
             // #8: Custom color picker handler
             function selectCustomColor(hexColor) {
-                services.synth.playPop();
+                synth.playPop();
                 state.isEraser = false;
                 state.isSprayMode = false;
                 state.isRainbowBrush = false;
@@ -753,7 +757,7 @@ import * as services from "./services.js";
                 const picker = document.getElementById("custom-color-picker");
                 if (picker) picker.value = hexColor;
 
-                services.showEncouragement("🎨 تم اختيار لون خاص بك!");
+                showEncouragement("🎨 تم اختيار لون خاص بك!");
             }
 
             // #16: Populate mobile color palette (mirrors the desktop palette)
@@ -761,13 +765,13 @@ import * as services from "./services.js";
                 const container = document.getElementById("mobile-color-palette");
                 if (!container) return;
                 container.innerHTML = "";
-                services.colors.forEach((color) => {
+                colors.forEach((color) => {
                     const btn = document.createElement("button");
                     btn.type = "button";
                     btn.title = color.name;
                     btn.className = `w-9 h-9 rounded-full border-3 border-slate-800 shadow-sm bubble-btn ${color.bgClass}`;
                     btn.addEventListener("click", () => {
-                        selectColor(color.val, document.querySelectorAll("#color-palette button")[services.colors.indexOf(color)]);
+                        selectColor(color.val, document.querySelectorAll("#color-palette button")[colors.indexOf(color)]);
                         toggleMobileDrawer();
                     });
                     container.appendChild(btn);
@@ -801,7 +805,7 @@ import * as services from "./services.js";
             // #6: Quick PNG download (canvas + stickers, no gallery save)
             function downloadDrawingPNG() {
                 deselectAllStickers();
-                services.synth.playTada();
+                synth.playTada();
 
                 const exportCanvas = document.createElement("canvas");
                 const exportCtx = exportCanvas.getContext("2d");
@@ -858,8 +862,8 @@ import * as services from "./services.js";
                         link.href = URL.createObjectURL(blob);
                         link.click();
                         setTimeout(() => URL.revokeObjectURL(link.href), 5000);
-                        services.triggerConfetti();
-                        services.showEncouragement("📥 تم تحميل الرسمة بنجاح! 🎉");
+                        triggerConfetti();
+                        showEncouragement("📥 تم تحميل الرسمة بنجاح! 🎉");
                     }, "image/png");
                 });
             }
