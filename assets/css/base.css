@@ -1,0 +1,24 @@
+/* Global layout, typography and reset styles extracted from index.html. */
+            :root {
+                --anim-speed-factor: 1;
+            }
+
+            /* Global Styles */
+            * {
+                box-sizing: border-box;
+            }
+
+            html,
+            body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+
+            body {
+                font-family: "Changa", sans-serif;
+                user-select: none;
+                -webkit-user-select: none;
+            }
+

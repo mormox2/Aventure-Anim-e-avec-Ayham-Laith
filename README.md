@@ -29,7 +29,21 @@
 
 ## 🚀 Démo Live & Déploiement / التجربة الحية والتشغيل
 
-Puisque ce projet est une **Single Page Application (SPA)** entièrement écrite en HTML, CSS et JavaScript pur, vous pouvez y jouer instantanément sans aucune installation !
+Le projet est une **Single Page Application (SPA)** écrite en HTML, CSS et JavaScript, avec Vite comme serveur de développement et bundler de production. La version publiée reste directement accessible depuis GitHub Pages.
+
+### Développement local
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Pour produire une version optimisée :
+
+```bash
+pnpm run build
+pnpm preview
+```
 
 > [!TIP]
 > **Jouer tout de suite :** Si vous avez activé les **GitHub Pages** sur votre dépôt, votre jeu est accessible à l'adresse suivante :
@@ -85,16 +99,37 @@ Derrière cette app extrêmement fluide et réactive se cache une ingénierie so
 
 ## 📂 Structure du Projet / هيكلة المشروع
 
-Le projet est d'une simplicité et d'une légèreté remarquables :
+Le projet reste une **Single Page Application statique**, mais son code est maintenant organisé par responsabilité afin de faciliter la maintenance et les évolutions :
 
 ```bash
-├── index.html       # L'intégralité du code (Structure, Styles CSS, Scripts et Assets SVG)
-├── README.md        # Présentation complète et documentation du projet
-├── LICENSE          # Licence d'utilisation MIT
-└── .git             # Suivi de version Git
+├── index.html                    # Structure de l'interface et point d'entrée Vite
+├── public/
+│   └── tailwind-config.js         # Configuration Tailwind servie comme asset statique
+├── assets/
+│   ├── css/
+│   │   ├── base.css              # Réinitialisation, layout global et typographie
+│   │   ├── animations.css         # Animations et arrière-plans
+│   │   └── components.css         # Contrôles personnalisés et styles partagés
+│   ├── js/
+│   │   ├── synth.js               # Moteur audio Web Audio API
+│   │   ├── data.js                # Données SVG, palettes et messages
+│   │   ├── state.js               # État partagé de l'application
+│   │   ├── lifecycle.js           # Initialisation et dimensionnement
+│   │   ├── drawing.js             # Outils de dessin et historique
+│   │   ├── stickers.js             # Stickers et manipulations
+│   │   ├── animations.js           # Animations et thèmes
+│   │   ├── audio-controls.js       # Musique de fond
+│   │   ├── utilities-gallery.js    # Modèles, galerie, amis et réinitialisation
+│   │   ├── settings.js             # Paramètres et encouragements
+│   │   ├── export-particles.js     # Export PNG et particules
+│   │   └── voice-duo.js             # Synthèse vocale et mode duo
+│   └── README.md                  # Carte des responsabilités des assets
+├── README.md                      # Présentation complète et documentation du projet
+├── LICENSE                        # Licence d'utilisation MIT
+└── .github/workflows/             # Déploiement automatique vers GitHub Pages
 ```
 
-Toutes les icônes, les stickers et les personnages peints sont intégrés sous forme de vecteurs **SVG natifs** directement imbriqués dans le code d'index.html, ce qui évite les requêtes HTTP réseau superflues et permet un affichage d'une netteté absolue sur les écrans Retina ou 4K !
+Les icônes, stickers et personnages restent intégrés sous forme de vecteurs **SVG natifs** dans les modules de données et le markup nécessaire. Vite regroupe les sources JavaScript et CSS dans `dist/`, tandis que `public/` contient les fichiers servis tels quels. Le pont global généré conserve la compatibilité avec les callbacks inline existants.
 
 ---
 ---

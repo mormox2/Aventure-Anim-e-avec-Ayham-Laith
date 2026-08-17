@@ -1,0 +1,17 @@
+{
+  "name": "aventure-anime-avec-ayham-laith",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Studio de dessin cartoon interactif pour enfants, avec canvas, stickers et animations.",
+  "type": "module",
+  "packageManager": "pnpm@11.20.0",
+  "scripts": {
+    "dev": "node scripts/generate-entry.mjs && vite",
+    "build": "node scripts/generate-entry.mjs && vite build",
+    "preview": "vite preview",
+    "check": "node scripts/generate-entry.mjs && node scripts/check-modules.mjs"
+  },
+  "devDependencies": {
+    "vite": "^7.1.3"
+  }
+}
