@@ -1,3 +1,6 @@
+import { state } from "./state.js";
+import * as services from "./services.js";
+
 /* Background music control. */
             /************************************************************
              * 11. Background Music Controller
@@ -6,7 +9,7 @@
                 const musicIcon = document.getElementById("music-icon");
                 const musicText = document.getElementById("music-text");
 
-                synth.toggleMusic((isPlaying) => {
+                services.synth.toggleMusic((isPlaying) => {
                     if (isPlaying) {
                         musicIcon.textContent = "🎵";
                         musicText.textContent = "موسيقى نشطة";
@@ -21,3 +24,4 @@
                 });
             }
 
+export { toggleMusic };

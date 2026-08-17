@@ -1,50 +1,53 @@
+import { state } from "./state.js";
+import * as services from "./services.js";
+
 /* DOM lifecycle, canvas sizing and application bootstrap. */
             /************************************************************
              * 4. Initializer / Lifecycle
              ************************************************************/
             window.addEventListener("DOMContentLoaded", () => {
-                canvas = document.getElementById("drawing-canvas");
-                ctx = canvas.getContext("2d");
+                state.canvas = document.getElementById("drawing-canvas");
+                state.ctx = state.canvas.getContext("2d");
 
                 // Set Canvas Resolution (supports high DPI/retina displays)
                 setupCanvasDimensions();
 
                 // Render color buttons
-                renderColors();
-                renderMobileColors(); // populate mobile drawer palette too
+                services.renderColors();
+                services.renderMobileColors(); // populate mobile drawer palette too
 
                 // Render stickers gallery
-                renderStickers("all");
+                services.renderStickers("all");
 
                 // Add Canvas drawing event listeners (Pointer Events)
-                canvas.addEventListener("pointerdown", startDrawing);
-                canvas.addEventListener("pointermove", draw);
+                state.canvas.addEventListener("pointerdown", startDrawing);
+                state.canvas.addEventListener("pointermove", draw);
                 // #2: save state on pointerup (end of stroke) — not on pointerdown
                 window.addEventListener("pointerup", (e) => {
                     stopDrawing();
-                    if (isDrawing === false && !isFillMode && !activeStamp) {
+                    if (state.isDrawing === false && !state.isFillMode && !state.activeStamp) {
                         // stroke just finished — save undo state
-                        saveState();
+                        services.saveState();
                     }
                 });
-                canvas.addEventListener("pointerleave", () => {
-                    if (isDrawing) {
-                        isDrawing = false;
-                        ctx.globalCompositeOperation = "source-over";
-                        saveState();
+                state.canvas.addEventListener("pointerleave", () => {
+                    if (state.isDrawing) {
+                        state.isDrawing = false;
+                        state.ctx.globalCompositeOperation = "source-over";
+                        services.saveState();
                     }
                 });
 
                 // Brush slider updates
                 const sizeSlider = document.getElementById("brush-size");
                 sizeSlider.addEventListener("input", (e) => {
-                    brushSize = parseInt(e.target.value);
-                    document.getElementById("brush-size-val").textContent = brushSize;
-                    document.getElementById("brush-preview").style.width = `${brushSize}px`;
-                    document.getElementById("brush-preview").style.height = `${brushSize}px`;
+                    state.brushSize = parseInt(e.target.value);
+                    document.getElementById("brush-size-val").textContent = state.brushSize;
+                    document.getElementById("brush-preview").style.width = `${state.brushSize}px`;
+                    document.getElementById("brush-preview").style.height = `${state.brushSize}px`;
                     // Keep mobile slider in sync
                     const mbs = document.getElementById("mobile-brush-size");
-                    if (mbs) mbs.value = brushSize;
+                    if (mbs) mbs.value = state.brushSize;
                 });
 
                 // Clear any active sticker if clicked elsewhere
@@ -60,21 +63,21 @@
                 window.addEventListener("resize", handleWindowResize);
 
                 // Save initial canvas state (blank canvas)
-                saveState();
+                services.saveState();
 
                 // Initialize default speed button highlight
                 setTimeout(() => {
-                    setAnimationSpeed(1);
+                    services.setAnimationSpeed(1);
                 }, 100);
 
                 // Sparkly confetti on startup to cheer up kids
                 setTimeout(() => {
-                    triggerConfetti();
+                    services.triggerConfetti();
                 }, 500);
 
                 // Personal welcome message for the kids
                 setTimeout(() => {
-                    showEncouragement("أهلاً أيهم و ليث! 🎨✨ هيا نبدأ مغامرة الرسم الممتعة!");
+                    services.showEncouragement("أهلاً أيهم و ليث! 🎨✨ هيا نبدأ مغامرة الرسم الممتعة!");
                 }, 1200);
 
                 // Render guest badges from localStorage
@@ -87,7 +90,7 @@
                     if (e.ctrlKey && e.shiftKey && e.key === "Z") { e.preventDefault(); redo(); }
                     if (e.key === "Escape") {
                         deselectAllStickers();
-                        activeStamp = null;
+                        state.activeStamp = null;
                         // close any open modal
                         ["stamps-modal","gallery-modal","friends-modal","hero-modal","help-modal"].forEach(id => {
                             const el = document.getElementById(id);
@@ -104,13 +107,13 @@
 
                 // #9: Auto-save every 30 seconds
                 setInterval(() => {
-                    if (undoStack.length > 1) {
+                    if (state.undoStack.length > 1) {
                         saveCurrentDrawingToGallery();
                     }
                 }, 30000);
 
                 // Initialize particle trail system
-                initParticles();
+                services.initParticles();
             });
 
 
@@ -118,25 +121,25 @@
             let canvasInitialized = false;
             function setupCanvasDimensions() {
                 // Use offsetWidth/Height to get the true layout size ignoring any active CSS transforms
-                const layoutW = canvas.offsetWidth || 700;
-                const layoutH = canvas.offsetHeight || 480;
+                const layoutW = state.canvas.offsetWidth || 700;
+                const layoutH = state.canvas.offsetHeight || 480;
 
                 // Save canvas state first (only if canvas was already initialized)
                 let tempDataUrl = null;
                 if (canvasInitialized) {
                     try {
-                        tempDataUrl = canvas.toDataURL();
+                        tempDataUrl = state.canvas.toDataURL();
                     } catch (err) {}
                 }
 
                 // Set canvas width & height matching layout size multiplied by devicePixelRatio (crisp drawing)
                 const dpr = window.devicePixelRatio || 1;
-                canvas.width = layoutW * dpr;
-                canvas.height = layoutH * dpr;
+                state.canvas.width = layoutW * dpr;
+                state.canvas.height = layoutH * dpr;
 
                 // Reset the transform matrix before applying DPR scaling
-                ctx.setTransform(1, 0, 0, 1, 0, 0);
-                ctx.scale(dpr, dpr);
+                state.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                state.ctx.scale(dpr, dpr);
 
                 canvasInitialized = true;
 
@@ -144,8 +147,8 @@
                 if (tempDataUrl) {
                     const tempImage = new Image();
                     tempImage.onload = () => {
-                        ctx.clearRect(0, 0, layoutW, layoutH);
-                        ctx.drawImage(tempImage, 0, 0, layoutW, layoutH);
+                        state.ctx.clearRect(0, 0, layoutW, layoutH);
+                        state.ctx.drawImage(tempImage, 0, 0, layoutW, layoutH);
                     };
                     tempImage.src = tempDataUrl;
                 }
@@ -158,3 +161,4 @@
                 _resizeTimer = setTimeout(setupCanvasDimensions, 200);
             }
 
+export { setupCanvasDimensions, handleWindowResize };

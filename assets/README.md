@@ -1,6 +1,6 @@
 # Organisation des assets
 
-L’application est une SPA statique construite avec Vite. Les fichiers sources sont séparés par responsabilité, puis l’entrée générée est regroupée et optimisée lors du build. Le fichier Tailwind reste dans `public/` car le CDN le lit directement avant le chargement de l’application.
+L’application est une SPA statique construite avec Vite. Les fichiers sources sont séparés par responsabilité, puis Vite analyse leur graphe ES modules et produit le bundle optimisé. Le fichier Tailwind reste dans `public/` car le CDN le lit directement avant le chargement de l’application.
 
 - `css/base.css` : reset, layout global et typographie.
 - `css/animations.css` : arrière-plans, transitions et animations du canvas.
@@ -8,7 +8,8 @@ L’application est une SPA statique construite avec Vite. Les fichiers sources 
 - `../public/tailwind-config.js` : configuration du CDN Tailwind servie telle quelle par Vite.
 - `js/synth.js` : moteur Web Audio.
 - `js/data.js` : données SVG, palettes et messages.
-- `js/state.js` : état partagé de l’application.
+- `js/state.js` : état partagé exporté sous forme d’objet `state`.
+- `js/services.js` : façade d’exports utilisée pour les dépendances interdomaines.
 - `js/lifecycle.js` : initialisation et dimensionnement.
 - `js/drawing.js` : outils de dessin et historique.
 - `js/stickers.js` : stickers et manipulations.
@@ -18,5 +19,6 @@ L’application est une SPA statique construite avec Vite. Les fichiers sources 
 - `js/settings.js` : paramètres et messages d’encouragement.
 - `js/export-particles.js` : export PNG et particules.
 - `js/voice-duo.js` : synthèse vocale et mode duo.
+- `js/ui.js` : délégation des clics et entrées via `addEventListener`.
 
-Le script `scripts/generate-entry.mjs` concatène les sources JavaScript dans `src/generated/app.js` et ajoute un pont global pour préserver les callbacks inline existants. Vite transforme ensuite cette entrée en bundle de production dans `dist/`.
+Le script `scripts/generate-entry.mjs` génère `src/main.js` avec des imports explicites, puis initialise `ui.js`. Les attributs HTML inline et le pont `globalThis` ont été supprimés ; les interactions sont désormais câblées depuis les modules.

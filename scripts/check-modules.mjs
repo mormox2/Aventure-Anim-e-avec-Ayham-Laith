@@ -15,8 +15,8 @@ for (const file of moduleFiles) {
   await run(process.execPath, ["--check", resolve(sourceDir, file)]);
 }
 
-await access(resolve(root, "src/generated/app.js"));
+await access(resolve(root, "src/main.js"));
 await access(resolve(root, "index.html"));
 await access(resolve(root, "vite.config.js"));
 
-console.log(`Checked ${moduleFiles.length} source modules and the generated Vite entry.`);
+console.log(`Checked ${moduleFiles.length} source modules and the ES module Vite entry.`);

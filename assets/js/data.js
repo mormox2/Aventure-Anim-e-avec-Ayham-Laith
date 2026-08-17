@@ -1,3 +1,5 @@
+import { state } from "./state.js";
+
 /* Static sticker, stamp, hero, color and message definitions. */
             /************************************************************
              * 2. Data Definitions: Sticker templates
@@ -987,3 +989,4 @@
                 "رسمتكما سحرية يا أيهم و ليث! ✨🪄",
             ];
 
+export { stickersData, stampTemplates, superheroes, colors, positiveQuotes, aliveMessages };

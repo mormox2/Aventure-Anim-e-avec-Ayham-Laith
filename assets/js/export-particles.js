@@ -1,18 +1,21 @@
+import { state } from "./state.js";
+import * as services from "./services.js";
+
 /* PNG export and pointer particle effects. */
             /************************************************************
              * 13. Export Composite Drawing (Canvas + Stickers) as PNG
              ************************************************************/
             function saveDrawing() {
-                deselectAllStickers(); // Clear outlines for final save
-                synth.playTada();
-                showEncouragement("جاري تحضير صورتك الجميلة... ⏱️✨");
+                services.deselectAllStickers(); // Clear outlines for final save
+                services.synth.playTada();
+                services.showEncouragement("جاري تحضير صورتك الجميلة... ⏱️✨");
 
                 const exportCanvas = document.createElement("canvas");
                 const exportCtx = exportCanvas.getContext("2d");
 
                 // Use layout width & height to stay immune to active CSS transforms
-                const layoutW = canvas.offsetWidth || 700;
-                const layoutH = canvas.offsetHeight || 480;
+                const layoutW = state.canvas.offsetWidth || 700;
+                const layoutH = state.canvas.offsetHeight || 480;
                 const dpr = window.devicePixelRatio || 1;
                 exportCanvas.width = layoutW * dpr;
                 exportCanvas.height = layoutH * dpr;
@@ -20,7 +23,7 @@
                 exportCtx.scale(dpr, dpr);
 
                 // 1. Draw Background
-                if (currentTheme === "day") {
+                if (state.currentTheme === "day") {
                     // Light sky gradient
                     const grad = exportCtx.createLinearGradient(0, 0, 0, layoutH);
                     grad.addColorStop(0, "#e0f2fe");
@@ -37,7 +40,7 @@
 
                 // 2. Draw Main Canvas Painting (source canvas is at DPR resolution, scale to logical)
                 // Source: 0,0 to canvas.width,canvas.height (native px) -> Dest: 0,0 to layoutW,layoutH (logical px)
-                exportCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, layoutW, layoutH);
+                exportCtx.drawImage(state.canvas, 0, 0, state.canvas.width, state.canvas.height, 0, 0, layoutW, layoutH);
 
                 // 3. Serialize and Draw All Placed Stickers
                 const stickers = Array.from(document.querySelectorAll(".sticker-element"));
@@ -101,10 +104,10 @@
                         document.body.removeChild(link);
 
                         // Save a thumbnail to gallery automatically
-                        saveCurrentDrawingToGallery();
+                        services.saveCurrentDrawingToGallery();
 
-                        triggerConfetti();
-                        showEncouragement("رائع! تم تحميل الرسمة بنجاح 🎉📥");
+                        services.triggerConfetti();
+                        services.showEncouragement("رائع! تم تحميل الرسمة بنجاح 🎉📥");
                     } catch (err) {
                         console.error(err);
                         alert("حدث خطأ ما أثناء حفظ الصورة. حاول مرة أخرى!");
@@ -116,34 +119,34 @@
              * 15. Magic Particle Trail System ⭐🫧
              ************************************************************/
             function initParticles() {
-                particlesCanvas = document.getElementById("particles-canvas");
-                if (!particlesCanvas) return;
-                particlesCtx = particlesCanvas.getContext("2d");
+                state.particlesCanvas = document.getElementById("particles-canvas");
+                if (!state.particlesCanvas) return;
+                state.particlesCtx = state.particlesCanvas.getContext("2d");
                 resizeParticlesCanvas();
                 window.addEventListener("resize", resizeParticlesCanvas);
                 requestAnimationFrame(updateParticles);
             }
 
             function resizeParticlesCanvas() {
-                if (!particlesCanvas || !canvas) return;
+                if (!state.particlesCanvas || !state.canvas) return;
                 const dpr = window.devicePixelRatio || 1;
-                particlesCanvas.width = canvas.width;
-                particlesCanvas.height = canvas.height;
-                particlesCtx.scale(dpr, dpr);
+                state.particlesCanvas.width = state.canvas.width;
+                state.particlesCanvas.height = state.canvas.height;
+                state.particlesCtx.scale(dpr, dpr);
             }
 
             function spawnParticles(x, y) {
-                if (!particlesCanvas) return;
-                let col = activeColor;
-                if (isRainbowBrush) {
-                    col = `hsl(${rainbowHue}, 100%, 55%)`;
-                } else if (isEraser) {
+                if (!state.particlesCanvas) return;
+                let col = state.activeColor;
+                if (state.isRainbowBrush) {
+                    col = `hsl(${state.rainbowHue}, 100%, 55%)`;
+                } else if (state.isEraser) {
                     col = "#E2E8F0"; // Cute chalky/pastel bubbles for eraser
                 }
 
                 // Spawn 2 particles at pointer coordinates
                 for (let i = 0; i < 2; i++) {
-                    particles.push({
+                    state.particles.push({
                         x: x,
                         y: y,
                         vx: (Math.random() - 0.5) * 2.0,
@@ -160,80 +163,81 @@
             }
 
             function updateParticles() {
-                if (!particlesCanvas || !particlesCtx) {
+                if (!state.particlesCanvas || !state.particlesCtx) {
                     requestAnimationFrame(updateParticles);
                     return;
                 }
 
                 const dpr = window.devicePixelRatio || 1;
-                const layoutW = particlesCanvas.width / dpr;
-                const layoutH = particlesCanvas.height / dpr;
+                const layoutW = state.particlesCanvas.width / dpr;
+                const layoutH = state.particlesCanvas.height / dpr;
 
-                particlesCtx.clearRect(0, 0, layoutW, layoutH);
+                state.particlesCtx.clearRect(0, 0, layoutW, layoutH);
 
-                for (let i = particles.length - 1; i >= 0; i--) {
-                    const p = particles[i];
+                for (let i = state.particles.length - 1; i >= 0; i--) {
+                    const p = state.particles[i];
                     p.x += p.vx;
                     p.y += p.vy;
                     p.rotation += p.rotSpeed;
                     p.life -= p.decay;
 
                     if (p.life <= 0) {
-                        particles.splice(i, 1);
+                        state.particles.splice(i, 1);
                         continue;
                     }
 
-                    particlesCtx.save();
-                    particlesCtx.globalAlpha = p.life;
-                    particlesCtx.fillStyle = p.color;
-                    particlesCtx.strokeStyle = p.color;
-                    particlesCtx.lineWidth = 1.8;
+                    state.particlesCtx.save();
+                    state.particlesCtx.globalAlpha = p.life;
+                    state.particlesCtx.fillStyle = p.color;
+                    state.particlesCtx.strokeStyle = p.color;
+                    state.particlesCtx.lineWidth = 1.8;
 
                     if (p.type === 'star') {
-                        drawStar(particlesCtx, p.x, p.y, 5, p.size, p.size / 2.2, p.rotation);
+                        drawStar(state.particlesCtx, p.x, p.y, 5, p.size, p.size / 2.2, p.rotation);
                     } else {
                         // Draw outline bubble
-                        particlesCtx.beginPath();
-                        particlesCtx.arc(p.x, p.y, p.size / 2, 0, Math.PI * 2);
-                        particlesCtx.stroke();
+                        state.particlesCtx.beginPath();
+                        state.particlesCtx.arc(p.x, p.y, p.size / 2, 0, Math.PI * 2);
+                        state.particlesCtx.stroke();
                         // Inner reflection dot
-                        particlesCtx.fillStyle = "rgba(255, 255, 255, 0.7)";
-                        particlesCtx.beginPath();
-                        particlesCtx.arc(p.x - p.size / 5, p.y - p.size / 5, p.size / 8, 0, Math.PI * 2);
-                        particlesCtx.fill();
+                        state.particlesCtx.fillStyle = "rgba(255, 255, 255, 0.7)";
+                        state.particlesCtx.beginPath();
+                        state.particlesCtx.arc(p.x - p.size / 5, p.y - p.size / 5, p.size / 8, 0, Math.PI * 2);
+                        state.particlesCtx.fill();
                     }
 
-                    particlesCtx.restore();
+                    state.particlesCtx.restore();
                 }
 
                 requestAnimationFrame(updateParticles);
             }
 
-            function drawStar(ctx, cx, cy, spikes, outerRadius, innerRadius, rotation = 0) {
+            function drawStar(starCtx, cx, cy, spikes, outerRadius, innerRadius, rotation = 0) {
                 let rot = (Math.PI / 2) * 3;
                 let x = cx;
                 let y = cy;
                 const step = Math.PI / spikes;
 
-                ctx.save();
-                ctx.translate(cx, cy);
-                ctx.rotate(rotation);
-                ctx.beginPath();
-                ctx.moveTo(0, -outerRadius);
+                starCtx.save();
+                starCtx.translate(cx, cy);
+                starCtx.rotate(rotation);
+                starCtx.beginPath();
+                starCtx.moveTo(0, -outerRadius);
 
                 for (let i = 0; i < spikes; i++) {
                     let lx = Math.cos(rot) * outerRadius;
                     let ly = Math.sin(rot) * outerRadius;
-                    ctx.lineTo(lx, ly);
+                    starCtx.lineTo(lx, ly);
                     rot += step;
 
                     lx = Math.cos(rot) * innerRadius;
                     ly = Math.sin(rot) * innerRadius;
-                    ctx.lineTo(lx, ly);
+                    starCtx.lineTo(lx, ly);
                     rot += step;
                 }
-                ctx.closePath();
-                ctx.fill();
-                ctx.restore();
+                starCtx.closePath();
+                starCtx.fill();
+                starCtx.restore();
             }
 
+export { saveDrawing, initParticles, resizeParticlesCanvas, spawnParticles, updateParticles, drawStar };
