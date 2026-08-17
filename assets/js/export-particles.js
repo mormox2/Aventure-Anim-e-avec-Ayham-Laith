@@ -135,6 +135,8 @@ import { state } from "./state.js";
                 const dpr = window.devicePixelRatio || 1;
                 state.particlesCanvas.width = state.canvas.width;
                 state.particlesCanvas.height = state.canvas.height;
+                // Reset the transform because resize events can fire repeatedly.
+                state.particlesCtx.setTransform(1, 0, 0, 1, 0, 0);
                 state.particlesCtx.scale(dpr, dpr);
             }
 
