@@ -1,3 +1,6 @@
+import { state } from "./state.js";
+import * as services from "./services.js";
+
 /* Animation settings, help, encouragement and confetti helpers. */
             /************************************************************
              * 15. Animation Speed Control
@@ -6,7 +9,7 @@
 
             function setAnimationSpeed(speed) {
                 animationSpeed = speed;
-                synth.playPop();
+                services.synth.playPop();
 
                 const slowBtn = document.getElementById("speed-slow");
                 const normalBtn = document.getElementById("speed-normal");
@@ -65,7 +68,7 @@
 
             // Peeking Animals Fun interactions
             function animalReact(animal) {
-                synth.playBoing();
+                services.synth.playBoing();
                 triggerConfetti();
 
                 let bubble;
@@ -112,13 +115,4 @@
                 }
             }
 
-
-
-/* ESM exports */
-
-Object.defineProperty(globalThis, "animationSpeed", {
-  configurable: true,
-  get: () => animationSpeed,
-  set: (value) => { animationSpeed = value; },
-});
 export { animationSpeed, setAnimationSpeed, setTemplateOpacity, toggleHelpModal, animalReact, showEncouragement, triggerConfetti };

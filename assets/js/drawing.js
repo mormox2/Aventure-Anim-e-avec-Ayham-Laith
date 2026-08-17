@@ -1,3 +1,6 @@
+import { state } from "./state.js";
+import * as services from "./services.js";
+
 /* Canvas tools, history, flood fill, backgrounds, dialogs and mobile tools. */
             /************************************************************
              * 5. Color Palette & Brush Management
@@ -6,11 +9,11 @@
                 const palette = document.getElementById("color-palette");
                 palette.innerHTML = "";
 
-                colors.forEach((color) => {
+                services.colors.forEach((color) => {
                     const btn = document.createElement("button");
                     btn.type = "button";
                     btn.title = color.name;
-                    btn.onclick = () => selectColor(color.val, btn);
+                    btn.addEventListener("click", () => selectColor(color.val, btn));
                     btn.className = `w-9 h-9 lg:w-10 lg:h-10 rounded-full border-3 border-slate-800 shadow-cartoon-sm hover:scale-110 active:scale-95 bubble-btn flex items-center justify-center relative overflow-hidden transition-all ${color.bgClass}`;
 
                     // Active indicator dot
@@ -20,7 +23,7 @@
                     btn.appendChild(dot);
 
                     // Set default active color button
-                    if (color.val === activeColor) {
+                    if (color.val === state.activeColor) {
                         dot.classList.remove("opacity-0");
                         dot.classList.add("opacity-100");
                         btn.classList.add("scale-110");
@@ -31,15 +34,15 @@
             }
 
             function selectColor(colorValue, buttonEl) {
-                synth.playPop();
-                isEraser = false;
+                services.synth.playPop();
+                state.isEraser = false;
 
                 // Update state
                 if (colorValue === "rainbow") {
-                    isRainbowBrush = true;
+                    state.isRainbowBrush = true;
                 } else {
-                    isRainbowBrush = false;
-                    activeColor = colorValue;
+                    state.isRainbowBrush = false;
+                    state.activeColor = colorValue;
                 }
 
                 // Reset eraser style
@@ -59,19 +62,19 @@
 
                 // Update brush preview
                 const preview = document.getElementById("brush-preview");
-                if (isRainbowBrush) {
+                if (state.isRainbowBrush) {
                     preview.style.background = "linear-gradient(to right, red, orange, yellow, green, blue, violet)";
                 } else {
-                    preview.style.background = activeColor;
+                    preview.style.background = state.activeColor;
                 }
             }
 
             function selectEraser() {
-                synth.playPop();
-                isEraser = true;
-                isRainbowBrush = false;
-                isSprayMode = false;
-                isFillMode = false;
+                services.synth.playPop();
+                state.isEraser = true;
+                state.isRainbowBrush = false;
+                state.isSprayMode = false;
+                state.isFillMode = false;
 
                 // Reset spray button
                 const sprayBtn = document.getElementById("btn-spray");
@@ -100,7 +103,7 @@
              ************************************************************/
             function startDrawing(e) {
                 // Instantly stop animations to allow stable, accurate drawing coordinates
-                stopAllAnimations();
+                services.stopAllAnimations();
 
                 // Prevent scrolling or zooming on iOS touch devices while drawing
                 if (e.pointerType === "touch") {
@@ -108,43 +111,43 @@
                 }
 
                 // Get relative position
-                const rect = canvas.getBoundingClientRect();
+                const rect = state.canvas.getBoundingClientRect();
                 const clickX = e.clientX - rect.left;
                 const clickY = e.clientY - rect.top;
 
                 // NEW: If Fill mode is active, perform flood fill and return
-                if (isFillMode) {
+                if (state.isFillMode) {
                     saveState();
                     performFloodFill(clickX, clickY);
                     return;
                 }
 
                 // NEW: If a stamp is selected, place it
-                if (activeStamp) {
+                if (state.activeStamp) {
                     saveState();
                     placeStamp(e.clientX, e.clientY);
-                    activeStamp = null;
+                    state.activeStamp = null;
                     return;
                 }
 
-                isDrawing = true;
-                lastX = clickX;
-                lastY = clickY;
+                state.isDrawing = true;
+                state.lastX = clickX;
+                state.lastY = clickY;
 
                 // Spawn magic pointer particles
                 spawnParticles(clickX, clickY);
 
                 // Play soft drawing start sound
-                synth.playClick();
+                services.synth.playClick();
             }
 
             function draw(e) {
-                if (!isDrawing) return;
+                if (!state.isDrawing) return;
                 if (e.pointerType === "touch") {
                     e.preventDefault();
                 }
 
-                const rect = canvas.getBoundingClientRect();
+                const rect = state.canvas.getBoundingClientRect();
                 const currentX = e.clientX - rect.left;
                 const currentY = e.clientY - rect.top;
 
@@ -152,147 +155,147 @@
                 spawnParticles(currentX, currentY);
 
                 // #7: Spray mode — no stroke, scatter dots
-                if (isSprayMode && !isEraser) {
+                if (state.isSprayMode && !state.isEraser) {
                     drawSpray(currentX, currentY);
-                    lastX = currentX;
-                    lastY = currentY;
-                    if (Math.random() < 0.005) showEncouragement();
+                    state.lastX = currentX;
+                    state.lastY = currentY;
+                    if (Math.random() < 0.005) services.showEncouragement();
                     return;
                 }
 
-                ctx.beginPath();
-                ctx.moveTo(lastX, lastY);
-                ctx.lineTo(currentX, currentY);
+                state.ctx.beginPath();
+                state.ctx.moveTo(state.lastX, state.lastY);
+                state.ctx.lineTo(currentX, currentY);
 
                 // Line characteristics
-                ctx.lineCap = "round";
-                ctx.lineJoin = "round";
-                ctx.lineWidth = brushSize;
+                state.ctx.lineCap = "round";
+                state.ctx.lineJoin = "round";
+                state.ctx.lineWidth = state.brushSize;
 
-                if (isEraser) {
+                if (state.isEraser) {
                     // Eraser clears drawings with transparency
-                    ctx.globalCompositeOperation = "destination-out";
-                    ctx.strokeStyle = "rgba(0,0,0,1)";
-                    ctx.shadowBlur = 0; // Reset glow for eraser
+                    state.ctx.globalCompositeOperation = "destination-out";
+                    state.ctx.strokeStyle = "rgba(0,0,0,1)";
+                    state.ctx.shadowBlur = 0; // Reset glow for eraser
                 } else {
                     // Normal drawing
-                    ctx.globalCompositeOperation = "source-over";
-                    if (isRainbowBrush) {
-                        rainbowHue = (rainbowHue + 2) % 360;
-                        ctx.strokeStyle = `hsl(${rainbowHue}, 100%, 55%)`;
+                    state.ctx.globalCompositeOperation = "source-over";
+                    if (state.isRainbowBrush) {
+                        state.rainbowHue = (state.rainbowHue + 2) % 360;
+                        state.ctx.strokeStyle = `hsl(${state.rainbowHue}, 100%, 55%)`;
                     } else {
-                        ctx.strokeStyle = activeColor;
+                        state.ctx.strokeStyle = state.activeColor;
                     }
 
                     // Apply magic glow in night mode
-                    if (currentTheme === "night") {
-                        ctx.shadowBlur = 15;
-                        ctx.shadowColor = ctx.strokeStyle;
+                    if (state.currentTheme === "night") {
+                        state.ctx.shadowBlur = 15;
+                        state.ctx.shadowColor = state.ctx.strokeStyle;
                     } else {
-                        ctx.shadowBlur = 0;
+                        state.ctx.shadowBlur = 0;
                     }
                 }
 
-                ctx.stroke();
+                state.ctx.stroke();
 
                 // Mirror mode: mirror horizontally
-                if (isMirrorMode) {
-                    const layoutW = canvas.offsetWidth || 700;
-                    const mirrorLastX = layoutW - lastX;
+                if (state.isMirrorMode) {
+                    const layoutW = state.canvas.offsetWidth || 700;
+                    const mirrorLastX = layoutW - state.lastX;
                     const mirrorCurX = layoutW - currentX;
                     // Save and restore context to avoid affecting main stroke style
-                    ctx.save();
-                    ctx.lineCap = "round";
-                    ctx.lineJoin = "round";
-                    ctx.lineWidth = brushSize;
-                    if (isEraser) {
-                        ctx.globalCompositeOperation = "destination-out";
-                        ctx.strokeStyle = "rgba(0,0,0,1)";
-                        ctx.shadowBlur = 0;
+                    state.ctx.save();
+                    state.ctx.lineCap = "round";
+                    state.ctx.lineJoin = "round";
+                    state.ctx.lineWidth = state.brushSize;
+                    if (state.isEraser) {
+                        state.ctx.globalCompositeOperation = "destination-out";
+                        state.ctx.strokeStyle = "rgba(0,0,0,1)";
+                        state.ctx.shadowBlur = 0;
                     } else {
-                        ctx.globalCompositeOperation = "source-over";
-                        if (isRainbowBrush) {
+                        state.ctx.globalCompositeOperation = "source-over";
+                        if (state.isRainbowBrush) {
                             // Recreate rainbow hue for mirror
-                            ctx.strokeStyle = `hsl(${(rainbowHue + 2) % 360}, 100%, 55%)`;
+                            state.ctx.strokeStyle = `hsl(${(state.rainbowHue + 2) % 360}, 100%, 55%)`;
                         } else {
-                            ctx.strokeStyle = activeColor;
+                            state.ctx.strokeStyle = state.activeColor;
                         }
 
                         // Apply magic glow in night mode
-                        if (currentTheme === "night") {
-                            ctx.shadowBlur = 15;
-                            ctx.shadowColor = ctx.strokeStyle;
+                        if (state.currentTheme === "night") {
+                            state.ctx.shadowBlur = 15;
+                            state.ctx.shadowColor = state.ctx.strokeStyle;
                         } else {
-                            ctx.shadowBlur = 0;
+                            state.ctx.shadowBlur = 0;
                         }
                     }
-                    ctx.beginPath();
-                    ctx.moveTo(mirrorLastX, lastY);
-                    ctx.lineTo(mirrorCurX, currentY);
-                    ctx.stroke();
-                    ctx.restore();
+                    state.ctx.beginPath();
+                    state.ctx.moveTo(mirrorLastX, state.lastY);
+                    state.ctx.lineTo(mirrorCurX, currentY);
+                    state.ctx.stroke();
+                    state.ctx.restore();
                 }
 
-                lastX = currentX;
-                lastY = currentY;
+                state.lastX = currentX;
+                state.lastY = currentY;
 
                 // Periodic check to trigger motivational speech bubble while drawing
                 if (Math.random() < 0.005) {
-                    showEncouragement();
+                    services.showEncouragement();
                 }
             }
 
             // #7: Spray paint draw (called inside draw() for spray mode)
             function drawSpray(x, y) {
                 const density = 35;
-                const radius = brushSize * 2;
-                ctx.globalCompositeOperation = "source-over";
-                ctx.fillStyle = isRainbowBrush ? `hsl(${rainbowHue}, 100%, 55%)` : activeColor;
+                const radius = state.brushSize * 2;
+                state.ctx.globalCompositeOperation = "source-over";
+                state.ctx.fillStyle = state.isRainbowBrush ? `hsl(${state.rainbowHue}, 100%, 55%)` : state.activeColor;
                 
                 // Add phosphorescent glow in night mode for spray
-                if (currentTheme === "night") {
-                    ctx.shadowBlur = 10;
-                    ctx.shadowColor = ctx.fillStyle;
+                if (state.currentTheme === "night") {
+                    state.ctx.shadowBlur = 10;
+                    state.ctx.shadowColor = state.ctx.fillStyle;
                 } else {
-                    ctx.shadowBlur = 0;
+                    state.ctx.shadowBlur = 0;
                 }
 
                 for (let i = 0; i < density; i++) {
                     const angle = Math.random() * Math.PI * 2;
                     const r = Math.random() * radius;
-                    ctx.beginPath();
-                    ctx.arc(x + r * Math.cos(angle), y + r * Math.sin(angle), 1, 0, Math.PI * 2);
-                    ctx.fill();
+                    state.ctx.beginPath();
+                    state.ctx.arc(x + r * Math.cos(angle), y + r * Math.sin(angle), 1, 0, Math.PI * 2);
+                    state.ctx.fill();
                 }
-                if (isMirrorMode) {
-                    const layoutW = canvas.offsetWidth || 700;
-                    ctx.fillStyle = isRainbowBrush ? `hsl(${(rainbowHue+1)%360}, 100%, 55%)` : activeColor;
+                if (state.isMirrorMode) {
+                    const layoutW = state.canvas.offsetWidth || 700;
+                    state.ctx.fillStyle = state.isRainbowBrush ? `hsl(${(state.rainbowHue+1)%360}, 100%, 55%)` : state.activeColor;
                     
                     // Add glow for mirror spray
-                    if (currentTheme === "night") {
-                        ctx.shadowBlur = 10;
-                        ctx.shadowColor = ctx.fillStyle;
+                    if (state.currentTheme === "night") {
+                        state.ctx.shadowBlur = 10;
+                        state.ctx.shadowColor = state.ctx.fillStyle;
                     } else {
-                        ctx.shadowBlur = 0;
+                        state.ctx.shadowBlur = 0;
                     }
 
                     for (let i = 0; i < density; i++) {
                         const angle = Math.random() * Math.PI * 2;
                         const r = Math.random() * radius;
-                        ctx.beginPath();
-                        ctx.arc((layoutW - x) + r * Math.cos(angle), y + r * Math.sin(angle), 1, 0, Math.PI * 2);
-                        ctx.fill();
+                        state.ctx.beginPath();
+                        state.ctx.arc((layoutW - x) + r * Math.cos(angle), y + r * Math.sin(angle), 1, 0, Math.PI * 2);
+                        state.ctx.fill();
                     }
                 }
-                if (isRainbowBrush) rainbowHue = (rainbowHue + 1) % 360;
-                ctx.shadowBlur = 0; // Always reset after spray block
+                if (state.isRainbowBrush) state.rainbowHue = (state.rainbowHue + 1) % 360;
+                state.ctx.shadowBlur = 0; // Always reset after spray block
             }
 
             function stopDrawing() {
-                if (isDrawing) {
-                    isDrawing = false;
-                    ctx.globalCompositeOperation = "source-over"; // Reset to default
-                    ctx.shadowBlur = 0; // Reset glow
+                if (state.isDrawing) {
+                    state.isDrawing = false;
+                    state.ctx.globalCompositeOperation = "source-over"; // Reset to default
+                    state.ctx.shadowBlur = 0; // Reset glow
                 }
             }
 
@@ -300,22 +303,22 @@
              * Fill Bucket (Flood Fill) - 🪣
              ************************************************************/
             function selectFillTool() {
-                synth.playPop();
-                isFillMode = !isFillMode;
-                isEraser = false;
-                isSprayMode = false;
+                services.synth.playPop();
+                state.isFillMode = !state.isFillMode;
+                state.isEraser = false;
+                state.isSprayMode = false;
 
                 // Reset spray button
                 const sprayBtn = document.getElementById("btn-spray");
                 if (sprayBtn) { sprayBtn.classList.remove("bg-yellow-400","scale-105"); sprayBtn.classList.add("bg-emerald-300"); }
                 const btn = document.getElementById("btn-fill");
-                if (isFillMode) {
+                if (state.isFillMode) {
                     btn.classList.remove("bg-purple-300");
                     btn.classList.add("bg-yellow-400", "scale-105");
                     // Deactivate eraser
                     document.getElementById("btn-eraser").classList.remove("bg-yellow-400", "scale-105");
                     document.getElementById("btn-eraser").classList.add("bg-pink-300");
-                    showEncouragement("🪣 اضغط على أي منطقة في الرسم لملئها بلونك السحري!");
+                    services.showEncouragement("🪣 اضغط على أي منطقة في الرسم لملئها بلونك السحري!");
                 } else {
                     btn.classList.remove("bg-yellow-400", "scale-105");
                     btn.classList.add("bg-purple-300");
@@ -323,17 +326,17 @@
             }
 
             function performFloodFill(startX, startY) {
-                const rect = canvas.getBoundingClientRect();
+                const rect = state.canvas.getBoundingClientRect();
                 // Convert coordinates taking DPR into account
                 const dpr = window.devicePixelRatio || 1;
                 const pixelX = Math.floor(startX * dpr);
                 const pixelY = Math.floor(startY * dpr);
 
                 // Get the image data
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const imageData = state.ctx.getImageData(0, 0, state.canvas.width, state.canvas.height);
                 const data = imageData.data;
-                const w = canvas.width;
-                const h = canvas.height;
+                const w = state.canvas.width;
+                const h = state.canvas.height;
 
                 // Source color (what we clicked on)
                 const srcIdx = (pixelY * w + pixelX) * 4;
@@ -344,15 +347,15 @@
 
                 // Prevent filling active outline/black/very dark lines
                 if (srcR < 45 && srcG < 45 && srcB < 45 && srcA > 200) {
-                    showEncouragement("🪣 خطوط الرسم السوداء تحميك! لوّن داخل الفراغات! 🛡️🖤");
-                    speakArabic("خطوط الرسم السوداء تحميك، لوّن داخل الفراغات يا بطل!");
-                    synth.playBoing();
+                    services.showEncouragement("🪣 خطوط الرسم السوداء تحميك! لوّن داخل الفراغات! 🛡️🖤");
+                    services.speakArabic("خطوط الرسم السوداء تحميك، لوّن داخل الفراغات يا بطل!");
+                    services.synth.playBoing();
                     return;
                 }
 
                 // Fill color (current brush color)
                 const tempDiv = document.createElement("div");
-                tempDiv.style.color = activeColor;
+                tempDiv.style.color = state.activeColor;
                 document.body.appendChild(tempDiv);
                 const computedColor = getComputedStyle(tempDiv).color;
                 document.body.removeChild(tempDiv);
@@ -409,23 +412,23 @@
                     queue.push([cx, cy - 1]);
                 }
 
-                ctx.putImageData(imageData, 0, 0);
-                synth.playPop();
-                showEncouragement("🪣 تم ملء المنطقة بنجاح! رائع!");
+                state.ctx.putImageData(imageData, 0, 0);
+                services.synth.playPop();
+                services.showEncouragement("🪣 تم ملء المنطقة بنجاح! رائع!");
             }
 
             /************************************************************
              * Mirror Mode - 🪞
              ************************************************************/
             function toggleMirror() {
-                synth.playPop();
-                isMirrorMode = !isMirrorMode;
+                services.synth.playPop();
+                state.isMirrorMode = !state.isMirrorMode;
 
                 const btn = document.getElementById("btn-mirror");
-                if (isMirrorMode) {
+                if (state.isMirrorMode) {
                     btn.classList.remove("bg-teal-300");
                     btn.classList.add("bg-yellow-400", "scale-105");
-                    showEncouragement("🪞 وضع المرآة السحرية نشط! ارسم على اليسار يظهر على اليمين!");
+                    services.showEncouragement("🪞 وضع المرآة السحرية نشط! ارسم على اليسار يظهر على اليمين!");
                 } else {
                     btn.classList.remove("bg-yellow-400", "scale-105");
                     btn.classList.add("bg-teal-300");
@@ -439,7 +442,7 @@
 
             // #13: Generic modal toggle helper — eliminates repeated show/hide boilerplate
             function toggleModal(modalId, contentId, show) {
-                synth.playClick();
+                services.synth.playClick();
                 const modal = document.getElementById(modalId);
                 const content = document.getElementById(contentId);
                 if (!modal || !content) return;
@@ -473,45 +476,45 @@
                 const container = document.getElementById("stamps-gallery");
                 container.innerHTML = "";
 
-                stampTemplates.forEach((stamp) => {
+                services.stampTemplates.forEach((stamp) => {
                     const btn = document.createElement("button");
                     btn.type = "button";
                     btn.className =
                         "bg-white border-3 border-slate-800 rounded-2xl p-1.5 hover:border-pink-500 cursor-pointer transition-all hover:scale-105 active:scale-95 shadow-cartoon-sm";
                     btn.innerHTML = stamp.svg;
-                    btn.onclick = () => selectStamp(stamp.id);
+                    btn.addEventListener("click", () => selectStamp(stamp.id));
                     container.appendChild(btn);
                 });
             }
 
             function selectStamp(stampId) {
-                const stamp = stampTemplates.find((s) => s.id === stampId);
+                const stamp = services.stampTemplates.find((s) => s.id === stampId);
                 if (!stamp) return;
 
-                activeStamp = stamp;
-                synth.playPop();
+                state.activeStamp = stamp;
+                services.synth.playPop();
                 toggleStampsModal(false);
-                showEncouragement(`⭐ اضغط على اللوحة لوضع ${stamp.name}! يمكنك تغيير حجمها بالفرشاة!`);
+                services.showEncouragement(`⭐ اضغط على اللوحة لوضع ${stamp.name}! يمكنك تغيير حجمها بالفرشاة!`);
             }
 
             function placeStamp(clientX, clientY) {
-                if (!activeStamp) return;
+                if (!state.activeStamp) return;
 
-                const rect = canvas.getBoundingClientRect();
+                const rect = state.canvas.getBoundingClientRect();
                 const x = clientX - rect.left;
                 const y = clientY - rect.top;
-                const size = brushSize * 3; // Stamp size is proportional to brush
+                const size = state.brushSize * 3; // Stamp size is proportional to brush
 
-                const svgString = activeStamp.svg;
+                const svgString = state.activeStamp.svg;
                 const svgBlob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
                 const url = URL.createObjectURL(svgBlob);
 
                 const img = new Image();
                 img.onload = () => {
-                    ctx.drawImage(img, x - size / 2, y - size / 2, size, size);
+                    state.ctx.drawImage(img, x - size / 2, y - size / 2, size, size);
                     URL.revokeObjectURL(url);
                     saveState();
-                    synth.playPop();
+                    services.synth.playPop();
                 };
                 img.src = url;
             }
@@ -520,13 +523,13 @@
              * Canvas Background Selector - 🎨
              ************************************************************/
             function selectCanvasBg(bgId) {
-                if (bgId === currentBg) return;
+                if (bgId === state.currentBg) return;
 
                 // Save state before changing background
                 saveState();
 
-                currentBg = bgId;
-                synth.playPop();
+                state.currentBg = bgId;
+                services.synth.playPop();
 
                 // Update button highlights
                 document.querySelectorAll(".bg-selector-btn").forEach((btn) => {
@@ -540,122 +543,122 @@
                 // Redraw background
                 drawCanvasBackground();
 
-                showEncouragement(`🎨 تم تغيير خلفية اللوحة!`);
+                services.showEncouragement(`🎨 تم تغيير خلفية اللوحة!`);
             }
 
             function drawCanvasBackground() {
-                const rect = canvas.getBoundingClientRect();
-                const layoutW = canvas.offsetWidth || rect.width || 700;
-                const layoutH = canvas.offsetHeight || rect.height || 480;
+                const rect = state.canvas.getBoundingClientRect();
+                const layoutW = state.canvas.offsetWidth || rect.width || 700;
+                const layoutH = state.canvas.offsetHeight || rect.height || 480;
 
                 // Save current drawing content
-                const tempDataUrl = canvas.toDataURL();
+                const tempDataUrl = state.canvas.toDataURL();
 
                 // Draw background first, then restore drawing on top
                 const dpr = window.devicePixelRatio || 1;
-                ctx.save();
-                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                state.ctx.save();
+                state.ctx.setTransform(1, 0, 0, 1, 0, 0);
 
                 // Clear with the selected background
-                switch (currentBg) {
+                switch (state.currentBg) {
                     case "white":
-                        ctx.fillStyle = "#FFFFFF";
+                        state.ctx.fillStyle = "#FFFFFF";
                         break;
                     case "sky":
-                        ctx.fillStyle = "#BAE6FD";
+                        state.ctx.fillStyle = "#BAE6FD";
                         break;
                     case "grass":
-                        ctx.fillStyle = "#A7F3D0";
+                        state.ctx.fillStyle = "#A7F3D0";
                         break;
                     case "sunset":
-                        const grad = ctx.createLinearGradient(0, 0, 0, layoutH * dpr);
+                        const grad = state.ctx.createLinearGradient(0, 0, 0, layoutH * dpr);
                         grad.addColorStop(0, "#FED7AA");
                         grad.addColorStop(0.5, "#FDA4AF");
                         grad.addColorStop(1, "#C4B5FD");
-                        ctx.fillStyle = grad;
+                        state.ctx.fillStyle = grad;
                         break;
                     case "dark":
-                        ctx.fillStyle = "#334155";
+                        state.ctx.fillStyle = "#334155";
                         break;
                     default:
-                        ctx.fillStyle = "#FFFFFF";
+                        state.ctx.fillStyle = "#FFFFFF";
                 }
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.restore();
+                state.ctx.fillRect(0, 0, state.canvas.width, state.canvas.height);
+                state.ctx.restore();
 
                 // Redraw the saved image onto the new background
                 const savedImg = new Image();
                 savedImg.onload = () => {
-                    ctx.drawImage(savedImg, 0, 0, layoutW, layoutH);
+                    state.ctx.drawImage(savedImg, 0, 0, layoutW, layoutH);
                 };
                 savedImg.src = tempDataUrl;
             }
 
             function clearCanvas() {
-                synth.playBoing();
+                services.synth.playBoing();
                 if (confirm("هل أنت متأكد أنك تريد مسح اللوحة بالكامل والبدء من جديد؟ 🧹")) {
                     // Save state before clearing
                     saveState();
                     // Use save/restore to clear the entire canvas regardless of transformation
-                    ctx.save();
-                    ctx.setTransform(1, 0, 0, 1, 0, 0);
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.restore();
+                    state.ctx.save();
+                    state.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                    state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+                    state.ctx.restore();
 
                     // Remove all stickers
                     const stickersContainer = document.getElementById("stickers-layer");
                     stickersContainer.innerHTML = "";
-                    activeSticker = null;
+                    state.activeSticker = null;
 
                     // Turn off Alive mode if active
-                    if (isAlive) {
+                    if (state.isAlive) {
                         toggleGiveLife();
                     }
 
-                    triggerConfetti();
-                    showEncouragement("بداية جديدة مرحة! 🌟🎨");
+                    services.triggerConfetti();
+                    services.showEncouragement("بداية جديدة مرحة! 🌟🎨");
                 }
             }
 
             // #11: saveState uses toBlob (async, non-blocking) — stores DataURL as fallback on error
             function saveState() {
                 // Revoke oldest URL if stack is full to avoid memory leak
-                if (undoStack.length >= 25) {
-                    const old = undoStack.shift();
+                if (state.undoStack.length >= 25) {
+                    const old = state.undoStack.shift();
                     if (old && old.startsWith("blob:")) URL.revokeObjectURL(old);
                 }
-                canvas.toBlob((blob) => {
+                state.canvas.toBlob((blob) => {
                     if (!blob) return;
-                    undoStack.push(URL.createObjectURL(blob));
-                    redoStack.forEach(u => { if (u && u.startsWith("blob:")) URL.revokeObjectURL(u); });
-                    redoStack = [];
+                    state.undoStack.push(URL.createObjectURL(blob));
+                    state.redoStack.forEach(u => { if (u && u.startsWith("blob:")) URL.revokeObjectURL(u); });
+                    state.redoStack = [];
                     updateUndoRedoButtons();
                 }, "image/webp", 0.85);
             }
 
             function undo() {
-                if (undoStack.length > 0) {
-                    const prevState = undoStack.pop();
+                if (state.undoStack.length > 0) {
+                    const prevState = state.undoStack.pop();
                     // push current state to redo (as blob)
-                    canvas.toBlob((blob) => {
-                        if (blob) redoStack.push(URL.createObjectURL(blob));
+                    state.canvas.toBlob((blob) => {
+                        if (blob) state.redoStack.push(URL.createObjectURL(blob));
                         updateUndoRedoButtons();
                     }, "image/webp", 0.85);
                     restoreCanvas(prevState);
-                    synth.playPop();
+                    services.synth.playPop();
                 }
                 updateUndoRedoButtons();
             }
 
             function redo() {
-                if (redoStack.length > 0) {
-                    const nextState = redoStack.pop();
-                    canvas.toBlob((blob) => {
-                        if (blob) undoStack.push(URL.createObjectURL(blob));
+                if (state.redoStack.length > 0) {
+                    const nextState = state.redoStack.pop();
+                    state.canvas.toBlob((blob) => {
+                        if (blob) state.undoStack.push(URL.createObjectURL(blob));
                         updateUndoRedoButtons();
                     }, "image/webp", 0.85);
                     restoreCanvas(nextState);
-                    synth.playPop();
+                    services.synth.playPop();
                 }
                 updateUndoRedoButtons();
             }
@@ -665,14 +668,14 @@
                 const undoBtn = document.getElementById("btn-undo");
                 const redoBtn = document.getElementById("btn-redo");
                 if (undoBtn) {
-                    if (undoStack.length === 0) {
+                    if (state.undoStack.length === 0) {
                         undoBtn.classList.add("opacity-40", "pointer-events-none");
                     } else {
                         undoBtn.classList.remove("opacity-40", "pointer-events-none");
                     }
                 }
                 if (redoBtn) {
-                    if (redoStack.length === 0) {
+                    if (state.redoStack.length === 0) {
                         redoBtn.classList.add("opacity-40", "pointer-events-none");
                     } else {
                         redoBtn.classList.remove("opacity-40", "pointer-events-none");
@@ -684,14 +687,14 @@
                 const img = new Image();
                 img.onload = () => {
                     // Clear regardless of current transform
-                    ctx.save();
-                    ctx.setTransform(1, 0, 0, 1, 0, 0);
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.restore();
+                    state.ctx.save();
+                    state.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                    state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+                    state.ctx.restore();
                     // Draw in logical coordinates (DPR scale is applied via ctx)
-                    const layoutW = canvas.offsetWidth || 700;
-                    const layoutH = canvas.offsetHeight || 480;
-                    ctx.drawImage(img, 0, 0, layoutW, layoutH);
+                    const layoutW = state.canvas.offsetWidth || 700;
+                    const layoutH = state.canvas.offsetHeight || 480;
+                    state.ctx.drawImage(img, 0, 0, layoutW, layoutH);
                     // Blob URLs can be revoked after draw (no longer needed)
                     if (url && url.startsWith("blob:")) URL.revokeObjectURL(url);
                 };
@@ -700,13 +703,13 @@
 
             // #7: Spray tool selector
             function selectSpray() {
-                synth.playPop();
-                isSprayMode = !isSprayMode;
-                isEraser = false;
-                isFillMode = false;
+                services.synth.playPop();
+                state.isSprayMode = !state.isSprayMode;
+                state.isEraser = false;
+                state.isFillMode = false;
 
                 const btn = document.getElementById("btn-spray");
-                if (isSprayMode) {
+                if (state.isSprayMode) {
                     btn.classList.remove("bg-emerald-300");
                     btn.classList.add("bg-yellow-400", "scale-105");
                     // reset fill and eraser UI
@@ -714,7 +717,7 @@
                     document.getElementById("btn-eraser").classList.add("bg-pink-300");
                     const fillBtn = document.getElementById("btn-fill");
                     if (fillBtn) { fillBtn.classList.remove("bg-yellow-400","scale-105"); fillBtn.classList.add("bg-purple-300"); }
-                    showEncouragement("🫧 وضع البخاخ! ارسم وستجد تأثيراً رائعاً!");
+                    services.showEncouragement("🫧 وضع البخاخ! ارسم وستجد تأثيراً رائعاً!");
                 } else {
                     btn.classList.remove("bg-yellow-400", "scale-105");
                     btn.classList.add("bg-emerald-300");
@@ -723,11 +726,11 @@
 
             // #8: Custom color picker handler
             function selectCustomColor(hexColor) {
-                synth.playPop();
-                isEraser = false;
-                isSprayMode = false;
-                isRainbowBrush = false;
-                activeColor = hexColor;
+                services.synth.playPop();
+                state.isEraser = false;
+                state.isSprayMode = false;
+                state.isRainbowBrush = false;
+                state.activeColor = hexColor;
 
                 // reset spray and fill button visuals
                 const sprayBtn = document.getElementById("btn-spray");
@@ -750,7 +753,7 @@
                 const picker = document.getElementById("custom-color-picker");
                 if (picker) picker.value = hexColor;
 
-                showEncouragement("🎨 تم اختيار لون خاص بك!");
+                services.showEncouragement("🎨 تم اختيار لون خاص بك!");
             }
 
             // #16: Populate mobile color palette (mirrors the desktop palette)
@@ -758,15 +761,15 @@
                 const container = document.getElementById("mobile-color-palette");
                 if (!container) return;
                 container.innerHTML = "";
-                colors.forEach((color) => {
+                services.colors.forEach((color) => {
                     const btn = document.createElement("button");
                     btn.type = "button";
                     btn.title = color.name;
                     btn.className = `w-9 h-9 rounded-full border-3 border-slate-800 shadow-sm bubble-btn ${color.bgClass}`;
-                    btn.onclick = () => {
-                        selectColor(color.val, document.querySelectorAll("#color-palette button")[colors.indexOf(color)]);
+                    btn.addEventListener("click", () => {
+                        selectColor(color.val, document.querySelectorAll("#color-palette button")[services.colors.indexOf(color)]);
                         toggleMobileDrawer();
-                    };
+                    });
                     container.appendChild(btn);
                 });
             }
@@ -798,12 +801,12 @@
             // #6: Quick PNG download (canvas + stickers, no gallery save)
             function downloadDrawingPNG() {
                 deselectAllStickers();
-                synth.playTada();
+                services.synth.playTada();
 
                 const exportCanvas = document.createElement("canvas");
                 const exportCtx = exportCanvas.getContext("2d");
-                const layoutW = canvas.offsetWidth || 700;
-                const layoutH = canvas.offsetHeight || 480;
+                const layoutW = state.canvas.offsetWidth || 700;
+                const layoutH = state.canvas.offsetHeight || 480;
                 const dpr = window.devicePixelRatio || 1;
                 exportCanvas.width = layoutW * dpr;
                 exportCanvas.height = layoutH * dpr;
@@ -813,7 +816,7 @@
                 exportCtx.fillStyle = "#FFFFFF";
                 exportCtx.fillRect(0, 0, layoutW, layoutH);
                 // Draw canvas content
-                exportCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, layoutW, layoutH);
+                exportCtx.drawImage(state.canvas, 0, 0, state.canvas.width, state.canvas.height, 0, 0, layoutW, layoutH);
 
                 // Draw stickers
                 const stickers = Array.from(document.querySelectorAll(".sticker-element"));
@@ -855,13 +858,10 @@
                         link.href = URL.createObjectURL(blob);
                         link.click();
                         setTimeout(() => URL.revokeObjectURL(link.href), 5000);
-                        triggerConfetti();
-                        showEncouragement("📥 تم تحميل الرسمة بنجاح! 🎉");
+                        services.triggerConfetti();
+                        services.showEncouragement("📥 تم تحميل الرسمة بنجاح! 🎉");
                     }, "image/png");
                 });
             }
 
-
-
-/* ESM exports */
-export { renderColors, selectColor, selectEraser, startDrawing, draw, drawSpray, stopDrawing, selectFillTool, performFloodFill, toggleMirror, toggleStampsModal, renderStampsGallery, selectStamp, placeStamp, selectCanvasBg, drawCanvasBackground, clearCanvas, saveState, undo, redo, updateUndoRedoButtons, restoreCanvas, selectSpray, selectCustomColor, renderMobileColors, toggleMobileDrawer, handleBackdropClick, downloadDrawingPNG };
+export { renderColors, selectColor, selectEraser, startDrawing, draw, drawSpray, stopDrawing, selectFillTool, performFloodFill, toggleMirror, toggleStampsModal, renderStampsGallery, selectStamp, placeStamp, selectCanvasBg, drawCanvasBackground, clearCanvas, saveState, undo, redo, updateUndoRedoButtons, restoreCanvas, selectSpray, selectCustomColor, renderMobileColors, toggleMobileDrawer, handleBackdropClick, downloadDrawingPNG, toggleModal };

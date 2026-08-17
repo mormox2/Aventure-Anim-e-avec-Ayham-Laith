@@ -119,7 +119,7 @@
                         class="flex items-center gap-1.5 md:gap-2.5 flex-wrap self-start text-[11px] md:text-sm lg:text-base"
                     >
                         <span
-                            onclick="celebrateName('أيهم')"
+                            data-ui-click="celebrate-name" data-ui-name="أيهم"
                             class="inline-flex items-center gap-1 md:gap-2 font-black bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-300 text-slate-900 px-3 md:px-5 py-1 md:py-2 rounded-full border-3 border-slate-800 shadow-cartoon hover:scale-110 active:scale-95 hover:rotate-3 transition-all duration-200 text-xs md:text-lg lg:text-xl cursor-pointer select-none"
                         >
                             <span class="animate-bounce">👑</span>
@@ -127,14 +127,14 @@
                         </span>
                         <span data-role="separator" class="text-slate-500 font-black text-xs md:text-xl mx-1">&amp;</span>
                         <span
-                            onclick="celebrateName('ليث')"
+                            data-ui-click="celebrate-name" data-ui-name="ليث"
                             class="inline-flex items-center gap-1 md:gap-2 font-black bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-300 text-slate-900 px-3 md:px-5 py-1 md:py-2 rounded-full border-3 border-slate-800 shadow-cartoon hover:scale-110 active:scale-95 hover:-rotate-3 transition-all duration-200 text-xs md:text-lg lg:text-xl cursor-pointer select-none"
                         >
                             <span class="animate-pulse">⚡</span>
                             <span>ليث</span>
                         </span>
                         <span
-                            onclick="celebrateName('رسم')"
+                            data-ui-click="celebrate-name" data-ui-name="رسم"
                             data-role="adventure"
                             class="inline-flex items-center gap-1 font-black bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500 text-white px-3 py-1 rounded-full border-3 border-slate-800 shadow-cartoon-sm hover:scale-110 active:scale-95 hover:rotate-2 transition-all duration-200 text-xs md:text-sm cursor-pointer select-none"
                         >
@@ -150,7 +150,7 @@
             <div class="flex items-center gap-1 md:gap-2 overflow-x-auto shrink-0">
                 <button
                     id="btn-music"
-                    onclick="toggleMusic()"
+                    data-ui-click="toggle-music"
                     class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-purple-400 hover:bg-purple-300 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
                 >
                     <span id="music-icon" class="text-sm md:text-xl">🔇</span>
@@ -158,28 +158,28 @@
                 </button>
                 <button
                     id="btn-theme"
-                    onclick="toggleTheme()"
+                    data-ui-click="toggle-theme"
                     class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-yellow-300 hover:bg-yellow-200 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
                 >
                     <span id="theme-icon" class="text-sm md:text-xl">☀️</span>
                     <span id="theme-text" class="hidden md:inline">النهار</span>
                 </button>
                 <button
-                    onclick="toggleHeroModal(true)"
+                    data-ui-click="toggle-hero-modal" data-ui-value="true"
                     class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-gradient-to-r from-red-400 via-green-400 to-blue-400 hover:from-red-300 hover:via-green-300 hover:to-blue-300 text-white font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
                 >
                     <span class="text-sm md:text-xl">🦸🦕</span>
                     <span class="hidden md:inline">رسومات</span>
                 </button>
                 <button
-                    onclick="toggleFriendsModal(true)"
+                    data-ui-click="toggle-friends-modal" data-ui-value="true"
                     class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-gradient-to-r from-pink-400 to-purple-400 text-white font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
                 >
                     <span class="text-sm md:text-xl">👥</span>
                     <span class="hidden md:inline">أصدقاء</span>
                 </button>
                 <button
-                    onclick="toggleGalleryModal(true)"
+                    data-ui-click="toggle-gallery-modal" data-ui-value="true"
                     class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-amber-400 hover:bg-amber-300 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
                 >
                     <span class="text-sm md:text-xl">🖼️</span>
@@ -187,14 +187,14 @@
                 </button>
                 <button
                     id="btn-split-mode"
-                    onclick="toggleSplitMode()"
+                    data-ui-click="toggle-split-mode"
                     class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-gradient-to-r from-amber-400 to-cyan-400 hover:from-amber-300 hover:to-cyan-300 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
                 >
                     <span class="text-sm md:text-xl">🤝</span>
                     <span class="hidden md:inline">ثنائي</span>
                 </button>
                 <button
-                    onclick="toggleHelpModal(true)"
+                    data-ui-click="toggle-help-modal" data-ui-value="true"
                     class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-cyan-400 hover:bg-cyan-300 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
                 >
                     <span class="text-sm md:text-xl">❓</span>
@@ -261,7 +261,7 @@
                 <div class="grid grid-cols-2 gap-1.5 mt-1">
                     <button
                         id="btn-eraser"
-                        onclick="selectEraser()"
+                        data-ui-click="select-eraser"
                         class="bubble-btn py-1.5 lg:py-2 px-1 bg-pink-300 hover:bg-pink-200 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
                     >
                         <span class="text-base lg:text-lg">🧽</span>
@@ -269,7 +269,7 @@
                     </button>
 
                     <button
-                        onclick="clearCanvas()"
+                        data-ui-click="clear-canvas"
                         class="bubble-btn py-1.5 lg:py-2 px-1 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
                     >
                         <span class="text-base lg:text-lg">💣</span>
@@ -279,7 +279,7 @@
                     <!-- Spray paint brush -->
                     <button
                         id="btn-spray"
-                        onclick="selectSpray()"
+                        data-ui-click="select-spray"
                         class="bubble-btn py-1.5 lg:py-2 px-1 bg-emerald-300 hover:bg-emerald-200 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
                     >
                         <span class="text-base lg:text-lg">🫧</span>
@@ -289,7 +289,7 @@
                     <!-- Fill Bucket (Flood Fill) -->
                     <button
                         id="btn-fill"
-                        onclick="selectFillTool()"
+                        data-ui-click="select-fill-tool"
                         class="bubble-btn py-1.5 lg:py-2 px-1 bg-purple-300 hover:bg-purple-200 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
                     >
                         <span class="text-base lg:text-lg">🪣</span>
@@ -301,7 +301,7 @@
                 <div class="grid grid-cols-2 gap-1.5">
                     <button
                         id="btn-mirror"
-                        onclick="toggleMirror()"
+                        data-ui-click="toggle-mirror"
                         class="bubble-btn py-1.5 lg:py-2 px-1 bg-teal-300 hover:bg-teal-200 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
                     >
                         <span class="text-base lg:text-lg">🪞</span>
@@ -309,7 +309,7 @@
                     </button>
 
                     <button
-                        onclick="toggleStampsModal(true)"
+                        data-ui-click="toggle-stamps-modal" data-ui-value="true"
                         class="bubble-btn py-1.5 lg:py-2 px-1 bg-cyan-300 hover:bg-cyan-200 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
                     >
                         <span class="text-base lg:text-lg">⭐</span>
@@ -326,7 +326,7 @@
                             id="custom-color-picker"
                             value="#FF4D6D"
                             class="w-12 h-12 rounded-full border-4 border-slate-800 cursor-pointer shadow-cartoon-sm flex-shrink-0"
-                            oninput="selectCustomColor(this.value)"
+                            data-ui-input="custom-color"
                             title="اختر لوناً مخصصاً"
                         />
                         <span class="text-xs font-bold text-slate-600">اضغط لاختيار أي لون تريده!</span>
@@ -337,7 +337,7 @@
                 <div class="grid grid-cols-2 gap-1.5">
                     <button
                         id="btn-undo"
-                        onclick="undo()"
+                        data-ui-click="undo"
                         class="bubble-btn py-1.5 lg:py-2 px-1 bg-blue-300 hover:bg-blue-200 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
                     >
                         <span class="text-base lg:text-lg">↩️</span>
@@ -346,7 +346,7 @@
 
                     <button
                         id="btn-redo"
-                        onclick="redo()"
+                        data-ui-click="redo"
                         class="bubble-btn py-1.5 lg:py-2 px-1 bg-blue-300 hover:bg-blue-200 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
                     >
                         <span class="text-base lg:text-lg">↪️</span>
@@ -359,7 +359,7 @@
                     <label class="block text-right font-bold text-slate-700 mb-1.5 text-sm">🎨 خلفية اللوحة:</label>
                     <div class="grid grid-cols-5 gap-1" id="bg-selector">
                         <button
-                            onclick="selectCanvasBg('white')"
+                            data-ui-click="select-canvas-bg" data-ui-bg="white"
                             class="bg-selector-btn w-full aspect-square rounded-full border-3 border-slate-800 shadow-cartoon-sm bubble-btn bg-white"
                             data-bg="white"
                             title="أبيض"
@@ -367,25 +367,25 @@
                             ⬜
                         </button>
                         <button
-                            onclick="selectCanvasBg('sky')"
+                            data-ui-click="select-canvas-bg" data-ui-bg="sky"
                             class="bg-selector-btn w-full aspect-square rounded-full border-3 border-slate-800 shadow-cartoon-sm bubble-btn bg-sky-200"
                             data-bg="sky"
                             title="سماء زرقاء"
                         ></button>
                         <button
-                            onclick="selectCanvasBg('grass')"
+                            data-ui-click="select-canvas-bg" data-ui-bg="grass"
                             class="bg-selector-btn w-full aspect-square rounded-full border-3 border-slate-800 shadow-cartoon-sm bubble-btn bg-emerald-200"
                             data-bg="grass"
                             title="عشب أخضر"
                         ></button>
                         <button
-                            onclick="selectCanvasBg('sunset')"
+                            data-ui-click="select-canvas-bg" data-ui-bg="sunset"
                             class="bg-selector-btn w-full aspect-square rounded-full border-3 border-slate-800 shadow-cartoon-sm bubble-btn bg-gradient-to-br from-orange-200 to-pink-200"
                             data-bg="sunset"
                             title="غروب شمس"
                         ></button>
                         <button
-                            onclick="selectCanvasBg('dark')"
+                            data-ui-click="select-canvas-bg" data-ui-bg="dark"
                             class="bg-selector-btn w-full aspect-square rounded-full border-3 border-slate-800 shadow-cartoon-sm bubble-btn bg-slate-700"
                             data-bg="dark"
                             title="ليلي"
@@ -487,49 +487,49 @@
                     id="anim-buttons-grid"
                 >
                     <button
-                        onclick="triggerAnimation('dance', this)"
+                        data-ui-click="trigger-animation" data-ui-animation="dance" data-ui-self="true"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-rose-400 hover:bg-rose-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">💃</span>
                         <span class="hidden md:inline">ارقص</span>
                     </button>
                     <button
-                        onclick="triggerAnimation('jump', this)"
+                        data-ui-click="trigger-animation" data-ui-animation="jump" data-ui-self="true"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-amber-400 hover:bg-amber-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">🦘</span>
                         <span class="hidden md:inline">اقفز</span>
                     </button>
                     <button
-                        onclick="triggerAnimation('spin', this)"
+                        data-ui-click="trigger-animation" data-ui-animation="spin" data-ui-self="true"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-indigo-400 hover:bg-indigo-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">🔄</span>
                         <span class="hidden md:inline">دُر</span>
                     </button>
                     <button
-                        onclick="triggerAnimation('shake', this)"
+                        data-ui-click="trigger-animation" data-ui-animation="shake" data-ui-self="true"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-teal-400 hover:bg-teal-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">🫨</span>
                         <span class="hidden md:inline">اهتز</span>
                     </button>
                     <button
-                        onclick="triggerAnimation('grow', this)"
+                        data-ui-click="trigger-animation" data-ui-animation="grow" data-ui-self="true"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-green-400 hover:bg-green-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">📈</span>
                         <span class="hidden md:inline">كبّر</span>
                     </button>
                     <button
-                        onclick="triggerAnimation('shrink', this)"
+                        data-ui-click="trigger-animation" data-ui-animation="shrink" data-ui-self="true"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-orange-400 hover:bg-orange-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">📉</span>
                         <span class="hidden md:inline">صغّر</span>
                     </button>
                     <button
-                        onclick="triggerAnimation('bounce-squish', this)"
+                        data-ui-click="trigger-animation" data-ui-animation="bounce-squish" data-ui-self="true"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-purple-400 hover:bg-purple-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">🏀</span>
@@ -540,21 +540,21 @@
 
                     <button
                         id="speed-slow"
-                        onclick="setAnimationSpeed(0.6)"
+                        data-ui-click="set-animation-speed" data-ui-speed="0.6"
                         class="speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-pink-200 hover:bg-pink-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon-sm transition-all"
                     >
                         🐢
                     </button>
                     <button
                         id="speed-normal"
-                        onclick="setAnimationSpeed(1)"
+                        data-ui-click="set-animation-speed" data-ui-speed="1"
                         class="speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-amber-400 text-slate-900 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon scale-110 ring-4 ring-yellow-400 z-10 transition-all"
                     >
                         ⚡
                     </button>
                     <button
                         id="speed-fast"
-                        onclick="setAnimationSpeed(1.5)"
+                        data-ui-click="set-animation-speed" data-ui-speed="1.5"
                         class="speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-emerald-200 hover:bg-emerald-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon-sm transition-all"
                     >
                         🚀
@@ -564,7 +564,7 @@
 
                     <button
                         id="btn-give-life"
-                        onclick="toggleGiveLife()"
+                        data-ui-click="toggle-give-life"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-gradient-to-r from-yellow-400 to-pink-400 hover:from-yellow-300 hover:to-pink-300 text-slate-900 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg animate-spin" style="animation-duration: 3s">🪄</span>
@@ -572,14 +572,14 @@
                     </button>
                     <!-- Save / Download buttons -->
                     <button
-                        onclick="saveDrawing()"
+                        data-ui-click="save-drawing"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-emerald-400 hover:bg-emerald-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">💾</span>
                         <span class="hidden md:inline">حفظ</span>
                     </button>
                     <button
-                        onclick="downloadDrawingPNG()"
+                        data-ui-click="download-drawing-png"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-sky-400 hover:bg-sky-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
                         title="تحميل كصورة PNG"
                     >
@@ -592,7 +592,7 @@
             <!-- Mobile tools drawer toggle (visible only on mobile) -->
             <button
                 id="mobile-tools-btn"
-                onclick="toggleMobileDrawer()"
+                data-ui-click="toggle-mobile-drawer"
                 class="md:hidden fixed bottom-4 left-4 z-50 bubble-btn p-3 bg-gradient-to-br from-pink-500 to-purple-500 text-white font-extrabold rounded-full border-3 border-slate-800 shadow-cartoon text-xl"
                 aria-label="أدوات الرسم"
             >
@@ -612,7 +612,7 @@
                     class="grid grid-cols-2 gap-1.5 bg-white/80 p-1.5 rounded-2xl border-2 border-slate-800 text-[10px] lg:text-xs font-bold shadow-cartoon-sm"
                 >
                     <button
-                        onclick="filterStickers('all')"
+                        data-ui-click="filter-stickers" data-ui-category="all"
                         id="tab-all"
                         class="bubble-btn py-1.5 lg:py-2 px-1 rounded-xl border-2 border-slate-800 shadow-none flex items-center justify-center gap-1.5 font-black text-center text-[10px] md:text-xs bg-amber-400 text-slate-900 ring-2 ring-yellow-300 scale-105"
                     >
@@ -620,7 +620,7 @@
                         <span class="inline">الكل</span>
                     </button>
                     <button
-                        onclick="filterStickers('eyes')"
+                        data-ui-click="filter-stickers" data-ui-category="eyes"
                         id="tab-eyes"
                         class="bubble-btn py-1.5 lg:py-2 px-1 rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1.5 font-black text-center text-[10px] md:text-xs bg-sky-100 text-slate-800 hover:bg-sky-200"
                     >
@@ -628,7 +628,7 @@
                         <span class="inline">عيون</span>
                     </button>
                     <button
-                        onclick="filterStickers('hats')"
+                        data-ui-click="filter-stickers" data-ui-category="hats"
                         id="tab-hats"
                         class="bubble-btn py-1.5 lg:py-2 px-1 rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1.5 font-black text-center text-[10px] md:text-xs bg-purple-100 text-slate-800 hover:bg-purple-200"
                     >
@@ -636,7 +636,7 @@
                         <span class="inline">قبعات</span>
                     </button>
                     <button
-                        onclick="filterStickers('faces')"
+                        data-ui-click="filter-stickers" data-ui-category="faces"
                         id="tab-faces"
                         class="bubble-btn py-1.5 lg:py-2 px-1 rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1.5 font-black text-center text-[10px] md:text-xs bg-emerald-100 text-slate-800 hover:bg-emerald-200"
                     >
@@ -661,13 +661,13 @@
                             max="100"
                             value="100"
                             class="flex-grow cursor-pointer accent-purple-500 h-3"
-                            oninput="setTemplateOpacity(parseInt(this.value) / 100)"
+                            data-ui-input="template-opacity"
                         />
                         <span class="text-[8px] font-extrabold text-slate-500">100</span>
                     </div>
                 </div>
                 <button
-                    onclick="resetApp()"
+                    data-ui-click="reset-app"
                     class="bubble-btn p-2 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon flex items-center justify-center gap-1 text-[10px] md:text-xs"
                 >
                     <span class="text-sm">🔄</span>
@@ -680,7 +680,7 @@
         <div class="fixed bottom-0 left-2 z-20 pointer-events-auto select-none group hidden sm:block">
             <div
                 class="relative cursor-pointer transition-transform duration-300 hover:translate-y-[-4px]"
-                onclick="animalReact('bunny')"
+                data-ui-click="animal-react" data-ui-animal="bunny"
             >
                 <div
                     id="bunny-bubble"
@@ -711,7 +711,7 @@
         <div class="fixed bottom-0 right-2 z-20 pointer-events-auto select-none group hidden sm:block">
             <div
                 class="relative cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
-                onclick="animalReact('cat')"
+                data-ui-click="animal-react" data-ui-animal="cat"
             >
                 <!-- Cat dialogue -->
                 <div
@@ -751,14 +751,14 @@
         <div
             id="stamps-modal"
             class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
-            onclick="handleBackdropClick(event,'stamps-modal',()=>toggleStampsModal(false))"
+            data-ui-backdrop="stamps-modal" data-ui-close="toggle-stamps-modal"
         >
             <div
                 class="bg-gradient-to-br from-yellow-50 via-pink-50 to-cyan-50 border-4 border-slate-800 rounded-[36px] max-w-md w-full p-5 shadow-cartoon-lg relative transform scale-95 transition-transform duration-300"
                 id="stamps-modal-content"
             >
                 <button
-                    onclick="toggleStampsModal(false)"
+                    data-ui-click="toggle-stamps-modal" data-ui-value="false"
                     class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all z-10"
                 >
                     ❌
@@ -777,14 +777,14 @@
         <div
             id="gallery-modal"
             class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
-            onclick="handleBackdropClick(event,'gallery-modal',()=>toggleGalleryModal(false))"
+            data-ui-backdrop="gallery-modal" data-ui-close="toggle-gallery-modal"
         >
             <div
                 class="bg-gradient-to-br from-purple-50 to-pink-50 border-4 border-slate-800 rounded-[36px] max-w-3xl w-full max-h-[85vh] overflow-y-auto p-5 shadow-cartoon-lg relative transform scale-95 transition-transform duration-300"
                 id="gallery-modal-content"
             >
                 <button
-                    onclick="toggleGalleryModal(false)"
+                    data-ui-click="toggle-gallery-modal" data-ui-value="false"
                     class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all z-10"
                 >
                     ❌
@@ -806,14 +806,14 @@
         <div
             id="friends-modal"
             class="fixed inset-0 bg-slate-900/70 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
-            onclick="handleBackdropClick(event,'friends-modal',()=>toggleFriendsModal(false))"
+            data-ui-backdrop="friends-modal" data-ui-close="toggle-friends-modal"
         >
             <div
                 class="bg-gradient-to-br from-pink-50 via-yellow-50 to-cyan-50 border-4 border-slate-800 rounded-[36px] max-w-md w-full max-h-[85vh] overflow-y-auto p-6 shadow-cartoon-lg relative transform scale-95 transition-transform duration-300"
                 id="friends-modal-content"
             >
                 <button
-                    onclick="toggleFriendsModal(false)"
+                    data-ui-click="toggle-friends-modal" data-ui-value="false"
                     class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all z-10"
                 >
                     ❌
@@ -839,7 +839,7 @@
                         class="flex-grow px-4 py-3 border-3 border-slate-800 rounded-2xl font-extrabold text-slate-700 text-center bg-white shadow-cartoon-sm focus:outline-none focus:ring-4 focus:ring-yellow-400"
                     />
                     <button
-                        onclick="addFriend()"
+                        data-ui-click="add-friend"
                         class="bubble-btn px-4 py-3 bg-green-400 hover:bg-green-300 text-slate-800 font-extrabold rounded-2xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1"
                     >
                         <span class="text-2xl">➕</span>
@@ -862,13 +862,13 @@
 
                 <div class="mt-4 flex gap-2">
                     <button
-                        onclick="resetFriends()"
+                        data-ui-click="reset-friends"
                         class="bubble-btn flex-1 py-2 bg-red-300 hover:bg-red-200 text-slate-800 font-extrabold rounded-2xl border-3 border-slate-800 shadow-cartoon text-sm"
                     >
                         🗑️ حذف الكل
                     </button>
                     <button
-                        onclick="addSampleFriends()"
+                        data-ui-click="add-sample-friends"
                         class="bubble-btn flex-1 py-2 bg-cyan-300 hover:bg-cyan-200 text-slate-800 font-extrabold rounded-2xl border-3 border-slate-800 shadow-cartoon text-sm"
                     >
                         🎲 إضافة أصدقاء تجريبيين
@@ -881,14 +881,14 @@
         <div
             id="hero-modal"
             class="fixed inset-0 bg-slate-900/70 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
-            onclick="handleBackdropClick(event,'hero-modal',()=>toggleHeroModal(false))"
+            data-ui-backdrop="hero-modal" data-ui-close="toggle-hero-modal"
         >
             <div
                 class="bg-gradient-to-br from-yellow-50 via-green-50 to-pink-50 border-4 border-slate-800 rounded-[36px] max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-cartoon-lg relative transform scale-95 transition-transform duration-300"
                 id="hero-modal-content"
             >
                 <button
-                    onclick="toggleHeroModal(false)"
+                    data-ui-click="toggle-hero-modal" data-ui-value="false"
                     class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all z-10"
                 >
                     ❌
@@ -908,7 +908,7 @@
                 <!-- Category Tabs -->
                 <div class="flex gap-2 mb-4 bg-white/70 p-1.5 rounded-2xl border-2 border-slate-300">
                     <button
-                        onclick="filterTemplates('all')"
+                        data-ui-click="filter-templates" data-ui-category="all"
                         id="tmpl-tab-all"
                         class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-red-400 to-blue-400 text-white font-extrabold text-sm flex items-center justify-center gap-1.5 transition-all"
                     >
@@ -916,7 +916,7 @@
                         الكل
                     </button>
                     <button
-                        onclick="filterTemplates('hero')"
+                        data-ui-click="filter-templates" data-ui-category="hero"
                         id="tmpl-tab-hero"
                         class="flex-1 py-2 px-3 rounded-xl text-slate-700 font-extrabold text-sm flex items-center justify-center gap-1.5 hover:bg-white/60 transition-all"
                     >
@@ -924,7 +924,7 @@
                         أبطال خارقون
                     </button>
                     <button
-                        onclick="filterTemplates('dino')"
+                        data-ui-click="filter-templates" data-ui-category="dino"
                         id="tmpl-tab-dino"
                         class="flex-1 py-2 px-3 rounded-xl text-slate-700 font-extrabold text-sm flex items-center justify-center gap-1.5 hover:bg-white/60 transition-all"
                     >
@@ -951,14 +951,14 @@
         <div
             id="help-modal"
             class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
-            onclick="handleBackdropClick(event,'help-modal',()=>toggleHelpModal(false))"
+            data-ui-backdrop="help-modal" data-ui-close="toggle-help-modal"
         >
             <div
                 class="bg-white border-4 border-slate-800 rounded-[36px] max-w-lg w-full p-6 shadow-cartoon-lg relative transform scale-95 transition-transform duration-300"
                 id="help-modal-content"
             >
                 <button
-                    onclick="toggleHelpModal(false)"
+                    data-ui-click="toggle-help-modal" data-ui-value="false"
                     class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all"
                 >
                     ❌
@@ -1014,7 +1014,7 @@
                 </div>
 
                 <button
-                    onclick="toggleHelpModal(false)"
+                    data-ui-click="toggle-help-modal" data-ui-value="false"
                     class="bubble-btn w-full mt-6 py-3 bg-yellow-400 hover:bg-yellow-300 text-slate-800 font-extrabold rounded-2xl border-3 border-slate-800 shadow-cartoon text-lg"
                 >
                     هيا بنا نبدأ الرسم! 🚀
@@ -1026,7 +1026,7 @@
         <div
             id="mobile-drawer"
             class="md:hidden fixed inset-0 z-40 hidden"
-            onclick="handleBackdropClick(event,'mobile-drawer',toggleMobileDrawer)"
+            data-ui-backdrop="mobile-drawer" data-ui-close="toggle-mobile-drawer"
         >
             <div class="absolute inset-0 bg-slate-900/50"></div>
             <div
@@ -1036,7 +1036,7 @@
                 <div class="flex justify-between items-center mb-3">
                     <h3 class="text-lg font-extrabold text-slate-800">🖌️ أدوات الرسم</h3>
                     <button
-                        onclick="toggleMobileDrawer()"
+                        data-ui-click="toggle-mobile-drawer"
                         class="w-8 h-8 bg-red-400 text-white rounded-full font-extrabold border-2 border-slate-800"
                     >❌</button>
                 </div>
@@ -1047,28 +1047,28 @@
                 </div>
                 <!-- Quick tools row -->
                 <div class="grid grid-cols-4 gap-2">
-                    <button onclick="selectEraser();toggleMobileDrawer()" class="bubble-btn p-2 bg-pink-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
+                    <button data-ui-click="mobile-tool" data-ui-tool="select-eraser" class="bubble-btn p-2 bg-pink-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
                         <span class="text-xl">🧽</span>ممحاة
                     </button>
-                    <button onclick="selectSpray();toggleMobileDrawer()" class="bubble-btn p-2 bg-emerald-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
+                    <button data-ui-click="mobile-tool" data-ui-tool="select-spray" class="bubble-btn p-2 bg-emerald-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
                         <span class="text-xl">🫧</span>بخاخ
                     </button>
-                    <button onclick="selectFillTool();toggleMobileDrawer()" class="bubble-btn p-2 bg-purple-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
+                    <button data-ui-click="mobile-tool" data-ui-tool="select-fill-tool" class="bubble-btn p-2 bg-purple-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
                         <span class="text-xl">🪣</span>دهان
                     </button>
-                    <button onclick="toggleMirror();toggleMobileDrawer()" class="bubble-btn p-2 bg-teal-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
+                    <button data-ui-click="mobile-tool" data-ui-tool="toggle-mirror" class="bubble-btn p-2 bg-teal-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
                         <span class="text-xl">🪞</span>مرآة
                     </button>
-                    <button onclick="undo()" class="bubble-btn p-2 bg-blue-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
+                    <button data-ui-click="undo" class="bubble-btn p-2 bg-blue-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
                         <span class="text-xl">↩️</span>تراجع
                     </button>
-                    <button onclick="redo()" class="bubble-btn p-2 bg-blue-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
+                    <button data-ui-click="redo" class="bubble-btn p-2 bg-blue-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
                         <span class="text-xl">↪️</span>إعادة
                     </button>
-                    <button onclick="clearCanvas();toggleMobileDrawer()" class="bubble-btn p-2 bg-red-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
+                    <button data-ui-click="mobile-tool" data-ui-tool="clear-canvas" class="bubble-btn p-2 bg-red-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
                         <span class="text-xl">💣</span>مسح
                     </button>
-                    <button onclick="downloadDrawingPNG();toggleMobileDrawer()" class="bubble-btn p-2 bg-sky-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
+                    <button data-ui-click="mobile-tool" data-ui-tool="download-drawing-png" class="bubble-btn p-2 bg-sky-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
                         <span class="text-xl">📥</span>تحميل
                     </button>
                 </div>
@@ -1077,7 +1077,7 @@
                     <span class="text-xs font-bold text-slate-600">🖉</span>
                     <input type="range" id="mobile-brush-size" min="3" max="50" value="12"
                         class="flex-grow cursor-pointer accent-pink-500"
-                        oninput="brushSize=parseInt(this.value);document.getElementById('brush-size').value=this.value;document.getElementById('brush-size-val').textContent=this.value"
+                        data-ui-input="mobile-brush-size"
                     />
                     <span class="text-xs font-bold text-slate-600">🖌️</span>
                 </div>

@@ -1,3 +1,5 @@
+import { state } from "./state.js";
+
 /* Audio synthesis engine. Loaded first because other domains use `synth`. */
             /************************************************************
              * 1. Dynamic Synthesizer Engine for Cute Audio Effects (Web Audio API)
@@ -438,7 +440,4 @@
             // Init synth on first user action anywhere
             window.addEventListener("pointerdown", () => synth.init(), { once: true });
 
-
-
-/* ESM exports */
 export { KidSynth, synth };

@@ -1,21 +1,24 @@
+import { state } from "./state.js";
+import * as services from "./services.js";
+
 /* Reset, templates, gallery and friends persistence. */
             /************************************************************
              * 12. App Utilities: Reset, Save, Help, Animal Interactivities
              ************************************************************/
             function resetApp() {
-                synth.playTada();
+                services.synth.playTada();
                 if (confirm("هل تريد مسح اللوحة والملصقات وإعادة ضبط كل شيء؟ 🥳")) {
-                    ctx.save();
-                    ctx.setTransform(1, 0, 0, 1, 0, 0);
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.restore();
+                    state.ctx.save();
+                    state.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                    state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+                    state.ctx.restore();
                     document.getElementById("stickers-layer").innerHTML = "";
 
                     // Reset defaults
-                    activeColor = "#FF4D6D";
-                    isRainbowBrush = false;
-                    isEraser = false;
-                    brushSize = 12;
+                    state.activeColor = "#FF4D6D";
+                    state.isRainbowBrush = false;
+                    state.isEraser = false;
+                    state.brushSize = 12;
                     document.getElementById("brush-size").value = 12;
                     document.getElementById("brush-size-val").textContent = 12;
                     // Reset brush preview size & color
@@ -28,23 +31,23 @@
                     document.getElementById("btn-eraser").classList.add("bg-pink-300");
 
                     // Reset all animations and live states cleanly using stopAllAnimations
-                    stopAllAnimations();
+                    services.stopAllAnimations();
 
                     // Reset theme & music
-                    if (currentTheme === "night") {
-                        toggleTheme();
+                    if (state.currentTheme === "night") {
+                        services.toggleTheme();
                     }
-                    if (synth.isPlayingMusic) {
-                        toggleMusic();
+                    if (services.synth.isPlayingMusic) {
+                        services.toggleMusic();
                     }
 
-                    undoStack = [];
-                    redoStack = [];
-                    saveState();
+                    state.undoStack = [];
+                    state.redoStack = [];
+                    services.saveState();
 
-                    renderColors();
-                    triggerConfetti();
-                    showEncouragement("تم تصفير لوحتك السحرية بنجاح! جاهز للإبداع؟ 🚀");
+                    services.renderColors();
+                    services.triggerConfetti();
+                    services.showEncouragement("تم تصفير لوحتك السحرية بنجاح! جاهز للإبداع؟ 🚀");
                 }
             }
 
@@ -58,7 +61,7 @@
                     renderHeroesGallery("all");
                     heroesGalleryRendered = true;
                 }
-                toggleModal("hero-modal", "hero-modal-content", show);
+                services.toggleModal("hero-modal", "hero-modal-content", show);
             }
 
             let currentTemplateFilter = "all";
@@ -68,7 +71,7 @@
                 const container = document.getElementById("heroes-gallery");
                 container.innerHTML = "";
 
-                const filtered = cat === "all" ? superheroes : superheroes.filter((h) => h.category === cat);
+                const filtered = cat === "all" ? services.superheroes : services.superheroes.filter((h) => h.category === cat);
 
                 filtered.forEach((hero) => {
                     const card = document.createElement("button");
@@ -79,7 +82,7 @@
                             ? "bg-gradient-to-br from-green-50 to-lime-50"
                             : "bg-gradient-to-br from-sky-50 to-pink-50";
                     card.className = `group bg-white border-3 border-slate-800 rounded-2xl p-2 hover:border-pink-500 cursor-pointer transition-all hover:scale-105 active:scale-95 shadow-cartoon-sm hover:shadow-cartoon flex flex-col items-center gap-1`;
-                    card.onclick = () => loadSuperhero(hero.id);
+                    card.addEventListener("click", () => loadSuperhero(hero.id));
 
                     // Thumbnail SVG
                     const thumb = document.createElement("div");
@@ -104,7 +107,7 @@
             }
 
             function filterTemplates(category) {
-                synth.playClick();
+                services.synth.playClick();
                 currentTemplateFilter = category;
 
                 // Update tab styles
@@ -133,13 +136,13 @@
             }
 
             function loadSuperhero(heroId) {
-                const hero = superheroes.find((h) => h.id === heroId);
+                const hero = services.superheroes.find((h) => h.id === heroId);
                 if (!hero) return;
 
-                synth.playTada();
+                services.synth.playTada();
 
                 // Confirm clearing existing canvas
-                const hasContent = undoStack.length > 1;
+                const hasContent = state.undoStack.length > 1;
                 if (hasContent) {
                     if (!confirm(`هل تريد تحميل "${hero.name}" والبدء بتلوينه؟ سيتم مسح الرسم الحالي. 🎨`)) {
                         return;
@@ -147,13 +150,13 @@
                 }
 
                 // Save current state for undo
-                saveState();
+                services.saveState();
 
                 // Clear the canvas first
-                ctx.save();
-                ctx.setTransform(1, 0, 0, 1, 0, 0);
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.restore();
+                state.ctx.save();
+                state.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+                state.ctx.restore();
 
                 // Load the hero SVG as an image on the canvas
                 const svgString = hero.svg;
@@ -162,15 +165,15 @@
 
                 const img = new Image();
                 img.onload = () => {
-                    const layoutW = canvas.offsetWidth || 700;
-                    const layoutH = canvas.offsetHeight || 480;
+                    const layoutW = state.canvas.offsetWidth || 700;
+                    const layoutH = state.canvas.offsetHeight || 480;
                     // Apply template opacity if set
-                    ctx.save();
+                    state.ctx.save();
                     const templateOpacity =
                         parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--template-opacity")) ||
                         1;
                     if (templateOpacity < 1) {
-                        ctx.globalAlpha = templateOpacity;
+                        state.ctx.globalAlpha = templateOpacity;
                     }
                     // Compute fit-to-canvas dimensions (preserve aspect ratio with padding)
                     const padding = 20;
@@ -182,17 +185,17 @@
                     const drawX = (layoutW - drawW) / 2;
                     const drawY = (layoutH - drawH) / 2;
 
-                    ctx.drawImage(img, drawX, drawY, drawW, drawH);
-                    ctx.restore();
+                    state.ctx.drawImage(img, drawX, drawY, drawW, drawH);
+                    state.ctx.restore();
                     URL.revokeObjectURL(url);
 
                     // Save the new state with the hero loaded
-                    saveState();
+                    services.saveState();
 
                     // Close the modal & celebrate
                     toggleHeroModal(false);
-                    triggerConfetti();
-                    showEncouragement(`رائع! لوّن ${hero.name} بألوانك المفضلة! ${hero.emoji}✨`);
+                    services.triggerConfetti();
+                    services.showEncouragement(`رائع! لوّن ${hero.name} بألوانك المفضلة! ${hero.emoji}✨`);
                 };
                 img.onerror = () => {
                     alert("حدث خطأ أثناء تحميل البطل. حاول مرة أخرى!");
@@ -230,7 +233,7 @@
                 try {
                     localStorage.setItem(GALLERY_KEY, JSON.stringify(drawings));
                 } catch (e) {
-                    showEncouragement("مساحة التخزين ممتلئة! احذف بعض الرسومات القديمة.");
+                    services.showEncouragement("مساحة التخزين ممتلئة! احذف بعض الرسومات القديمة.");
                 }
             }
 
@@ -268,7 +271,7 @@
                         img.src = draw.dataUrl;
                         img.className =
                             "w-full aspect-square object-cover rounded-xl border-2 border-slate-600 cursor-pointer hover:opacity-80 transition-all";
-                        img.onclick = () => loadDrawingFromGallery(draw.dataUrl);
+                        img.addEventListener("click", () => loadDrawingFromGallery(draw.dataUrl));
                         card.appendChild(img);
 
                         const label = document.createElement("div");
@@ -280,7 +283,7 @@
                         delBtn.className =
                             "bubble-btn text-xs bg-red-300 hover:bg-red-200 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm py-1 px-2";
                         delBtn.innerHTML = "🗑️ حذف";
-                        delBtn.onclick = () => deleteDrawingFromGallery(draw.id);
+                        delBtn.addEventListener("click", () => deleteDrawingFromGallery(draw.id));
                         card.appendChild(delBtn);
 
                         grid.appendChild(card);
@@ -288,7 +291,7 @@
             }
 
             function loadDrawingFromGallery(dataUrl) {
-                synth.playBoing();
+                services.synth.playBoing();
                 if (confirm("هل تريد تحميل هذه الرسمة؟ سيتم حفظ الرسمة الحالية أولاً.")) {
                     // Save current drawing first
                     saveCurrentDrawingToGallery();
@@ -296,35 +299,35 @@
                     // Load the gallery drawing
                     const img = new Image();
                     img.onload = () => {
-                        const layoutW = canvas.offsetWidth || 700;
-                        const layoutH = canvas.offsetHeight || 480;
-                        ctx.save();
-                        ctx.setTransform(1, 0, 0, 1, 0, 0);
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        ctx.restore();
-                        ctx.drawImage(img, 0, 0, layoutW, layoutH);
-                        saveState();
-                        showEncouragement("🖼️ تم تحميل الرسمة من المعرض!");
+                        const layoutW = state.canvas.offsetWidth || 700;
+                        const layoutH = state.canvas.offsetHeight || 480;
+                        state.ctx.save();
+                        state.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                        state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+                        state.ctx.restore();
+                        state.ctx.drawImage(img, 0, 0, layoutW, layoutH);
+                        services.saveState();
+                        services.showEncouragement("🖼️ تم تحميل الرسمة من المعرض!");
                     };
                     img.src = dataUrl;
                 }
             }
 
             function saveCurrentDrawingToGallery() {
-                const dataUrl = canvas.toDataURL("image/jpeg", 0.7);
+                const dataUrl = state.canvas.toDataURL("image/jpeg", 0.7);
                 saveDrawingToGallery(dataUrl);
             }
 
             function toggleGalleryModal(show) {
                 if (show) renderGalleryGrid();
-                toggleModal("gallery-modal", "gallery-modal-content", show);
+                services.toggleModal("gallery-modal", "gallery-modal-content", show);
             }
 
             function celebrateName(name) {
                 if (window.synth) {
-                    synth.playTada();
+                    services.synth.playTada();
                 }
-                showEncouragement(`✨ بطلنا الخارق ${name}! ✨`);
+                services.showEncouragement(`✨ بطلنا الخارق ${name}! ✨`);
                 speakArabic("أهلاً بالبطل " + name);
 
                 if (typeof confetti === "function") {
@@ -389,11 +392,11 @@
 
                 const friends = getFriends();
                 if (friends.includes(name)) {
-                    showEncouragement(`🤔 ${name} موجود بالفعل!`);
+                    services.showEncouragement(`🤔 ${name} موجود بالفعل!`);
                     return;
                 }
                 if (friends.length >= 15) {
-                    showEncouragement("⚠️ الحد الأقصى 15 صديقاً!");
+                    services.showEncouragement("⚠️ الحد الأقصى 15 صديقاً!");
                     return;
                 }
 
@@ -401,8 +404,8 @@
                 saveFriends(friends);
                 input.value = "";
                 input.focus();
-                synth.playPop();
-                showEncouragement(`🎉 مرحباً ${name}! أنت الآن صديق أيهم وليث!`);
+                services.synth.playPop();
+                services.showEncouragement(`🎉 مرحباً ${name}! أنت الآن صديق أيهم وليث!`);
                 speakArabic("مرحباً " + name + "! أنت الآن صديق أيهم وليث!");
             }
 
@@ -410,15 +413,15 @@
                 let friends = getFriends();
                 friends = friends.filter((f) => f !== name);
                 saveFriends(friends);
-                synth.playBoing();
-                showEncouragement(`👋 وداعاً ${name}! سنشتاق إليك!`);
+                services.synth.playBoing();
+                services.showEncouragement(`👋 وداعاً ${name}! سنشتاق إليك!`);
             }
 
             function resetFriends() {
                 if (confirm("هل تريد حذف جميع الأصدقاء؟")) {
                     saveFriends([]);
-                    synth.playBoing();
-                    showEncouragement("🗑️ تم حذف جميع الأصدقاء!");
+                    services.synth.playBoing();
+                    services.showEncouragement("🗑️ تم حذف جميع الأصدقاء!");
                 }
             }
 
@@ -436,10 +439,10 @@
 
                 if (addedCount > 0) {
                     saveFriends(friends);
-                    synth.playTada();
-                    showEncouragement(`🎉 تم إضافة ${addedCount} أصدقاء جدد!`);
+                    services.synth.playTada();
+                    services.showEncouragement(`🎉 تم إضافة ${addedCount} أصدقاء جدد!`);
                 } else {
-                    showEncouragement("🤗 جميع الأصدقاء موجودون بالفعل!");
+                    services.showEncouragement("🤗 جميع الأصدقاء موجودون بالفعل!");
                 }
             }
 
@@ -474,7 +477,7 @@
                     // Magnified premium style for guest/friend badges
                     badge.className =
                         "inline-flex items-center gap-1.5 text-xs md:text-sm font-black bg-gradient-to-r from-purple-200 via-pink-200 to-indigo-100 text-slate-850 px-3 py-1 rounded-full border-2 border-slate-800 shadow-cartoon-sm hover:scale-110 hover:-rotate-1 active:scale-95 transition-all duration-200 cursor-pointer select-none";
-                    badge.onclick = () => celebrateName(name);
+                    badge.addEventListener("click", () => celebrateName(name));
                     
                     const spanEmoji = document.createElement("span");
                     spanEmoji.textContent = emoji;
@@ -520,7 +523,7 @@
                     delBtn.className =
                         "bubble-btn text-sm bg-red-300 hover:bg-red-200 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm px-3 py-1";
                     delBtn.innerHTML = "🗑️";
-                    delBtn.onclick = () => removeFriend(name);
+                    delBtn.addEventListener("click", () => removeFriend(name));
                     item.appendChild(delBtn);
 
                     list.appendChild(item);
@@ -528,7 +531,7 @@
             }
 
             function toggleFriendsModal(show) {
-                synth.playClick();
+                services.synth.playClick();
                 const modal = document.getElementById("friends-modal");
                 const content = document.getElementById("friends-modal-content");
 
@@ -539,17 +542,8 @@
                         modal.classList.remove("opacity-0");
                         content.classList.remove("scale-95");
                         content.classList.add("scale-100");
-                        // Focus the input and add keyboard listener
-                        const input = document.getElementById("friend-name-input");
-                        if (input) {
-                            input.focus();
-                            input.onkeydown = (e) => {
-                                if (e.key === "Enter") {
-                                    e.preventDefault();
-                                    addFriend();
-                                }
-                            };
-                        }
+                        // Focus the input; its Enter listener is bound once by ui.js.
+                        document.getElementById("friend-name-input")?.focus();
                     }, 10);
                 } else {
                     modal.classList.add("opacity-0");
@@ -561,7 +555,4 @@
                 }
             }
 
-
-
-/* ESM exports */
 export { resetApp, toggleHeroModal, renderHeroesGallery, filterTemplates, loadSuperhero, getSavedDrawings, saveDrawingToGallery, deleteDrawingFromGallery, renderGalleryGrid, loadDrawingFromGallery, saveCurrentDrawingToGallery, toggleGalleryModal, celebrateName, getFriends, saveFriends, addFriend, removeFriend, resetFriends, addSampleFriends, renderFriendBadges, renderFriendList, toggleFriendsModal };
