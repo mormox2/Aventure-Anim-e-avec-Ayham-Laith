@@ -56,7 +56,8 @@ import { state } from "./state.js";
                 renderStickers(category);
             }
 
-            function addStickerToCanvas(stickerId) {
+            function addStickerToCanvas(stickerId, options = {}) {
+                const { silent = false, savedState = null, recordHistory = true } = options;
                 const stickerInfo = stickersData.find((s) => s.id === stickerId);
                 if (!stickerInfo) {
                     synth.playPop();
@@ -64,37 +65,50 @@ import { state } from "./state.js";
                 }
 
                 // Play interactive Premium Sound Effects based on specific Sticker Category
-                if (stickerInfo.category === "hats" || stickerInfo.category === "magic") {
-                    synth.playMagicChime();
-                } else if (stickerInfo.category === "eyes") {
-                    synth.playFunnyGlissando();
-                } else if (stickerInfo.category === "dino" || stickerInfo.category === "space") {
-                    synth.playMiniGrowl();
-                } else {
-                    synth.playPop();
+                if (!silent) {
+                    if (stickerInfo.category === "hats" || stickerInfo.category === "magic") {
+                        synth.playMagicChime();
+                    } else if (stickerInfo.category === "eyes") {
+                        synth.playFunnyGlissando();
+                    } else if (stickerInfo.category === "dino" || stickerInfo.category === "space") {
+                        synth.playMiniGrowl();
+                    } else {
+                        synth.playPop();
+                    }
                 }
 
                 const layer = document.getElementById("stickers-layer");
-                const uniqueId = `sticker-${state.stickerIdCounter++}`;
+                const uniqueId = savedState?.id || `sticker-${state.stickerIdCounter++}`;
+                const numericId = Number.parseInt(uniqueId.replace("sticker-", ""), 10);
+                if (Number.isFinite(numericId)) {
+                    state.stickerIdCounter = Math.max(state.stickerIdCounter, numericId + 1);
+                }
 
                 // Create new sticker container
                 const stickerDiv = document.createElement("div");
                 stickerDiv.id = uniqueId;
                 stickerDiv.className =
                     "sticker-element absolute select-none cursor-grab active:cursor-grabbing pointer-events-auto group touch-none";
-                stickerDiv.dataset.category = stickerInfo.category;
+                stickerDiv.dataset.category = savedState?.category ?? stickerInfo.category;
+                stickerDiv.dataset.stickerId = savedState?.stickerId ?? stickerInfo.id;
 
                 // Default dimensions & transformations (center on the canvas itself)
                 const canvasRect = state.canvas.getBoundingClientRect();
-                const startLeft = (canvasRect.width - 100) / 2;
-                const startTop = (canvasRect.height - 100) / 2;
-                stickerDiv.style.width = "100px";
-                stickerDiv.style.height = "100px";
-                stickerDiv.style.left = `${startLeft}px`;
-                stickerDiv.style.top = `${startTop}px`;
-                stickerDiv.dataset.angle = "0";
-                stickerDiv.dataset.scale = "1";
-                stickerDiv.style.transform = "rotate(0deg) scale(1)";
+                const defaultLeft = (canvasRect.width - 100) / 2;
+                const defaultTop = (canvasRect.height - 100) / 2;
+                const width = savedState?.width ?? "100px";
+                const height = savedState?.height ?? "100px";
+                const left = savedState?.left ?? `${defaultLeft}px`;
+                const top = savedState?.top ?? `${defaultTop}px`;
+                const angle = savedState?.angle ?? "0";
+                const scale = savedState?.scale ?? "1";
+                stickerDiv.style.width = width;
+                stickerDiv.style.height = height;
+                stickerDiv.style.left = left;
+                stickerDiv.style.top = top;
+                stickerDiv.dataset.angle = angle;
+                stickerDiv.dataset.scale = scale;
+                stickerDiv.style.transform = `rotate(${angle}deg) scale(${scale})`;
 
                 // Inner content (The SVG)
                 const content = document.createElement("div");
@@ -119,6 +133,7 @@ import { state } from "./state.js";
                     synth.playBoing();
                     stickerDiv.remove();
                     state.activeSticker = null;
+                    notifyStickerHistoryChange();
                 });
                 controls.appendChild(deleteBtn);
 
@@ -189,6 +204,40 @@ import { state } from "./state.js";
                 deselectAllStickers();
                 state.activeSticker = stickerDiv;
                 stickerDiv.classList.add("active");
+                if (recordHistory) notifyStickerHistoryChange();
+            }
+
+            function captureStickerState() {
+                return Array.from(document.querySelectorAll(".sticker-element")).map((sticker) => ({
+                    id: sticker.id,
+                    stickerId: sticker.dataset.stickerId,
+                    category: sticker.dataset.category,
+                    width: sticker.style.width,
+                    height: sticker.style.height,
+                    left: sticker.style.left,
+                    top: sticker.style.top,
+                    angle: sticker.dataset.angle || "0",
+                    scale: sticker.dataset.scale || "1",
+                }));
+            }
+
+            function restoreStickerState(stickers = []) {
+                const layer = document.getElementById("stickers-layer");
+                if (!layer) return;
+                layer.innerHTML = "";
+                state.activeSticker = null;
+                stickers.forEach((savedState) => {
+                    addStickerToCanvas(savedState.stickerId, {
+                        silent: true,
+                        savedState,
+                        recordHistory: false,
+                    });
+                });
+                deselectAllStickers();
+            }
+
+            function notifyStickerHistoryChange() {
+                window.dispatchEvent(new CustomEvent("sticker-history-change"));
             }
 
             function deselectAllStickers() {
@@ -222,6 +271,8 @@ import { state } from "./state.js";
                 };
             }
 
+            let stickerInteractionChanged = false;
+
             // Combined Global Pointer Move event to handle dragging, resizing, and rotating
             window.addEventListener("pointermove", (e) => {
                 if (!state.activeSticker) return;
@@ -241,6 +292,7 @@ import { state } from "./state.js";
 
                     state.activeSticker.style.left = `${newLeft}px`;
                     state.activeSticker.style.top = `${newTop}px`;
+                    stickerInteractionChanged = true;
                 } else if (state.isResizing) {
                     const currentDist = Math.hypot(e.clientX - state.stickerCenter.x, e.clientY - state.stickerCenter.y);
                     const startDist = Math.hypot(state.initialPointerX - state.stickerCenter.x, state.initialPointerY - state.stickerCenter.y);
@@ -250,6 +302,7 @@ import { state } from "./state.js";
                         newScale = Math.max(0.4, Math.min(newScale, 3.5)); // limit sizes for kids
 
                         state.activeSticker.dataset.scale = newScale;
+                        stickerInteractionChanged = true;
                         const currentAngle = state.activeSticker.dataset.angle || 0;
                         state.activeSticker.style.transform = `rotate(${currentAngle}deg) scale(${newScale})`;
                     }
@@ -261,15 +314,19 @@ import { state } from "./state.js";
                     let newAngle = (state.stickerStartAngle + deltaAngle) % 360;
 
                     state.activeSticker.dataset.angle = newAngle;
+                    stickerInteractionChanged = true;
                     const currentScale = state.activeSticker.dataset.scale || 1;
                     state.activeSticker.style.transform = `rotate(${newAngle}deg) scale(${currentScale})`;
                 }
             });
 
             window.addEventListener("pointerup", () => {
+                const shouldSave = stickerInteractionChanged;
                 state.isDragging = false;
                 state.isResizing = false;
                 state.isRotating = false;
+                stickerInteractionChanged = false;
+                if (shouldSave) notifyStickerHistoryChange();
             });
 
-export { renderStickers, filterStickers, addStickerToCanvas, deselectAllStickers, setupStickerPointerData };
+export { renderStickers, filterStickers, addStickerToCanvas, captureStickerState, restoreStickerState, deselectAllStickers, setupStickerPointerData };

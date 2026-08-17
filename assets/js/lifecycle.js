@@ -27,10 +27,11 @@ import { state } from "./state.js";
                 state.canvas.addEventListener("pointerdown", startDrawing);
                 state.canvas.addEventListener("pointermove", draw);
                 // #2: save state on pointerup (end of stroke) — not on pointerdown
-                window.addEventListener("pointerup", (e) => {
+                window.addEventListener("pointerup", () => {
+                    const wasDrawing = state.isDrawing;
                     stopDrawing();
-                    if (state.isDrawing === false && !state.isFillMode && !state.activeStamp) {
-                        // stroke just finished — save undo state
+                    if (wasDrawing && !state.isFillMode && !state.activeStamp) {
+                        // Stroke just finished — save the resulting canvas and sticker state.
                         saveState();
                     }
                 });
@@ -41,6 +42,9 @@ import { state } from "./state.js";
                         saveState();
                     }
                 });
+
+                // Stickers commit their own snapshots after add, delete or transform.
+                window.addEventListener("sticker-history-change", saveState);
 
                 // Brush slider updates
                 const sizeSlider = document.getElementById("brush-size");
