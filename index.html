@@ -396,6 +396,9 @@
                 <!-- Fun notification banner inside sidebar -->
                 <div
                     id="encouragement-sidebar"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
                     class="bg-gradient-to-r from-pink-100 to-yellow-100 text-pink-600 font-extrabold text-xs py-2 px-3 rounded-xl border border-pink-200 text-center animate-pulse block"
                 >
                     👦 أيهم و ليث 👦 جرّبوا أبطال خارقون لتلوينهم، أو ارسموا حيوانكما المفضل! 🎨
@@ -429,10 +432,14 @@
                         <div id="canvas-anim-container" class="relative flex-grow min-h-0">
                             <canvas
                                 id="drawing-canvas"
+                                role="img"
+                                aria-label="لوحة الرسم التفاعلية"
+                                tabindex="0"
                                 class="block w-full h-full bg-transparent cursor-crosshair relative z-10 touch-none rounded-lg md:rounded-xl"
                             ></canvas>
                             <canvas
                                 id="particles-canvas"
+                                aria-hidden="true"
                                 class="absolute inset-0 w-full h-full pointer-events-none z-15 block"
                             ></canvas>
                             <div
@@ -750,6 +757,11 @@
         <!-- STAMPS Modal (Shapes & Patterns) -->
         <div
             id="stamps-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="stamps-modal-title"
+            aria-describedby="stamps-modal-description"
+            aria-hidden="true"
             class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
             data-ui-backdrop="stamps-modal" data-ui-close="toggle-stamps-modal"
         >
@@ -759,12 +771,13 @@
             >
                 <button
                     data-ui-click="toggle-stamps-modal" data-ui-value="false"
+                    aria-label="إغلاق نافذة الطوابع"
                     class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all z-10"
                 >
                     ❌
                 </button>
-                <h3 class="text-2xl md:text-3xl font-extrabold text-center mb-3">الطوابع السحرية ⭐✨</h3>
-                <p class="text-center text-sm font-bold text-slate-600 mb-3 bg-white/60 py-1 px-3 rounded-full">
+                <h3 id="stamps-modal-title" class="text-2xl md:text-3xl font-extrabold text-center mb-3">الطوابع السحرية ⭐✨</h3>
+                <p id="stamps-modal-description" class="text-center text-sm font-bold text-slate-600 mb-3 bg-white/60 py-1 px-3 rounded-full">
                     اضغط على شكل، ثم انقر على اللوحة لوضعه!
                 </p>
                 <div class="grid grid-cols-4 gap-2" id="stamps-gallery">
@@ -776,6 +789,11 @@
         <!-- GALLERY Modal (Saved Drawings) -->
         <div
             id="gallery-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="gallery-modal-title"
+            aria-describedby="gallery-modal-description"
+            aria-hidden="true"
             class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
             data-ui-backdrop="gallery-modal" data-ui-close="toggle-gallery-modal"
         >
@@ -785,12 +803,13 @@
             >
                 <button
                     data-ui-click="toggle-gallery-modal" data-ui-value="false"
+                    aria-label="إغلاق معرض الرسومات"
                     class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all z-10"
                 >
                     ❌
                 </button>
-                <h3 class="text-2xl md:text-3xl font-extrabold text-center mb-2">🖼️ معرض رسوماتي</h3>
-                <p class="text-center text-sm font-bold text-slate-600 mb-3 bg-white/60 py-1 px-3 rounded-full">
+                <h3 id="gallery-modal-title" class="text-2xl md:text-3xl font-extrabold text-center mb-2">🖼️ معرض رسوماتي</h3>
+                <p id="gallery-modal-description" class="text-center text-sm font-bold text-slate-600 mb-3 bg-white/60 py-1 px-3 rounded-full">
                     اضغط على رسمة لإعادة تحميلها، أو احذفها!
                 </p>
                 <div id="gallery-empty" class="text-center py-8 text-slate-500 font-extrabold text-lg hidden">
@@ -805,6 +824,11 @@
         <!-- FRIENDS Modal (Guests of Ayhem & Layth) -->
         <div
             id="friends-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="friends-modal-title"
+            aria-describedby="friends-modal-description"
+            aria-hidden="true"
             class="fixed inset-0 bg-slate-900/70 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
             data-ui-backdrop="friends-modal" data-ui-close="toggle-friends-modal"
         >
@@ -814,16 +838,19 @@
             >
                 <button
                     data-ui-click="toggle-friends-modal" data-ui-value="false"
+                    aria-label="إغلاق نافذة الأصدقاء"
                     class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all z-10"
                 >
                     ❌
                 </button>
                 <h3
+                    id="friends-modal-title"
                     class="text-3xl md:text-4xl font-extrabold text-center mb-2 bg-gradient-to-r from-pink-500 via-yellow-500 to-cyan-500 bg-clip-text text-transparent"
                 >
                     👥 أصدقاء أيهم وليث 👥
                 </h3>
                 <p
+                    id="friends-modal-description"
                     class="text-center text-sm font-bold text-slate-600 mb-4 bg-white/70 py-2 px-4 rounded-full inline-block w-full"
                 >
                     أضف أسماء أصدقائك لظهورهم بجانبكما! 🎉
@@ -834,6 +861,7 @@
                     <input
                         type="text"
                         id="friend-name-input"
+                        aria-label="اسم الصديق"
                         placeholder="اكتب اسم الصديق..."
                         maxlength="12"
                         class="flex-grow px-4 py-3 border-3 border-slate-800 rounded-2xl font-extrabold text-slate-700 text-center bg-white shadow-cartoon-sm focus:outline-none focus:ring-4 focus:ring-yellow-400"
@@ -880,6 +908,11 @@
         <!-- TEMPLATES Modal (Superheroes + Dinosaurs) -->
         <div
             id="hero-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="hero-modal-title"
+            aria-describedby="hero-modal-description"
+            aria-hidden="true"
             class="fixed inset-0 bg-slate-900/70 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
             data-ui-backdrop="hero-modal" data-ui-close="toggle-hero-modal"
         >
@@ -889,17 +922,20 @@
             >
                 <button
                     data-ui-click="toggle-hero-modal" data-ui-value="false"
+                    aria-label="إغلاق نافذة الرسومات"
                     class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all z-10"
                 >
                     ❌
                 </button>
 
                 <h3
+                    id="hero-modal-title"
                     class="text-3xl md:text-4xl font-extrabold text-center mb-2 bg-gradient-to-r from-red-500 via-green-500 to-blue-500 bg-clip-text text-transparent"
                 >
                     🦸 اختر رسمة ولوّنها! 🦕
                 </h3>
                 <p
+                    id="hero-modal-description"
                     class="text-center text-sm font-bold text-slate-600 mb-4 bg-white/70 py-2 px-4 rounded-full inline-block w-full"
                 >
                     اختر بطلاً خارقاً أو ديناصوراً وابدأ بتلوينه والرسم فوقه! 🎨✨
@@ -950,6 +986,10 @@
         <!-- HELP HOW-TO Modal -->
         <div
             id="help-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="help-modal-title"
+            aria-hidden="true"
             class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
             data-ui-backdrop="help-modal" data-ui-close="toggle-help-modal"
         >
@@ -959,12 +999,14 @@
             >
                 <button
                     data-ui-click="toggle-help-modal" data-ui-value="false"
+                    aria-label="إغلاق نافذة المساعدة"
                     class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all"
                 >
                     ❌
                 </button>
 
                 <h3
+                    id="help-modal-title"
                     class="text-3xl font-extrabold text-slate-800 text-center mb-4 border-b-4 border-dashed border-yellow-400 pb-2"
                 >
                     كيف ألعب وأرسم؟ 🎨✨

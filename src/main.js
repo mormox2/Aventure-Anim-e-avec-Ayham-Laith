@@ -3,7 +3,10 @@
 import "../assets/css/base.css";
 import "../assets/css/animations.css";
 import "../assets/css/components.css";
+import "../assets/css/accessibility.css";
 import { initializeUI } from "../assets/js/ui.js";
+import { initializeAccessibility } from "../assets/js/accessibility.js";
 import "../assets/js/lifecycle.js";
 
 initializeUI();
+initializeAccessibility();

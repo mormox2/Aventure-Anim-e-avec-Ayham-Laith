@@ -18,6 +18,7 @@ import { captureStickerState, restoreStickerState } from "./stickers.js";
                     const btn = document.createElement("button");
                     btn.type = "button";
                     btn.title = color.name;
+                    btn.setAttribute("aria-label", `اختيار اللون ${color.name}`);
                     btn.addEventListener("click", () => selectColor(color.val, btn));
                     btn.className = `w-9 h-9 lg:w-10 lg:h-10 rounded-full border-3 border-slate-800 shadow-cartoon-sm hover:scale-110 active:scale-95 bubble-btn flex items-center justify-center relative overflow-hidden transition-all ${color.bgClass}`;
 
@@ -695,12 +696,18 @@ import { captureStickerState, restoreStickerState } from "./stickers.js";
                 const undoBtn = document.getElementById("btn-undo");
                 const redoBtn = document.getElementById("btn-redo");
                 if (undoBtn) {
-                    undoBtn.classList.toggle("opacity-40", state.undoStack.length <= 1);
-                    undoBtn.classList.toggle("pointer-events-none", state.undoStack.length <= 1);
+                    const disabled = state.undoStack.length <= 1;
+                    undoBtn.disabled = disabled;
+                    undoBtn.setAttribute("aria-disabled", String(disabled));
+                    undoBtn.classList.toggle("opacity-40", disabled);
+                    undoBtn.classList.toggle("pointer-events-none", disabled);
                 }
                 if (redoBtn) {
-                    redoBtn.classList.toggle("opacity-40", state.redoStack.length === 0);
-                    redoBtn.classList.toggle("pointer-events-none", state.redoStack.length === 0);
+                    const disabled = state.redoStack.length === 0;
+                    redoBtn.disabled = disabled;
+                    redoBtn.setAttribute("aria-disabled", String(disabled));
+                    redoBtn.classList.toggle("opacity-40", disabled);
+                    redoBtn.classList.toggle("pointer-events-none", disabled);
                 }
             }
 

@@ -22,4 +22,6 @@ Les modules utilisent désormais des imports nommés directs et ne dépendent pl
 - `js/voice-duo.js` : synthèse vocale et mode duo.
 - `js/ui.js` : délégation des clics et entrées via `addEventListener`.
 
-Le script `scripts/generate-entry.mjs` génère `src/main.js` avec des imports explicites, puis initialise `ui.js`. Les attributs HTML inline et le pont `globalThis` ont été supprimés ; les interactions sont désormais câblées depuis les modules. Les SVG héros et dinosaures sont chargés par `import()` seulement lorsque la galerie est ouverte.
+Le script `scripts/generate-entry.mjs` génère `src/main.js` avec des imports explicites, puis initialise `ui.js` et le gestionnaire d’accessibilité. Les attributs HTML inline et le pont `globalThis` ont été supprimés ; les interactions sont désormais câblées depuis les modules. Les SVG héros et dinosaures sont chargés par `import()` seulement lorsque la galerie est ouverte.
+
+Les modales utilisent des rôles ARIA, des titres et descriptions associés, un focus initial, une boucle de navigation `Tab`, la fermeture `Escape` et la restauration du focus sur le bouton déclencheur. Les messages d’encouragement sont exposés comme région `aria-live`, les galeries dynamiques utilisent des boutons accessibles et les animations respectent `prefers-reduced-motion`.
