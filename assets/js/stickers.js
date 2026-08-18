@@ -8,7 +8,7 @@ import { state } from "./state.js";
              ************************************************************/
             function renderStickers(category) {
                 const container = document.getElementById("stickers-gallery");
-                container.innerHTML = "";
+                container.replaceChildren();
 
                 const filtered = stickersData.filter((st) => category === "all" || st.category === category);
 
@@ -129,7 +129,7 @@ import { state } from "./state.js";
                 const deleteBtn = document.createElement("button");
                 deleteBtn.className =
                     "absolute -top-4 -right-4 bg-rose-500 hover:bg-rose-400 text-white rounded-full w-8 h-8 flex items-center justify-center pointer-events-auto shadow-cartoon-sm border-2 border-slate-800 hover:scale-110 active:scale-95 transition-all text-xs";
-                deleteBtn.innerHTML = "❌";
+                deleteBtn.textContent = "❌";
                 deleteBtn.title = "حذف الملصق";
                 deleteBtn.addEventListener("click", (e) => {
                     e.stopPropagation();
@@ -144,7 +144,7 @@ import { state } from "./state.js";
                 const rotateBtn = document.createElement("button");
                 rotateBtn.className =
                     "absolute -top-4 -left-4 bg-yellow-400 hover:bg-yellow-300 text-slate-800 rounded-full w-8 h-8 flex items-center justify-center pointer-events-auto shadow-cartoon-sm border-2 border-slate-800 hover:scale-110 active:scale-95 transition-all text-sm";
-                rotateBtn.innerHTML = "🔄";
+                rotateBtn.textContent = "🔄";
                 rotateBtn.title = "تدوير الملصق";
                 // Pointer down for rotation
                 rotateBtn.addEventListener("pointerdown", (e) => {
@@ -158,7 +158,7 @@ import { state } from "./state.js";
                 const resizeBtn = document.createElement("button");
                 resizeBtn.className =
                     "absolute -bottom-4 -right-4 bg-cyan-400 hover:bg-cyan-300 text-slate-800 rounded-full w-8 h-8 flex items-center justify-center pointer-events-auto shadow-cartoon-sm border-2 border-slate-800 hover:scale-110 active:scale-95 transition-all text-sm";
-                resizeBtn.innerHTML = "📐";
+                resizeBtn.textContent = "📐";
                 resizeBtn.title = "تكبير/تصغير";
                 // Pointer down for resizing
                 resizeBtn.addEventListener("pointerdown", (e) => {
@@ -227,7 +227,7 @@ import { state } from "./state.js";
             function restoreStickerState(stickers = []) {
                 const layer = document.getElementById("stickers-layer");
                 if (!layer) return;
-                layer.innerHTML = "";
+                layer.replaceChildren();
                 state.activeSticker = null;
                 stickers.forEach((savedState) => {
                     addStickerToCanvas(savedState.stickerId, {

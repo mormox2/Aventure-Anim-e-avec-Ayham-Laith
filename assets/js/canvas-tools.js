@@ -1,0 +1,446 @@
+import { colors } from "./data.js";
+import { stopAllAnimations } from "./animations.js";
+import { showEncouragement } from "./feedback.js";
+import { saveState } from "./history.js";
+import { placeStamp } from "./canvas-modals.js";
+import { synth } from "./synth.js";
+import { speakArabic } from "./voice-duo.js";
+import { state } from "./state.js";
+
+let particleSpawner = () => {};
+
+function setParticleSpawner(spawner) {
+  particleSpawner = typeof spawner === "function" ? spawner : () => {};
+}
+
+            function renderColors() {
+                const palette = document.getElementById("color-palette");
+                palette.replaceChildren();
+
+                colors.forEach((color) => {
+                    const btn = document.createElement("button");
+                    btn.type = "button";
+                    btn.title = color.name;
+                    btn.setAttribute("aria-label", `اختيار اللون ${color.name}`);
+                    btn.addEventListener("click", () => selectColor(color.val, btn));
+                    btn.className = `w-9 h-9 lg:w-10 lg:h-10 rounded-full border-3 border-slate-800 shadow-cartoon-sm hover:scale-110 active:scale-95 bubble-btn flex items-center justify-center relative overflow-hidden transition-all ${color.bgClass}`;
+
+                    // Active indicator dot
+                    const dot = document.createElement("div");
+                    dot.className =
+                        "w-2.5 h-2.5 bg-white rounded-full border border-slate-800 opacity-0 transition-opacity active-dot";
+                    btn.appendChild(dot);
+
+                    // Set default active color button
+                    if (color.val === state.activeColor) {
+                        dot.classList.remove("opacity-0");
+                        dot.classList.add("opacity-100");
+                        btn.classList.add("scale-110");
+                    }
+
+                    palette.appendChild(btn);
+                });
+            }
+
+            function selectColor(colorValue, buttonEl) {
+                synth.playPop();
+                state.isEraser = false;
+
+                // Update state
+                if (colorValue === "rainbow") {
+                    state.isRainbowBrush = true;
+                } else {
+                    state.isRainbowBrush = false;
+                    state.activeColor = colorValue;
+                }
+
+                // Reset eraser style
+                document.getElementById("btn-eraser").classList.remove("bg-yellow-400", "scale-105");
+                document.getElementById("btn-eraser").classList.add("bg-pink-300");
+
+                // Update active indicators
+                document.querySelectorAll("#color-palette button").forEach((b) => {
+                    b.classList.remove("scale-110");
+                    b.querySelector(".active-dot").classList.remove("opacity-100");
+                    b.querySelector(".active-dot").classList.add("opacity-0");
+                });
+
+                buttonEl.classList.add("scale-110");
+                buttonEl.querySelector(".active-dot").classList.remove("opacity-0");
+                buttonEl.querySelector(".active-dot").classList.add("opacity-100");
+
+                // Update brush preview
+                const preview = document.getElementById("brush-preview");
+                if (state.isRainbowBrush) {
+                    preview.style.background = "linear-gradient(to right, red, orange, yellow, green, blue, violet)";
+                } else {
+                    preview.style.background = state.activeColor;
+                }
+            }
+
+            function selectEraser() {
+                synth.playPop();
+                state.isEraser = true;
+                state.isRainbowBrush = false;
+                state.isSprayMode = false;
+                state.isFillMode = false;
+
+                // Reset spray button
+                const sprayBtn = document.getElementById("btn-spray");
+                if (sprayBtn) { sprayBtn.classList.remove("bg-yellow-400","scale-105"); sprayBtn.classList.add("bg-emerald-300"); }
+                // Reset fill button
+                const fillBtn = document.getElementById("btn-fill");
+                if (fillBtn) { fillBtn.classList.remove("bg-yellow-400","scale-105"); fillBtn.classList.add("bg-purple-300"); }
+                // Update Eraser Button look
+                const eraserBtn = document.getElementById("btn-eraser");
+                eraserBtn.classList.remove("bg-pink-300");
+                eraserBtn.classList.add("bg-yellow-400", "scale-105");
+
+                // De-select colors from palette
+                document.querySelectorAll("#color-palette button").forEach((b) => {
+                    b.classList.remove("scale-110");
+                    b.querySelector(".active-dot").classList.remove("opacity-100");
+                    b.querySelector(".active-dot").classList.add("opacity-0");
+                });
+
+                // Update brush preview to checkered pattern or white representing eraser
+                document.getElementById("brush-preview").style.background = "#FFFFFF";
+            }
+
+            /************************************************************
+             * 6. Canvas Drawing Core
+             ************************************************************/
+            function startDrawing(e) {
+                // Instantly stop animations to allow stable, accurate drawing coordinates
+                stopAllAnimations();
+
+                // Prevent scrolling or zooming on iOS touch devices while drawing
+                if (e.pointerType === "touch") {
+                    e.preventDefault();
+                }
+
+                // Get relative position
+                const rect = state.canvas.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const clickY = e.clientY - rect.top;
+
+                // NEW: If Fill mode is active, perform flood fill and return
+                if (state.isFillMode) {
+                    if (performFloodFill(clickX, clickY)) saveState();
+                    return;
+                }
+
+                // NEW: If a stamp is selected, place it
+                if (state.activeStamp) {
+                    placeStamp(e.clientX, e.clientY);
+                    state.activeStamp = null;
+                    return;
+                }
+
+                state.isDrawing = true;
+                state.lastX = clickX;
+                state.lastY = clickY;
+
+                // Spawn magic pointer particles
+                particleSpawner(clickX, clickY);
+
+                // Play soft drawing start sound
+                synth.playClick();
+            }
+
+            function draw(e) {
+                if (!state.isDrawing) return;
+                if (e.pointerType === "touch") {
+                    e.preventDefault();
+                }
+
+                const rect = state.canvas.getBoundingClientRect();
+                const currentX = e.clientX - rect.left;
+                const currentY = e.clientY - rect.top;
+
+                // Spawn magic pointer particles as we draw
+                particleSpawner(currentX, currentY);
+
+                // #7: Spray mode — no stroke, scatter dots
+                if (state.isSprayMode && !state.isEraser) {
+                    drawSpray(currentX, currentY);
+                    state.lastX = currentX;
+                    state.lastY = currentY;
+                    if (Math.random() < 0.005) showEncouragement();
+                    return;
+                }
+
+                state.ctx.beginPath();
+                state.ctx.moveTo(state.lastX, state.lastY);
+                state.ctx.lineTo(currentX, currentY);
+
+                // Line characteristics
+                state.ctx.lineCap = "round";
+                state.ctx.lineJoin = "round";
+                state.ctx.lineWidth = state.brushSize;
+
+                if (state.isEraser) {
+                    // Eraser clears drawings with transparency
+                    state.ctx.globalCompositeOperation = "destination-out";
+                    state.ctx.strokeStyle = "rgba(0,0,0,1)";
+                    state.ctx.shadowBlur = 0; // Reset glow for eraser
+                } else {
+                    // Normal drawing
+                    state.ctx.globalCompositeOperation = "source-over";
+                    if (state.isRainbowBrush) {
+                        state.rainbowHue = (state.rainbowHue + 2) % 360;
+                        state.ctx.strokeStyle = `hsl(${state.rainbowHue}, 100%, 55%)`;
+                    } else {
+                        state.ctx.strokeStyle = state.activeColor;
+                    }
+
+                    // Apply magic glow in night mode
+                    if (state.currentTheme === "night") {
+                        state.ctx.shadowBlur = 15;
+                        state.ctx.shadowColor = state.ctx.strokeStyle;
+                    } else {
+                        state.ctx.shadowBlur = 0;
+                    }
+                }
+
+                state.ctx.stroke();
+
+                // Mirror mode: mirror horizontally
+                if (state.isMirrorMode) {
+                    const layoutW = state.canvas.offsetWidth || 700;
+                    const mirrorLastX = layoutW - state.lastX;
+                    const mirrorCurX = layoutW - currentX;
+                    // Save and restore context to avoid affecting main stroke style
+                    state.ctx.save();
+                    state.ctx.lineCap = "round";
+                    state.ctx.lineJoin = "round";
+                    state.ctx.lineWidth = state.brushSize;
+                    if (state.isEraser) {
+                        state.ctx.globalCompositeOperation = "destination-out";
+                        state.ctx.strokeStyle = "rgba(0,0,0,1)";
+                        state.ctx.shadowBlur = 0;
+                    } else {
+                        state.ctx.globalCompositeOperation = "source-over";
+                        if (state.isRainbowBrush) {
+                            // Recreate rainbow hue for mirror
+                            state.ctx.strokeStyle = `hsl(${(state.rainbowHue + 2) % 360}, 100%, 55%)`;
+                        } else {
+                            state.ctx.strokeStyle = state.activeColor;
+                        }
+
+                        // Apply magic glow in night mode
+                        if (state.currentTheme === "night") {
+                            state.ctx.shadowBlur = 15;
+                            state.ctx.shadowColor = state.ctx.strokeStyle;
+                        } else {
+                            state.ctx.shadowBlur = 0;
+                        }
+                    }
+                    state.ctx.beginPath();
+                    state.ctx.moveTo(mirrorLastX, state.lastY);
+                    state.ctx.lineTo(mirrorCurX, currentY);
+                    state.ctx.stroke();
+                    state.ctx.restore();
+                }
+
+                state.lastX = currentX;
+                state.lastY = currentY;
+
+                // Periodic check to trigger motivational speech bubble while drawing
+                if (Math.random() < 0.005) {
+                    showEncouragement();
+                }
+            }
+
+            // #7: Spray paint draw (called inside draw() for spray mode)
+            function drawSpray(x, y) {
+                const density = 35;
+                const radius = state.brushSize * 2;
+                state.ctx.globalCompositeOperation = "source-over";
+                state.ctx.fillStyle = state.isRainbowBrush ? `hsl(${state.rainbowHue}, 100%, 55%)` : state.activeColor;
+                
+                // Add phosphorescent glow in night mode for spray
+                if (state.currentTheme === "night") {
+                    state.ctx.shadowBlur = 10;
+                    state.ctx.shadowColor = state.ctx.fillStyle;
+                } else {
+                    state.ctx.shadowBlur = 0;
+                }
+
+                for (let i = 0; i < density; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const r = Math.random() * radius;
+                    state.ctx.beginPath();
+                    state.ctx.arc(x + r * Math.cos(angle), y + r * Math.sin(angle), 1, 0, Math.PI * 2);
+                    state.ctx.fill();
+                }
+                if (state.isMirrorMode) {
+                    const layoutW = state.canvas.offsetWidth || 700;
+                    state.ctx.fillStyle = state.isRainbowBrush ? `hsl(${(state.rainbowHue+1)%360}, 100%, 55%)` : state.activeColor;
+                    
+                    // Add glow for mirror spray
+                    if (state.currentTheme === "night") {
+                        state.ctx.shadowBlur = 10;
+                        state.ctx.shadowColor = state.ctx.fillStyle;
+                    } else {
+                        state.ctx.shadowBlur = 0;
+                    }
+
+                    for (let i = 0; i < density; i++) {
+                        const angle = Math.random() * Math.PI * 2;
+                        const r = Math.random() * radius;
+                        state.ctx.beginPath();
+                        state.ctx.arc((layoutW - x) + r * Math.cos(angle), y + r * Math.sin(angle), 1, 0, Math.PI * 2);
+                        state.ctx.fill();
+                    }
+                }
+                if (state.isRainbowBrush) state.rainbowHue = (state.rainbowHue + 1) % 360;
+                state.ctx.shadowBlur = 0; // Always reset after spray block
+            }
+
+            function stopDrawing() {
+                if (state.isDrawing) {
+                    state.isDrawing = false;
+                    state.ctx.globalCompositeOperation = "source-over"; // Reset to default
+                    state.ctx.shadowBlur = 0; // Reset glow
+                }
+            }
+
+            /************************************************************
+             * Fill Bucket (Flood Fill) - 🪣
+             ************************************************************/
+            function selectFillTool() {
+                synth.playPop();
+                state.isFillMode = !state.isFillMode;
+                state.isEraser = false;
+                state.isSprayMode = false;
+
+                // Reset spray button
+                const sprayBtn = document.getElementById("btn-spray");
+                if (sprayBtn) { sprayBtn.classList.remove("bg-yellow-400","scale-105"); sprayBtn.classList.add("bg-emerald-300"); }
+                const btn = document.getElementById("btn-fill");
+                if (state.isFillMode) {
+                    btn.classList.remove("bg-purple-300");
+                    btn.classList.add("bg-yellow-400", "scale-105");
+                    // Deactivate eraser
+                    document.getElementById("btn-eraser").classList.remove("bg-yellow-400", "scale-105");
+                    document.getElementById("btn-eraser").classList.add("bg-pink-300");
+                    showEncouragement("🪣 اضغط على أي منطقة في الرسم لملئها بلونك السحري!");
+                } else {
+                    btn.classList.remove("bg-yellow-400", "scale-105");
+                    btn.classList.add("bg-purple-300");
+                }
+            }
+
+            function performFloodFill(startX, startY) {
+                const rect = state.canvas.getBoundingClientRect();
+                // Convert coordinates taking DPR into account
+                const dpr = window.devicePixelRatio || 1;
+                const pixelX = Math.floor(startX * dpr);
+                const pixelY = Math.floor(startY * dpr);
+
+                // Get the image data
+                const imageData = state.ctx.getImageData(0, 0, state.canvas.width, state.canvas.height);
+                const data = imageData.data;
+                const w = state.canvas.width;
+                const h = state.canvas.height;
+
+                // Source color (what we clicked on)
+                const srcIdx = (pixelY * w + pixelX) * 4;
+                const srcR = data[srcIdx];
+                const srcG = data[srcIdx + 1];
+                const srcB = data[srcIdx + 2];
+                const srcA = data[srcIdx + 3];
+
+                // Prevent filling active outline/black/very dark lines
+                if (srcR < 45 && srcG < 45 && srcB < 45 && srcA > 200) {
+                    showEncouragement("🪣 خطوط الرسم السوداء تحميك! لوّن داخل الفراغات! 🛡️🖤");
+                    speakArabic("خطوط الرسم السوداء تحميك، لوّن داخل الفراغات يا بطل!");
+                    synth.playBoing();
+                    return false;
+                }
+
+                // Fill color (current brush color)
+                const tempDiv = document.createElement("div");
+                tempDiv.style.color = state.activeColor;
+                document.body.appendChild(tempDiv);
+                const computedColor = getComputedStyle(tempDiv).color;
+                document.body.removeChild(tempDiv);
+                const match = computedColor.match(/\d+/g);
+                let fillR = 0,
+                    fillG = 0,
+                    fillB = 0,
+                    fillA = 255;
+                if (match && match.length >= 3) {
+                    fillR = parseInt(match[0], 10);
+                    fillG = parseInt(match[1], 10);
+                    fillB = parseInt(match[2], 10);
+                }
+
+                // If the source is already the fill color, do nothing
+                if (srcR === fillR && srcG === fillG && srcB === fillB && srcA === fillA) return false;
+
+                // BFS flood fill — #1: use index pointer (O(1) dequeue, avoids O(n) shift)
+                const matchColor = (idx) => {
+                    return (
+                        Math.abs(data[idx] - srcR) < 5 &&
+                        Math.abs(data[idx + 1] - srcG) < 5 &&
+                        Math.abs(data[idx + 2] - srcB) < 5 &&
+                        Math.abs(data[idx + 3] - srcA) < 5
+                    );
+                };
+
+                const setColor = (idx) => {
+                    data[idx] = fillR;
+                    data[idx + 1] = fillG;
+                    data[idx + 2] = fillB;
+                    data[idx + 3] = fillA;
+                };
+
+                const visited = new Uint8Array(w * h); // faster than Set
+                const queue = [[pixelX, pixelY]];
+                let qi = 0;
+
+                while (qi < queue.length && queue.length < 500000) {
+                    const [cx, cy] = queue[qi++];
+                    if (cx < 0 || cx >= w || cy < 0 || cy >= h) continue;
+                    const visitIdx = cy * w + cx;
+                    if (visited[visitIdx]) continue;
+
+                    const idx = (cy * w + cx) * 4;
+                    if (!matchColor(idx)) continue;
+
+                    visited[cy * w + cx] = 1;
+                    setColor(idx);
+
+                    queue.push([cx + 1, cy]);
+                    queue.push([cx - 1, cy]);
+                    queue.push([cx, cy + 1]);
+                    queue.push([cx, cy - 1]);
+                }
+
+                state.ctx.putImageData(imageData, 0, 0);
+                synth.playPop();
+                showEncouragement("🪣 تم ملء المنطقة بنجاح! رائع!");
+                return true;
+            }
+
+            /************************************************************
+             * Mirror Mode - 🪞
+             ************************************************************/
+            function toggleMirror() {
+                synth.playPop();
+                state.isMirrorMode = !state.isMirrorMode;
+
+                const btn = document.getElementById("btn-mirror");
+                if (state.isMirrorMode) {
+                    btn.classList.remove("bg-teal-300");
+                    btn.classList.add("bg-yellow-400", "scale-105");
+                    showEncouragement("🪞 وضع المرآة السحرية نشط! ارسم على اليسار يظهر على اليمين!");
+                } else {
+                    btn.classList.remove("bg-yellow-400", "scale-105");
+                    btn.classList.add("bg-teal-300");
+                }
+            }
+
+export { renderColors, selectColor, selectEraser, startDrawing, draw, drawSpray, stopDrawing, selectFillTool, performFloodFill, toggleMirror, setParticleSpawner };
