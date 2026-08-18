@@ -147,7 +147,7 @@ import { state } from "./state.js";
                 if (!container) return;
                 const friends = getFriends();
 
-                container.innerHTML = "";
+                container.replaceChildren();
                 friends.forEach((name, index) => {
                     const badge = document.createElement("span");
                     const emoji = friendEmojis[index % friendEmojis.length];
@@ -172,7 +172,7 @@ import { state } from "./state.js";
                 if (!list || !empty) return;
 
                 const friends = getFriends();
-                list.innerHTML = "";
+                list.replaceChildren();
 
                 if (friends.length === 0) {
                     empty.classList.remove("hidden");
@@ -199,7 +199,7 @@ import { state } from "./state.js";
                     const delBtn = document.createElement("button");
                     delBtn.className =
                         "bubble-btn text-sm bg-red-300 hover:bg-red-200 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm px-3 py-1";
-                    delBtn.innerHTML = "🗑️";
+                    delBtn.textContent = "🗑️";
                     delBtn.addEventListener("click", () => removeFriend(name));
                     item.appendChild(delBtn);
 

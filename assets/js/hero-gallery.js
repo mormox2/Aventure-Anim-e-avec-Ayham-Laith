@@ -28,9 +28,12 @@ function loadHeroesData() {
             async function renderHeroesGallery(filterCat) {
                 const cat = filterCat || "all";
                 const container = document.getElementById("heroes-gallery");
-                container.innerHTML = "<div class=\"col-span-full py-8 text-center text-slate-500\">جاري تحميل الرسومات...</div>";
+                const loading = document.createElement("div");
+                loading.className = "col-span-full py-8 text-center text-slate-500";
+                loading.textContent = "جاري تحميل الرسومات...";
+                container.replaceChildren(loading);
                 const superheroes = await loadHeroesData();
-                container.innerHTML = "";
+                container.replaceChildren();
 
                 const filtered = cat === "all" ? superheroes : superheroes.filter((h) => h.category === cat);
 
@@ -61,7 +64,10 @@ function loadHeroesData() {
                     // Name label
                     const label = document.createElement("div");
                     label.className = "text-xs md:text-sm font-extrabold text-slate-700 text-center";
-                    label.innerHTML = `<span class="text-base">${hero.emoji}</span> ${hero.name}`;
+                    const emoji = document.createElement("span");
+                    emoji.className = "text-base";
+                    emoji.textContent = hero.emoji;
+                    label.append(emoji, document.createTextNode(` ${hero.name}`));
                     card.appendChild(label);
 
                     container.appendChild(card);

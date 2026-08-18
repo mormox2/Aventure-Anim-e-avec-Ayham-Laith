@@ -119,24 +119,38 @@ Le projet reste une **Single Page Application statique**, mais son code est main
 │   │   │   └── data/heroes.js     # SVG héros et dinosaures chargé à la demande
 │   │   ├── state.js               # État partagé de l'application
 │   │   ├── ui.js                  # Écouteurs addEventListener et délégation UI
-│   │   ├── lifecycle.js           # Initialisation et dimensionnement
-│   │   ├── drawing.js             # Outils de dessin et historique
-│   │   ├── stickers.js             # Stickers et manipulations
-│   │   ├── animations.js           # Animations et thèmes
-│   │   ├── audio-controls.js       # Musique de fond
-│   │   ├── utilities-gallery.js    # Modèles, galerie, amis et réinitialisation
-│   │   ├── settings.js             # Paramètres et encouragements
-│   │   ├── export-particles.js     # Export PNG et particules
-│   │   └── voice-duo.js             # Synthèse vocale et mode duo
+│   │   ├── lifecycle.js           # Initialisation, dimensionnement et événements canvas
+│   │   ├── drawing.js             # Façade de compatibilité de l’API canvas
+│   │   ├── canvas-tools.js        # Palette, dessin, spray, remplissage et miroir
+│   │   ├── canvas-modals.js       # Stamps et modale des tampons
+│   │   ├── canvas-backgrounds.js  # Fonds et effacement de la toile
+│   │   ├── history.js             # Snapshots canvas/stickers et undo/redo
+│   │   ├── canvas-controls.js     # Outils mobiles et export PNG
+│   │   ├── stickers.js            # Stickers et manipulations
+│   │   ├── animations.js          # Animations et thèmes
+│   │   ├── audio-controls.js      # Musique de fond
+│   │   ├── utilities-gallery.js   # Façade des fonctionnalités de galerie
+│   │   ├── hero-gallery.js        # Galerie héros et lazy loading
+│   │   ├── drawing-gallery.js     # Dessins sauvegardés
+│   │   ├── friends.js             # Amis, badges et célébrations
+│   │   ├── reset-app.js           # Réinitialisation complète
+│   │   ├── storage.js             # Stockage local versionné
+│   │   ├── pointer-scheduler.js   # Coalescence des pointermove par frame
+│   │   ├── settings.js            # Paramètres et interactions UI
+│   │   ├── export-particles.js    # Export PNG et particules
+│   │   └── voice-duo.js            # Synthèse vocale et mode duo
 │   └── README.md                  # Carte des responsabilités des assets
+├── tests/                         # Tests Vitest/jsdom
 ├── README.md                      # Présentation complète et documentation du projet
 ├── LICENSE                        # Licence d'utilisation MIT
 ├── scripts/
-│   └── check-bundle-size.mjs       # Budgets de taille des assets de production
-├── .github/workflows/             # Déploiement automatique vers GitHub Pages
+│   ├── check-modules.mjs          # Contrôle syntaxique et présence des modules
+│   └── check-bundle-size.mjs      # Budgets de taille des assets de production
+├── .github/workflows/
+│   └── ci.yml                     # Vérification continue
 ```
 
-Les icônes, stickers et personnages restent intégrés sous forme de vecteurs **SVG natifs** dans les modules de données et le markup nécessaire. `scripts/generate-entry.mjs` génère `src/main.js` avec des imports ES explicites ; Vite analyse ensuite le graphe des modules et produit le bundle optimisé dans `dist/`, tandis que `public/` contient les fichiers servis tels quels. Le module `ui.js` câble les interactions avec `addEventListener`, sans attributs HTML inline ni pont `globalThis`.
+Les icônes, stickers et personnages restent intégrés sous forme de vecteurs **SVG natifs** dans les modules de données et le markup nécessaire. `scripts/generate-entry.mjs` génère `src/main.js` avec des imports ES explicites ; Vite analyse ensuite le graphe des modules et produit le bundle optimisé dans `dist/`. Le module `ui.js` câble les interactions avec `addEventListener`, sans attributs HTML inline ni pont `globalThis`.
 
 Le script `scripts/check-bundle-size.mjs` vérifie automatiquement les budgets du JavaScript initial, du chunk héros différé et de la feuille CSS afin qu’une régression de taille échoue explicitement pendant la CI.
 

@@ -47,7 +47,7 @@ import { state } from "./state.js";
                 const empty = document.getElementById("gallery-empty");
                 const drawings = getSavedDrawings();
 
-                grid.innerHTML = "";
+                grid.replaceChildren();
 
                 if (drawings.length === 0) {
                     empty.classList.remove("hidden");
@@ -78,7 +78,7 @@ import { state } from "./state.js";
                         const delBtn = document.createElement("button");
                         delBtn.className =
                             "bubble-btn text-xs bg-red-300 hover:bg-red-200 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm py-1 px-2";
-                        delBtn.innerHTML = "🗑️ حذف";
+                        delBtn.textContent = "🗑️ حذف";
                         delBtn.addEventListener("click", () => deleteDrawingFromGallery(draw.id));
                         card.appendChild(delBtn);
 

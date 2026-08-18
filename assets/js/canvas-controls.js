@@ -62,7 +62,7 @@ import { state } from "./state.js";
             function renderMobileColors() {
                 const container = document.getElementById("mobile-color-palette");
                 if (!container) return;
-                container.innerHTML = "";
+                container.replaceChildren();
                 colors.forEach((color) => {
                     const btn = document.createElement("button");
                     btn.type = "button";

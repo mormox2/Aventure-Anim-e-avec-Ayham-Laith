@@ -15,7 +15,7 @@ import { state } from "./state.js";
 
             function renderStampsGallery() {
                 const container = document.getElementById("stamps-gallery");
-                container.innerHTML = "";
+                container.replaceChildren();
 
                 stampTemplates.forEach((stamp) => {
                     const btn = document.createElement("button");

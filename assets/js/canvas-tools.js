@@ -15,7 +15,7 @@ function setParticleSpawner(spawner) {
 
             function renderColors() {
                 const palette = document.getElementById("color-palette");
-                palette.innerHTML = "";
+                palette.replaceChildren();
 
                 colors.forEach((color) => {
                     const btn = document.createElement("button");

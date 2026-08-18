@@ -13,7 +13,7 @@ import { state } from "./state.js";
                     state.ctx.setTransform(1, 0, 0, 1, 0, 0);
                     state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
                     state.ctx.restore();
-                    document.getElementById("stickers-layer").innerHTML = "";
+                    document.getElementById("stickers-layer").replaceChildren();
 
                     // Reset defaults
                     state.activeColor = "#FF4D6D";

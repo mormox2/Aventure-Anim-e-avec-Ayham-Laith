@@ -88,7 +88,7 @@ import { state } from "./state.js";
 
                     // Remove all stickers
                     const stickersContainer = document.getElementById("stickers-layer");
-                    stickersContainer.innerHTML = "";
+                    stickersContainer.replaceChildren();
                     state.activeSticker = null;
 
                     // Turn off Alive mode if active
