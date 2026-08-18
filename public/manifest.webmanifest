@@ -1,0 +1,22 @@
+{
+  "name": "ارسم وحرّك مع أيهم و ليث",
+  "short_name": "ارسم وحرّك",
+  "description": "استوديو رسم كرتوني تفاعلي للأطفال مع ملصقات، أبطال ومؤثرات صوتية مرحة",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FEF9C3",
+  "theme_color": "#FDE047",
+  "dir": "rtl",
+  "lang": "ar",
+  "categories": ["education", "entertainment", "kids"],
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

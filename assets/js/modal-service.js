@@ -1,5 +1,12 @@
 import { synth } from "./synth.js";
 
+/**
+ * Toggles visibility, animations and ARIA attributes for a modal dialog.
+ *
+ * @param {string} modalId - The DOM ID of the dialog container element.
+ * @param {string} contentId - The DOM ID of the inner card element with zoom/scale animations.
+ * @param {boolean} show - Whether to open (true) or close (false) the modal.
+ */
 function toggleModal(modalId, contentId, show) {
   synth.playClick();
   const modal = document.getElementById(modalId);
@@ -24,4 +31,3 @@ function toggleModal(modalId, contentId, show) {
 }
 
 export { toggleModal };
-

@@ -128,6 +128,13 @@ import { state } from "./state.js";
 
                 // Initialize particle trail system
                 initParticles();
+
+                // Register Service Worker for offline PWA support
+                if ("serviceWorker" in navigator && window.location.protocol.startsWith("http")) {
+                    window.addEventListener("load", () => {
+                        navigator.serviceWorker.register("./sw.js").catch(() => {});
+                    });
+                }
             });
 
 

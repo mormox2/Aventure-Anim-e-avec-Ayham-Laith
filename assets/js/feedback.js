@@ -1,5 +1,9 @@
 import { positiveQuotes } from "./data.js";
 
+/**
+ * Displays a positive encouragement quote in the UI with a gentle pulse animation.
+ * @param {string} [specificText=""] - Optional specific message to show; falls back to a random quote.
+ */
 function showEncouragement(specificText = "") {
   const element = document.getElementById("encouragement-sidebar");
   if (!element) return;
@@ -11,6 +15,9 @@ function showEncouragement(specificText = "") {
   element.classList.add("animate-pulse");
 }
 
+/**
+ * Triggers full-screen celebratory confetti particles using canvas-confetti.
+ */
 function triggerConfetti() {
   if (typeof confetti !== "function") return;
 
@@ -23,4 +30,3 @@ function triggerConfetti() {
 }
 
 export { showEncouragement, triggerConfetti };
-

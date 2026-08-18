@@ -1,3 +1,11 @@
+/**
+ * Creates a coalescing scheduler that synchronizes pointer drawing events with requestAnimationFrame.
+ * Prevents redundant re-renders and input lag during high-frequency pointer moves.
+ *
+ * @param {(event: PointerEvent|MouseEvent) => void} draw - The drawing function to invoke per animation frame.
+ * @param {typeof globalThis.requestAnimationFrame} [requestFrame=globalThis.requestAnimationFrame] - RAF provider.
+ * @returns {((event: PointerEvent|MouseEvent) => void) & { cancel: () => void }} Coalesced scheduler function with a cancel method.
+ */
 function createPointerMoveScheduler(draw, requestFrame = globalThis.requestAnimationFrame) {
   let pendingEvent = null;
   let frameId = null;
