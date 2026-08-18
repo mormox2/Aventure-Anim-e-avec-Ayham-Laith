@@ -38,5 +38,11 @@ jobs:
       - name: Check modules
         run: pnpm run check
 
+      - name: Run tests
+        run: pnpm test
+
       - name: Build production bundle
         run: pnpm run build
+
+      - name: Check bundle budgets
+        run: pnpm run bundle:check
