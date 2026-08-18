@@ -1,11 +1,13 @@
 # Organisation des assets
 
-L’application est une SPA statique construite avec Vite. Les fichiers sources sont séparés par responsabilité, puis Vite analyse leur graphe ES modules et produit le bundle optimisé. Le fichier Tailwind reste dans `public/` car le CDN le lit directement avant le chargement de l’application.
+L’application est une SPA statique construite avec Vite. Les fichiers sources sont séparés par responsabilité, puis Vite analyse leur graphe ES modules et produit le bundle optimisé. Tailwind CSS est compilé localement par PostCSS et purgé à partir de `index.html` et des modules JavaScript.
 
 - `css/base.css` : reset, layout global et typographie.
 - `css/animations.css` : arrière-plans, transitions et animations du canvas.
 - `css/components.css` : contrôles personnalisés et styles de secours.
-- `../public/tailwind-config.js` : configuration du CDN Tailwind servie telle quelle par Vite.
+- `css/tailwind.css` : directives d’entrée Tailwind compilées localement par Vite.
+- `../tailwind.config.js` : thème Tailwind local, extension Changa, bordures 3px et ombres cartoon.
+- `../postcss.config.js` : chaîne PostCSS avec Tailwind et Autoprefixer.
 - `js/synth.js` : moteur Web Audio.
 - `js/data.js` : palettes, stickers, tampons et messages légers.
 - `js/data/heroes.js` : SVG des héros et dinosaures chargé dynamiquement par la galerie.
@@ -22,4 +24,4 @@ Les modules utilisent désormais des imports nommés directs et ne dépendent pl
 - `js/voice-duo.js` : synthèse vocale et mode duo.
 - `js/ui.js` : délégation des clics et entrées via `addEventListener`.
 
-Le script `scripts/generate-entry.mjs` génère `src/main.js` avec des imports explicites, puis initialise `ui.js`. Les attributs HTML inline et le pont `globalThis` ont été supprimés ; les interactions sont désormais câblées depuis les modules. Les SVG héros et dinosaures sont chargés par `import()` seulement lorsque la galerie est ouverte.
+Le script `scripts/generate-entry.mjs` génère `src/main.js` avec des imports explicites, dont la feuille Tailwind locale, puis initialise `ui.js`. Les attributs HTML inline et le pont `globalThis` ont été supprimés ; les interactions sont désormais câblées depuis les modules. Les SVG héros et dinosaures sont chargés par `import()` seulement lorsque la galerie est ouverte.
