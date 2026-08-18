@@ -8,10 +8,13 @@
   "scripts": {
     "dev": "node scripts/generate-entry.mjs && vite",
     "build": "node scripts/generate-entry.mjs && vite build",
+    "test": "vitest run",
     "preview": "vite preview",
     "check": "node scripts/generate-entry.mjs && node scripts/check-modules.mjs"
   },
   "devDependencies": {
-    "vite": "^7.1.3"
+    "jsdom": "^26.1.0",
+    "vite": "^7.1.3",
+    "vitest": "^3.2.7"
   }
 }
