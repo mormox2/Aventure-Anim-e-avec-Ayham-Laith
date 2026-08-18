@@ -1,6 +1,7 @@
 import { draw, redo, renderColors, renderMobileColors, saveState, startDrawing, stopDrawing, toggleMobileDrawer, undo } from "./drawing.js";
 import { initParticles } from "./export-particles.js";
-import { setAnimationSpeed, showEncouragement, triggerConfetti } from "./settings.js";
+import { showEncouragement, triggerConfetti } from "./feedback.js";
+import { setAnimationSpeed } from "./settings.js";
 import { deselectAllStickers, renderStickers } from "./stickers.js";
 import { renderFriendBadges, saveCurrentDrawingToGallery } from "./utilities-gallery.js";
 import { state } from "./state.js";

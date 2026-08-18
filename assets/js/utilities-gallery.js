@@ -1,7 +1,8 @@
 import { stopAllAnimations, toggleTheme } from "./animations.js";
 import { toggleMusic } from "./audio-controls.js";
-import { clearHistory, renderColors, saveState, toggleModal } from "./drawing.js";
-import { showEncouragement, triggerConfetti } from "./settings.js";
+import { clearHistory, renderColors, saveState } from "./drawing.js";
+import { showEncouragement, triggerConfetti } from "./feedback.js";
+import { toggleModal } from "./modal-service.js";
 import { synth } from "./synth.js";
 import { state } from "./state.js";
 

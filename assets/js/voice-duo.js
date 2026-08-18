@@ -1,4 +1,4 @@
-import { showEncouragement } from "./settings.js";
+import { showEncouragement } from "./feedback.js";
 import { synth } from "./synth.js";
 import { state } from "./state.js";
 

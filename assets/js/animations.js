@@ -1,5 +1,6 @@
 import { aliveMessages } from "./data.js";
-import { animationSpeed, showEncouragement, triggerConfetti } from "./settings.js";
+import { getAnimationSpeed } from "./animation-state.js";
+import { showEncouragement, triggerConfetti } from "./feedback.js";
 import { deselectAllStickers } from "./stickers.js";
 import { synth } from "./synth.js";
 import { speakArabic } from "./voice-duo.js";
@@ -72,7 +73,7 @@ import { state } from "./state.js";
             }
 
             function triggerAnimation(animName, buttonEl) {
-                const speed = animationSpeed || 1;
+                const speed = getAnimationSpeed() || 1;
                 if (animName === "dance") synth.playDanceMelody(speed);
                 else if (animName === "jump") synth.playJumpSound(speed);
                 else if (animName === "spin") synth.playSpinSound(speed);
@@ -102,13 +103,13 @@ import { state } from "./state.js";
                 void drawingArea.offsetWidth;
 
                 // 4. Apply speed multiplier before adding class
-                if (animationSpeed !== 1) {
+                if (speed !== 1) {
                     // Remove and re-add the class after speed is set
                     const baseDuration = 1; // Base duration in seconds (relative)
-                    const durationMultiplier = 1 / animationSpeed;
-                    drawingArea.style.setProperty("--anim-speed-factor", animationSpeed);
+                    const durationMultiplier = 1 / speed;
+                    drawingArea.style.setProperty("--anim-speed-factor", speed);
                     // Apply a data attribute for CSS to use
-                    drawingArea.dataset.speed = animationSpeed;
+                    drawingArea.dataset.speed = speed;
                 } else {
                     drawingArea.dataset.speed = "1";
                 }

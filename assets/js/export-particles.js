@@ -1,4 +1,4 @@
-import { showEncouragement, triggerConfetti } from "./settings.js";
+import { showEncouragement, triggerConfetti } from "./feedback.js";
 import { deselectAllStickers } from "./stickers.js";
 import { synth } from "./synth.js";
 import { saveCurrentDrawingToGallery } from "./utilities-gallery.js";
