@@ -10,6 +10,11 @@ const sourceDir = resolve(root, "assets/js");
 const moduleFiles = (await readdir(sourceDir))
   .filter((file) => file.endsWith(".js"))
   .sort();
+const requiredModules = ["animation-state.js", "feedback.js", "modal-service.js"];
+
+for (const file of requiredModules) {
+  await access(resolve(sourceDir, file));
+}
 
 for (const file of moduleFiles) {
   await run(process.execPath, ["--check", resolve(sourceDir, file)]);
@@ -19,4 +24,4 @@ await access(resolve(root, "src/main.js"));
 await access(resolve(root, "index.html"));
 await access(resolve(root, "vite.config.js"));
 
-console.log(`Checked ${moduleFiles.length} source modules and the ES module Vite entry.`);
+console.log(`Checked ${moduleFiles.length} source modules, including ${requiredModules.join(", ")}, and the ES module Vite entry.`);

@@ -1,6 +1,7 @@
 import { stopAllAnimations } from "./animations.js";
 import { colors, stampTemplates } from "./data.js";
-import { showEncouragement, triggerConfetti } from "./settings.js";
+import { showEncouragement, triggerConfetti } from "./feedback.js";
+import { toggleModal } from "./modal-service.js";
 import { synth } from "./synth.js";
 import { speakArabic } from "./voice-duo.js";
 import { state } from "./state.js";
@@ -444,30 +445,6 @@ import { captureStickerState, restoreStickerState } from "./stickers.js";
              * Stamps (Shapes) Tool - ⭐
              ************************************************************/
             let stampsGalleryRendered = false;
-
-            // #13: Generic modal toggle helper — eliminates repeated show/hide boilerplate
-            function toggleModal(modalId, contentId, show) {
-                synth.playClick();
-                const modal = document.getElementById(modalId);
-                const content = document.getElementById(contentId);
-                if (!modal || !content) return;
-
-                if (show) {
-                    modal.classList.remove("hidden");
-                    setTimeout(() => {
-                        modal.classList.remove("opacity-0");
-                        content.classList.remove("scale-95");
-                        content.classList.add("scale-100");
-                    }, 10);
-                } else {
-                    modal.classList.add("opacity-0");
-                    content.classList.remove("scale-100");
-                    content.classList.add("scale-95");
-                    setTimeout(() => {
-                        modal.classList.add("hidden");
-                    }, 300);
-                }
-            }
 
             function toggleStampsModal(show) {
                 if (!stampsGalleryRendered) {

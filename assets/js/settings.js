@@ -1,15 +1,15 @@
-import { positiveQuotes } from "./data.js";
-import { toggleModal } from "./drawing.js";
+import { setAnimationSpeedValue } from "./animation-state.js";
+import { showEncouragement, triggerConfetti } from "./feedback.js";
+import { toggleModal } from "./modal-service.js";
 import { synth } from "./synth.js";
 
 /* Animation settings, help, encouragement and confetti helpers. */
             /************************************************************
              * 15. Animation Speed Control
              ************************************************************/
-            let animationSpeed = 1; // 1 = normal
 
             function setAnimationSpeed(speed) {
-                animationSpeed = speed;
+                setAnimationSpeedValue(speed);
                 synth.playPop();
 
                 const slowBtn = document.getElementById("speed-slow");
@@ -92,28 +92,5 @@ import { synth } from "./synth.js";
                 );
             }
 
-            // Show floating encouragement text on top or sidebar
-            function showEncouragement(specificText = "") {
-                const el = document.getElementById("encouragement-sidebar");
-                const text = specificText || positiveQuotes[Math.floor(Math.random() * positiveQuotes.length)];
-                el.textContent = text;
 
-                // Visual bounce on text update
-                el.classList.remove("animate-pulse");
-                void el.offsetWidth;
-                el.classList.add("animate-pulse");
-            }
-
-            // Local Confetti burst wrapper
-            function triggerConfetti() {
-                if (typeof confetti === "function") {
-                    confetti({
-                        particleCount: 80,
-                        spread: 70,
-                        origin: { y: 0.6 },
-                        colors: ["#FF4D6D", "#FF8C00", "#FFD700", "#4CAF50", "#00BFFF", "#9C27B0", "#FF69B4"],
-                    });
-                }
-            }
-
-export { animationSpeed, setAnimationSpeed, setTemplateOpacity, toggleHelpModal, animalReact, showEncouragement, triggerConfetti };
+export { setAnimationSpeed, setTemplateOpacity, toggleHelpModal, animalReact };
