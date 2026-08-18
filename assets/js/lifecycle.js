@@ -1,5 +1,5 @@
-import { draw, redo, renderColors, renderMobileColors, saveState, startDrawing, stopDrawing, toggleMobileDrawer, undo } from "./drawing.js";
-import { initParticles } from "./export-particles.js";
+import { draw, redo, renderColors, renderMobileColors, saveState, setParticleSpawner, startDrawing, stopDrawing, toggleMobileDrawer, undo } from "./drawing.js";
+import { initParticles, spawnParticles } from "./export-particles.js";
 import { showEncouragement, triggerConfetti } from "./feedback.js";
 import { setAnimationSpeed } from "./settings.js";
 import { deselectAllStickers, renderStickers } from "./stickers.js";
@@ -23,6 +23,9 @@ import { state } from "./state.js";
 
                 // Render stickers gallery
                 renderStickers("all");
+
+                // Inject the particle trail without coupling canvas-tools to the export module.
+                setParticleSpawner(spawnParticles);
 
                 // Add Canvas drawing event listeners (Pointer Events)
                 state.canvas.addEventListener("pointerdown", startDrawing);
