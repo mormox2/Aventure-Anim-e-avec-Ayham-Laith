@@ -5,9 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>ارسم وحرّك مع أيهم و ليث 🎨✨🦸‍♂️</title>
 
-        <!-- Tailwind CSS Play CDN -->
-        <script src="https://cdn.tailwindcss.com"></script>
-
         <!-- Canvas Confetti for celebrations -->
         <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
@@ -15,8 +12,6 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;600;800&display=swap" rel="stylesheet" />
-
-        <script vite-ignore src="%BASE_URL%tailwind-config.js"></script>
 
     </head>
 
@@ -28,7 +23,7 @@
             <!-- Rainbow (Day mode) -->
             <div
                 id="deco-rainbow"
-                class="absolute left-1/2 -translate-x-1/2 -top-24 w-[140%] max-w-[1200px] aspect-[2/1] border-[40px] md:border-[60px] border-double rounded-full opacity-30 select-none border-t-red-400 border-r-yellow-400 border-b-green-400 border-l-blue-400"
+                class="absolute left-1/2 -translate-x-1/2 -top-24 w-[140%] max-w-[1200px] aspect-[2/1] border-[40px] md:border-[60px] border-double rounded-full opacity-30 select-none border-t-red[...]"
             ></div>
 
             <!-- Floating Clouds (Day mode) -->
@@ -120,7 +115,7 @@
                     >
                         <span
                             data-ui-click="celebrate-name" data-ui-name="أيهم"
-                            class="inline-flex items-center gap-1 md:gap-2 font-black bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-300 text-slate-900 px-3 md:px-5 py-1 md:py-2 rounded-full border-3 border-slate-800 shadow-cartoon hover:scale-110 active:scale-95 hover:rotate-3 transition-all duration-200 text-xs md:text-lg lg:text-xl cursor-pointer select-none"
+                            class="inline-flex items-center gap-1 md:gap-2 font-black bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-300 text-slate-900 px-3 md:px-5 py-1 md:py-2 rounded[...]
                         >
                             <span class="animate-bounce">👑</span>
                             <span>أيهم</span>
@@ -128,7 +123,7 @@
                         <span data-role="separator" class="text-slate-500 font-black text-xs md:text-xl mx-1">&amp;</span>
                         <span
                             data-ui-click="celebrate-name" data-ui-name="ليث"
-                            class="inline-flex items-center gap-1 md:gap-2 font-black bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-300 text-slate-900 px-3 md:px-5 py-1 md:py-2 rounded-full border-3 border-slate-800 shadow-cartoon hover:scale-110 active:scale-95 hover:-rotate-3 transition-all duration-200 text-xs md:text-lg lg:text-xl cursor-pointer select-none"
+                            class="inline-flex items-center gap-1 md:gap-2 font-black bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-300 text-slate-900 px-3 md:px-5 py-1 md:py-2 rounded-full [...]
                         >
                             <span class="animate-pulse">⚡</span>
                             <span>ليث</span>
@@ -136,7 +131,7 @@
                         <span
                             data-ui-click="celebrate-name" data-ui-name="رسم"
                             data-role="adventure"
-                            class="inline-flex items-center gap-1 font-black bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500 text-white px-3 py-1 rounded-full border-3 border-slate-800 shadow-cartoon-sm hover:scale-110 active:scale-95 hover:rotate-2 transition-all duration-200 text-xs md:text-sm cursor-pointer select-none"
+                            class="inline-flex items-center gap-1 font-black bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500 text-white px-3 py-1 rounded-full border-3 border-slate-800 sh[...]
                         >
                             <span>✨</span>
                             <span>رسم</span>
@@ -151,7 +146,7 @@
                 <button
                     id="btn-music"
                     data-ui-click="toggle-music"
-                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-purple-400 hover:bg-purple-300 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
+                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-purple-400 hover:bg-purple-300 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 s[...]
                 >
                     <span id="music-icon" class="text-sm md:text-xl">🔇</span>
                     <span id="music-text" class="hidden md:inline">موسيقى</span>
@@ -159,28 +154,28 @@
                 <button
                     id="btn-theme"
                     data-ui-click="toggle-theme"
-                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-yellow-300 hover:bg-yellow-200 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
+                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-yellow-300 hover:bg-yellow-200 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 s[...]
                 >
                     <span id="theme-icon" class="text-sm md:text-xl">☀️</span>
                     <span id="theme-text" class="hidden md:inline">النهار</span>
                 </button>
                 <button
                     data-ui-click="toggle-hero-modal" data-ui-value="true"
-                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-gradient-to-r from-red-400 via-green-400 to-blue-400 hover:from-red-300 hover:via-green-300 hover:to-blue-300 text-white font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
+                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-gradient-to-r from-red-400 via-green-400 to-blue-400 hover:from-red-300 hover:via-green-300 hover:to-blue-300 text-white font-[...]
                 >
                     <span class="text-sm md:text-xl">🦸🦕</span>
                     <span class="hidden md:inline">رسومات</span>
                 </button>
                 <button
                     data-ui-click="toggle-friends-modal" data-ui-value="true"
-                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-gradient-to-r from-pink-400 to-purple-400 text-white font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
+                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-gradient-to-r from-pink-400 to-purple-400 text-white font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slat[...]
                 >
                     <span class="text-sm md:text-xl">👥</span>
                     <span class="hidden md:inline">أصدقاء</span>
                 </button>
                 <button
                     data-ui-click="toggle-gallery-modal" data-ui-value="true"
-                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-amber-400 hover:bg-amber-300 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
+                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-amber-400 hover:bg-amber-300 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 sha[...]
                 >
                     <span class="text-sm md:text-xl">🖼️</span>
                     <span class="hidden md:inline">معرض</span>
@@ -188,14 +183,14 @@
                 <button
                     id="btn-split-mode"
                     data-ui-click="toggle-split-mode"
-                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-gradient-to-r from-amber-400 to-cyan-400 hover:from-amber-300 hover:to-cyan-300 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
+                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-gradient-to-r from-amber-400 to-cyan-400 hover:from-amber-300 hover:to-cyan-300 text-slate-800 font-extrabold rounded-xl md:ro[...]
                 >
                     <span class="text-sm md:text-xl">🤝</span>
                     <span class="hidden md:inline">ثنائي</span>
                 </button>
                 <button
                     data-ui-click="toggle-help-modal" data-ui-value="true"
-                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-cyan-400 hover:bg-cyan-300 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
+                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-cyan-400 hover:bg-cyan-300 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shado[...]
                 >
                     <span class="text-sm md:text-xl">❓</span>
                     <span class="hidden md:inline">كيف</span>
@@ -207,884 +202,7 @@
         <main class="relative z-10 flex-grow flex px-1 md:px-2 gap-1 md:gap-2 overflow-hidden min-h-0">
             <!-- LEFT SIDEBAR: Drawing Tools (compact, fixed width) -->
             <section
-                class="hidden md:flex flex-col gap-1 w-40 lg:w-44 bg-amber-100/95 border-2 md:border-3 border-slate-800 rounded-2xl md:rounded-3xl p-1.5 md:p-2 shadow-cartoon-lg select-none overflow-y-auto shrink-0"
+                class="hidden md:flex flex-col gap-1 w-40 lg:w-44 bg-amber-100/95 border-2 md:border-3 border-slate-800 rounded-2xl md:rounded-3xl p-1.5 md:p-2 shadow-cartoon-lg select-none overf[...]
             >
-                <div
-                    class="text-center bg-amber-300/80 border border-slate-800 py-0.5 px-1 rounded-full font-extrabold text-slate-800 text-xs lg:text-sm shadow-cartoon-sm whitespace-nowrap"
-                >
-                    <span class="inline">أدوات الرسم</span> 🖌️
-                </div>
-
-                <!-- Color Palette Grid -->
-                <div>
-                    <label class="block text-right font-bold text-slate-700 mb-1.5 text-xs lg:text-sm">اختر لونك السحري:</label>
-                    <div class="grid grid-cols-4 gap-1.5 md:gap-2.5" id="color-palette">
-                        <!-- Dynamic Colors inserted via JS -->
-                    </div>
-                </div>
-
-                <!-- Brush Size Section -->
-                <div class="bg-white/70 border-2 border-slate-800 p-2 md:p-3 rounded-2xl shadow-cartoon-sm block">
-                    <label
-                        class="block text-right font-bold text-slate-700 mb-1 text-sm flex justify-between items-center"
-                    >
-                        <span>حجم الفرشاة:</span>
-                        <span
-                            id="brush-size-val"
-                            class="bg-pink-100 text-pink-600 px-2 py-0.5 rounded-md font-extrabold border border-pink-200"
-                        >
-                            12
-                        </span>
-                    </label>
-                    <div class="flex items-center gap-3 mt-2">
-                        <!-- Small dot indicator -->
-                        <div
-                            class="w-10 h-10 flex items-center justify-center bg-slate-100 border-2 border-slate-800 rounded-xl overflow-hidden"
-                        >
-                            <div
-                                id="brush-preview"
-                                class="bg-slate-800 rounded-full transition-all duration-100"
-                                style="width: 12px; height: 12px"
-                            ></div>
-                        </div>
-                        <input
-                            type="range"
-                            id="brush-size"
-                            min="3"
-                            max="50"
-                            value="12"
-                            class="flex-grow cursor-pointer accent-pink-500"
-                        />
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-1.5 mt-1">
-                    <button
-                        id="btn-eraser"
-                        data-ui-click="select-eraser"
-                        class="bubble-btn py-1.5 lg:py-2 px-1 bg-pink-300 hover:bg-pink-200 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
-                    >
-                        <span class="text-base lg:text-lg">🧽</span>
-                        <span class="inline">الممحاة</span>
-                    </button>
-
-                    <button
-                        data-ui-click="clear-canvas"
-                        class="bubble-btn py-1.5 lg:py-2 px-1 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
-                    >
-                        <span class="text-base lg:text-lg">💣</span>
-                        <span class="inline">مسح الكل</span>
-                    </button>
-
-                    <!-- Spray paint brush -->
-                    <button
-                        id="btn-spray"
-                        data-ui-click="select-spray"
-                        class="bubble-btn py-1.5 lg:py-2 px-1 bg-emerald-300 hover:bg-emerald-200 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
-                    >
-                        <span class="text-base lg:text-lg">🫧</span>
-                        <span class="inline">بخاخ</span>
-                    </button>
-
-                    <!-- Fill Bucket (Flood Fill) -->
-                    <button
-                        id="btn-fill"
-                        data-ui-click="select-fill-tool"
-                        class="bubble-btn py-1.5 lg:py-2 px-1 bg-purple-300 hover:bg-purple-200 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
-                    >
-                        <span class="text-base lg:text-lg">🪣</span>
-                        <span class="inline">دهان سحري</span>
-                    </button>
-                </div>
-
-                <!-- Drawing tools row (Mirror + Shapes) -->
-                <div class="grid grid-cols-2 gap-1.5">
-                    <button
-                        id="btn-mirror"
-                        data-ui-click="toggle-mirror"
-                        class="bubble-btn py-1.5 lg:py-2 px-1 bg-teal-300 hover:bg-teal-200 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
-                    >
-                        <span class="text-base lg:text-lg">🪞</span>
-                        <span class="inline">مرآة سحرية</span>
-                    </button>
-
-                    <button
-                        data-ui-click="toggle-stamps-modal" data-ui-value="true"
-                        class="bubble-btn py-1.5 lg:py-2 px-1 bg-cyan-300 hover:bg-cyan-200 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
-                    >
-                        <span class="text-base lg:text-lg">⭐</span>
-                        <span class="inline">طوابع سحرية</span>
-                    </button>
-                </div>
-
-                <!-- Custom color picker -->
-                <div class="bg-white/70 border-2 border-slate-800 p-2.5 rounded-2xl shadow-cartoon-sm block">
-                    <label class="block text-right font-bold text-slate-700 mb-1.5 text-sm">🎨 لون مخصص:</label>
-                    <div class="flex items-center gap-2">
-                        <input
-                            type="color"
-                            id="custom-color-picker"
-                            value="#FF4D6D"
-                            class="w-12 h-12 rounded-full border-4 border-slate-800 cursor-pointer shadow-cartoon-sm flex-shrink-0"
-                            data-ui-input="custom-color"
-                            title="اختر لوناً مخصصاً"
-                        />
-                        <span class="text-xs font-bold text-slate-600">اضغط لاختيار أي لون تريده!</span>
-                    </div>
-                </div>
-
-                <!-- Undo / Redo Actions -->
-                <div class="grid grid-cols-2 gap-1.5">
-                    <button
-                        id="btn-undo"
-                        data-ui-click="undo"
-                        class="bubble-btn py-1.5 lg:py-2 px-1 bg-blue-300 hover:bg-blue-200 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
-                    >
-                        <span class="text-base lg:text-lg">↩️</span>
-                        <span class="inline">تراجع</span>
-                    </button>
-
-                    <button
-                        id="btn-redo"
-                        data-ui-click="redo"
-                        class="bubble-btn py-1.5 lg:py-2 px-1 bg-blue-300 hover:bg-blue-200 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-1.5 text-center text-[10px] md:text-xs"
-                    >
-                        <span class="text-base lg:text-lg">↪️</span>
-                        <span class="inline">إعادة</span>
-                    </button>
-                </div>
-
-                <!-- Canvas Background Selector -->
-                <div class="bg-white/70 border-2 border-slate-800 p-2.5 rounded-2xl shadow-cartoon-sm block">
-                    <label class="block text-right font-bold text-slate-700 mb-1.5 text-sm">🎨 خلفية اللوحة:</label>
-                    <div class="grid grid-cols-5 gap-1" id="bg-selector">
-                        <button
-                            data-ui-click="select-canvas-bg" data-ui-bg="white"
-                            class="bg-selector-btn w-full aspect-square rounded-full border-3 border-slate-800 shadow-cartoon-sm bubble-btn bg-white"
-                            data-bg="white"
-                            title="أبيض"
-                        >
-                            ⬜
-                        </button>
-                        <button
-                            data-ui-click="select-canvas-bg" data-ui-bg="sky"
-                            class="bg-selector-btn w-full aspect-square rounded-full border-3 border-slate-800 shadow-cartoon-sm bubble-btn bg-sky-200"
-                            data-bg="sky"
-                            title="سماء زرقاء"
-                        ></button>
-                        <button
-                            data-ui-click="select-canvas-bg" data-ui-bg="grass"
-                            class="bg-selector-btn w-full aspect-square rounded-full border-3 border-slate-800 shadow-cartoon-sm bubble-btn bg-emerald-200"
-                            data-bg="grass"
-                            title="عشب أخضر"
-                        ></button>
-                        <button
-                            data-ui-click="select-canvas-bg" data-ui-bg="sunset"
-                            class="bg-selector-btn w-full aspect-square rounded-full border-3 border-slate-800 shadow-cartoon-sm bubble-btn bg-gradient-to-br from-orange-200 to-pink-200"
-                            data-bg="sunset"
-                            title="غروب شمس"
-                        ></button>
-                        <button
-                            data-ui-click="select-canvas-bg" data-ui-bg="dark"
-                            class="bg-selector-btn w-full aspect-square rounded-full border-3 border-slate-800 shadow-cartoon-sm bubble-btn bg-slate-700"
-                            data-bg="dark"
-                            title="ليلي"
-                        ></button>
-                    </div>
-                </div>
-
-                <!-- Fun notification banner inside sidebar -->
-                <div
-                    id="encouragement-sidebar"
-                    class="bg-gradient-to-r from-pink-100 to-yellow-100 text-pink-600 font-extrabold text-xs py-2 px-3 rounded-xl border border-pink-200 text-center animate-pulse block"
-                >
-                    👦 أيهم و ليث 👦 جرّبوا أبطال خارقون لتلوينهم، أو ارسموا حيوانكما المفضل! 🎨
-                </div>
-            </section>
-
-            <!-- CENTER COLUMN: Canvas Drawing Board (fills remaining space, NO SCROLL) -->
-            <section class="flex flex-col flex-grow min-w-0 gap-1 md:gap-2 min-h-0">
-                <!-- Speech bubble (compact, positioned absolute over the canvas) -->
-                <div
-                    id="speech-bubble"
-                    class="hidden opacity-0 transition-all duration-500 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 bg-white border-4 border-slate-800 px-3 py-2 rounded-2xl shadow-cartoon text-center max-w-[80%]"
-                >
-                    <div
-                        class="absolute bottom-[-14px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[14px] border-t-slate-800"
-                    ></div>
-                    <p id="speech-text" class="text-sm md:text-base font-extrabold text-slate-700">
-                        مرحباً يا بطل! أنا جاهز للحركة! ✨
-                    </p>
-                </div>
-
-                <!-- Drawing Board Outer frame (fills all remaining height) -->
-                <div
-                    id="drawing-frame"
-                    class="flex-grow bg-[#8B5A2B] p-1.5 md:p-2 rounded-2xl md:rounded-3xl border-4 border-slate-800 shadow-cartoon-lg select-none relative flex flex-col min-h-0"
-                >
-                    <div
-                        class="flex-grow bg-white rounded-xl md:rounded-2xl border-4 border-dashed border-yellow-400 overflow-visible relative flex flex-col min-h-0"
-                        id="canvas-wrapper"
-                    >
-                        <div id="canvas-anim-container" class="relative flex-grow min-h-0">
-                            <canvas
-                                id="drawing-canvas"
-                                class="block w-full h-full bg-transparent cursor-crosshair relative z-10 touch-none rounded-lg md:rounded-xl"
-                            ></canvas>
-                            <canvas
-                                id="particles-canvas"
-                                class="absolute inset-0 w-full h-full pointer-events-none z-15 block"
-                            ></canvas>
-                            <div
-                                id="split-screen-overlay"
-                                class="hidden absolute inset-0 z-20 pointer-events-none"
-                            >
-                                <!-- Left half (Ayham) header -->
-                                <div class="absolute top-2 left-[25%] -translate-x-1/2 pointer-events-auto">
-                                    <div class="bg-amber-100 text-amber-800 border-2 border-slate-800 rounded-full px-4 py-1 font-black text-xs md:text-sm shadow-cartoon-sm flex items-center gap-1 select-none animate-bounce" style="animation-duration: 2s;">
-                                        👑 قسم أيهم
-                                    </div>
-                                </div>
-                                <!-- Right half (Laith) header -->
-                                <div class="absolute top-2 right-[25%] translate-x-1/2 pointer-events-auto">
-                                    <div class="bg-cyan-100 text-cyan-800 border-2 border-slate-800 rounded-full px-4 py-1 font-black text-xs md:text-sm shadow-cartoon-sm flex items-center gap-1 select-none animate-bounce" style="animation-duration: 2.5s;">
-                                        ⚡ قسم ليث
-                                    </div>
-                                </div>
-                                <!-- Center line divider -->
-                                <div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-1 border-r-4 border-dashed border-pink-400 z-10"></div>
-                            </div>
-                            <div
-                                id="stickers-layer"
-                                class="absolute inset-0 z-30 pointer-events-none rounded-lg md:rounded-xl"
-                            ></div>
-                        </div>
-
-                        <div
-                            class="absolute inset-0 bg-[linear-gradient(rgba(240,240,240,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(240,240,240,0.5)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none z-0 rounded-xl md:rounded-2xl"
-                        ></div>
-                        <div
-                            id="alive-glow"
-                            class="hidden absolute inset-0 border-4 md:border-8 border-pink-400/50 rounded-xl md:rounded-2xl pointer-events-none z-30 animate-pulse"
-                        ></div>
-                    </div>
-
-                    <div
-                        class="absolute -top-2 md:-top-3 left-6 md:left-10 bg-yellow-300 border-2 border-slate-800 rounded-full w-5 h-5 md:w-8 md:h-8 flex items-center justify-center text-[10px] md:text-sm shadow-cartoon-sm"
-                    >
-                        👀
-                    </div>
-                    <div
-                        class="absolute -top-2 md:-top-3 right-6 md:right-10 bg-yellow-300 border-2 border-slate-800 rounded-full w-5 h-5 md:w-8 md:h-8 flex items-center justify-center text-[10px] md:text-sm shadow-cartoon-sm"
-                    >
-                        ✨
-                    </div>
-                </div>
-
-                <!-- Bottom Action Bar (ultra-compact, no scroll needed) -->
-                <div
-                    class="bg-sky-100/95 border-3 border-slate-800 rounded-2xl p-1.5 md:p-2 shadow-cartoon flex items-center justify-center gap-1.5 md:gap-2.5 flex-shrink-0 overflow-x-auto"
-                    id="anim-buttons-grid"
-                >
-                    <button
-                        data-ui-click="trigger-animation" data-ui-animation="dance" data-ui-self="true"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-rose-400 hover:bg-rose-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
-                    >
-                        <span class="text-base md:text-lg">💃</span>
-                        <span class="hidden md:inline">ارقص</span>
-                    </button>
-                    <button
-                        data-ui-click="trigger-animation" data-ui-animation="jump" data-ui-self="true"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-amber-400 hover:bg-amber-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
-                    >
-                        <span class="text-base md:text-lg">🦘</span>
-                        <span class="hidden md:inline">اقفز</span>
-                    </button>
-                    <button
-                        data-ui-click="trigger-animation" data-ui-animation="spin" data-ui-self="true"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-indigo-400 hover:bg-indigo-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
-                    >
-                        <span class="text-base md:text-lg">🔄</span>
-                        <span class="hidden md:inline">دُر</span>
-                    </button>
-                    <button
-                        data-ui-click="trigger-animation" data-ui-animation="shake" data-ui-self="true"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-teal-400 hover:bg-teal-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
-                    >
-                        <span class="text-base md:text-lg">🫨</span>
-                        <span class="hidden md:inline">اهتز</span>
-                    </button>
-                    <button
-                        data-ui-click="trigger-animation" data-ui-animation="grow" data-ui-self="true"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-green-400 hover:bg-green-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
-                    >
-                        <span class="text-base md:text-lg">📈</span>
-                        <span class="hidden md:inline">كبّر</span>
-                    </button>
-                    <button
-                        data-ui-click="trigger-animation" data-ui-animation="shrink" data-ui-self="true"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-orange-400 hover:bg-orange-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
-                    >
-                        <span class="text-base md:text-lg">📉</span>
-                        <span class="hidden md:inline">صغّر</span>
-                    </button>
-                    <button
-                        data-ui-click="trigger-animation" data-ui-animation="bounce-squish" data-ui-self="true"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-purple-400 hover:bg-purple-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
-                    >
-                        <span class="text-base md:text-lg">🏀</span>
-                        <span class="hidden md:inline">ارتد</span>
-                    </button>
-
-                    <div class="w-0.5 h-6 md:h-8 bg-sky-300 shrink-0 mx-1 md:mx-2"></div>
-
-                    <button
-                        id="speed-slow"
-                        data-ui-click="set-animation-speed" data-ui-speed="0.6"
-                        class="speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-pink-200 hover:bg-pink-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon-sm transition-all"
-                    >
-                        🐢
-                    </button>
-                    <button
-                        id="speed-normal"
-                        data-ui-click="set-animation-speed" data-ui-speed="1"
-                        class="speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-amber-400 text-slate-900 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon scale-110 ring-4 ring-yellow-400 z-10 transition-all"
-                    >
-                        ⚡
-                    </button>
-                    <button
-                        id="speed-fast"
-                        data-ui-click="set-animation-speed" data-ui-speed="1.5"
-                        class="speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-emerald-200 hover:bg-emerald-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon-sm transition-all"
-                    >
-                        🚀
-                    </button>
-
-                    <div class="w-0.5 h-6 md:h-8 bg-sky-300 shrink-0 mx-1 md:mx-2"></div>
-
-                    <button
-                        id="btn-give-life"
-                        data-ui-click="toggle-give-life"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-gradient-to-r from-yellow-400 to-pink-400 hover:from-yellow-300 hover:to-pink-300 text-slate-900 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
-                    >
-                        <span class="text-base md:text-lg animate-spin" style="animation-duration: 3s">🪄</span>
-                        <span id="give-life-text" class="hidden md:inline">أعطِ الحياة</span>
-                    </button>
-                    <!-- Save / Download buttons -->
-                    <button
-                        data-ui-click="save-drawing"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-emerald-400 hover:bg-emerald-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
-                    >
-                        <span class="text-base md:text-lg">💾</span>
-                        <span class="hidden md:inline">حفظ</span>
-                    </button>
-                    <button
-                        data-ui-click="download-drawing-png"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-sky-400 hover:bg-sky-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
-                        title="تحميل كصورة PNG"
-                    >
-                        <span class="text-base md:text-lg">📥</span>
-                        <span class="hidden md:inline">تحميل</span>
-                    </button>
-                </div>
-            </section>
-
-            <!-- Mobile tools drawer toggle (visible only on mobile) -->
-            <button
-                id="mobile-tools-btn"
-                data-ui-click="toggle-mobile-drawer"
-                class="md:hidden fixed bottom-4 left-4 z-50 bubble-btn p-3 bg-gradient-to-br from-pink-500 to-purple-500 text-white font-extrabold rounded-full border-3 border-slate-800 shadow-cartoon text-xl"
-                aria-label="أدوات الرسم"
-            >
-                🖌️
-            </button>
-
-            <!-- RIGHT SIDEBAR: Stickers (compact, fixed width) -->
-            <section
-                class="hidden md:flex flex-col gap-1 w-44 lg:w-48 bg-pink-100/95 border-2 md:border-3 border-slate-800 rounded-2xl md:rounded-3xl p-1.5 md:p-2 shadow-cartoon-lg select-none overflow-y-auto shrink-0"
-            >
-                <div
-                    class="text-center bg-pink-300/80 border border-slate-800 py-0.5 px-1 rounded-full font-extrabold text-slate-800 text-xs lg:text-sm shadow-cartoon-sm whitespace-nowrap"
-                >
-                    ✨ ملصقات
-                </div>
-                <div
-                    class="grid grid-cols-2 gap-1.5 bg-white/80 p-1.5 rounded-2xl border-2 border-slate-800 text-[10px] lg:text-xs font-bold shadow-cartoon-sm"
-                >
-                    <button
-                        data-ui-click="filter-stickers" data-ui-category="all"
-                        id="tab-all"
-                        class="bubble-btn py-1.5 lg:py-2 px-1 rounded-xl border-2 border-slate-800 shadow-none flex items-center justify-center gap-1.5 font-black text-center text-[10px] md:text-xs bg-amber-400 text-slate-900 ring-2 ring-yellow-300 scale-105"
-                    >
-                        <span class="text-base lg:text-lg">🌟</span>
-                        <span class="inline">الكل</span>
-                    </button>
-                    <button
-                        data-ui-click="filter-stickers" data-ui-category="eyes"
-                        id="tab-eyes"
-                        class="bubble-btn py-1.5 lg:py-2 px-1 rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1.5 font-black text-center text-[10px] md:text-xs bg-sky-100 text-slate-800 hover:bg-sky-200"
-                    >
-                        <span class="text-base lg:text-lg">👀</span>
-                        <span class="inline">عيون</span>
-                    </button>
-                    <button
-                        data-ui-click="filter-stickers" data-ui-category="hats"
-                        id="tab-hats"
-                        class="bubble-btn py-1.5 lg:py-2 px-1 rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1.5 font-black text-center text-[10px] md:text-xs bg-purple-100 text-slate-800 hover:bg-purple-200"
-                    >
-                        <span class="text-base lg:text-lg">🎩</span>
-                        <span class="inline">قبعات</span>
-                    </button>
-                    <button
-                        data-ui-click="filter-stickers" data-ui-category="faces"
-                        id="tab-faces"
-                        class="bubble-btn py-1.5 lg:py-2 px-1 rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1.5 font-black text-center text-[10px] md:text-xs bg-emerald-100 text-slate-800 hover:bg-emerald-200"
-                    >
-                        <span class="text-base lg:text-lg">✨</span>
-                        <span class="inline">أخرى</span>
-                    </button>
-                </div>
-                <div
-                    class="flex-grow overflow-y-auto border-2 border-slate-800 bg-white rounded-xl p-1 grid grid-cols-3 gap-1"
-                    id="stickers-gallery"
-                ></div>
-                <div class="bg-white/70 border border-slate-800 p-1 rounded-xl shadow-cartoon-sm">
-                    <label class="block text-right font-bold text-slate-700 text-[8px] lg:text-[10px] mb-0.5">
-                        🔍 شفافية
-                    </label>
-                    <div class="flex items-center gap-1">
-                        <span class="text-[8px] font-extrabold text-slate-500">30</span>
-                        <input
-                            type="range"
-                            id="template-opacity"
-                            min="30"
-                            max="100"
-                            value="100"
-                            class="flex-grow cursor-pointer accent-purple-500 h-3"
-                            data-ui-input="template-opacity"
-                        />
-                        <span class="text-[8px] font-extrabold text-slate-500">100</span>
-                    </div>
-                </div>
-                <button
-                    data-ui-click="reset-app"
-                    class="bubble-btn p-2 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon flex items-center justify-center gap-1 text-[10px] md:text-xs"
-                >
-                    <span class="text-sm">🔄</span>
-                    <span class="inline">ابدأ من جديد</span>
-                </button>
-            </section>
-        </main>
-
-        <!-- Peeking Animals Footer Decorators (fixed over the layout, very small) -->
-        <div class="fixed bottom-0 left-2 z-20 pointer-events-auto select-none group hidden sm:block">
-            <div
-                class="relative cursor-pointer transition-transform duration-300 hover:translate-y-[-4px]"
-                data-ui-click="animal-react" data-ui-animal="bunny"
-            >
-                <div
-                    id="bunny-bubble"
-                    class="absolute -top-10 left-4 bg-white border border-slate-800 py-0.5 px-2 rounded-full text-[10px] font-extrabold text-slate-700 opacity-0 transition-opacity duration-300 pointer-events-none whitespace-nowrap shadow-sm"
-                >
-                    أهلاً أيهم و ليث! 🐰✨
-                </div>
-                <!-- Bunny SVG -->
-                <svg class="w-16 h-16" viewBox="0 0 100 100">
-                    <!-- Ears -->
-                    <ellipse cx="35" cy="25" rx="10" ry="25" fill="#FFF" stroke="#333" stroke-width="3" />
-                    <ellipse cx="35" cy="27" rx="5" ry="17" fill="#FFAEC9" />
-                    <ellipse cx="65" cy="25" rx="10" ry="25" fill="#FFF" stroke="#333" stroke-width="3" />
-                    <ellipse cx="65" cy="27" rx="5" ry="17" fill="#FFAEC9" />
-                    <!-- Face -->
-                    <circle cx="50" cy="65" r="30" fill="#FFF" stroke="#333" stroke-width="3" />
-                    <circle cx="42" cy="60" r="4" fill="#333" />
-                    <circle cx="58" cy="60" r="4" fill="#333" />
-                    <polygon points="50,68 47,65 53,65" fill="#FFAEC9" />
-                    <path d="M 46,73 Q 50,76 54,73" fill="none" stroke="#333" stroke-width="2" />
-                    <!-- Paws -->
-                    <circle cx="35" cy="95" r="10" fill="#FFF" stroke="#333" stroke-width="3" />
-                    <circle cx="65" cy="95" r="10" fill="#FFF" stroke="#333" stroke-width="3" />
-                </svg>
-            </div>
-        </div>
-
-        <div class="fixed bottom-0 right-2 z-20 pointer-events-auto select-none group hidden sm:block">
-            <div
-                class="relative cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
-                data-ui-click="animal-react" data-ui-animal="cat"
-            >
-                <!-- Cat dialogue -->
-                <div
-                    id="cat-bubble"
-                    class="absolute -top-12 right-6 bg-white border-2 border-slate-800 py-1 px-3 rounded-full text-xs font-extrabold text-slate-700 opacity-0 transition-opacity duration-300 pointer-events-none whitespace-nowrap shadow-sm"
-                >
-                    مياو! رسمة أيهم و ليث مذهلة! 🐱💖
-                </div>
-                <!-- Cat SVG -->
-                <svg class="w-16 h-16" viewBox="0 0 100 100">
-                    <!-- Ears -->
-                    <polygon points="20,40 30,10 50,35" fill="#FFA347" stroke="#333" stroke-width="3" />
-                    <polygon points="24,35 30,18 42,32" fill="#FFAEC9" />
-                    <polygon points="80,40 70,10 50,35" fill="#FFA347" stroke="#333" stroke-width="3" />
-                    <polygon points="76,35 70,18 58,32" fill="#FFAEC9" />
-                    <!-- Face -->
-                    <circle cx="50" cy="55" r="28" fill="#FFA347" stroke="#333" stroke-width="3" />
-                    <!-- Eyes -->
-                    <circle cx="40" cy="50" r="5" fill="#FFF" stroke="#333" stroke-width="2" />
-                    <circle cx="40" cy="50" r="2.5" fill="#000" />
-                    <circle cx="60" cy="50" r="5" fill="#FFF" stroke="#333" stroke-width="2" />
-                    <circle cx="60" cy="50" r="2.5" fill="#000" />
-                    <!-- Nose -->
-                    <polygon points="50,58 46,55 54,55" fill="#FFAEC9" />
-                    <!-- Mouth -->
-                    <path d="M 46,62 Q 50,65 54,62" fill="none" stroke="#333" stroke-width="2" />
-                    <!-- Whiskers -->
-                    <line x1="22" y1="58" x2="10" y2="56" stroke="#333" stroke-width="2" />
-                    <line x1="22" y1="62" x2="8" y2="64" stroke="#333" stroke-width="2" />
-                    <line x1="78" y1="58" x2="90" y2="56" stroke="#333" stroke-width="2" />
-                    <line x1="78" y1="62" x2="92" y2="64" stroke="#333" stroke-width="2" />
-                </svg>
-            </div>
-        </div>
-
-        <!-- STAMPS Modal (Shapes & Patterns) -->
-        <div
-            id="stamps-modal"
-            class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
-            data-ui-backdrop="stamps-modal" data-ui-close="toggle-stamps-modal"
-        >
-            <div
-                class="bg-gradient-to-br from-yellow-50 via-pink-50 to-cyan-50 border-4 border-slate-800 rounded-[36px] max-w-md w-full p-5 shadow-cartoon-lg relative transform scale-95 transition-transform duration-300"
-                id="stamps-modal-content"
-            >
-                <button
-                    data-ui-click="toggle-stamps-modal" data-ui-value="false"
-                    class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all z-10"
-                >
-                    ❌
-                </button>
-                <h3 class="text-2xl md:text-3xl font-extrabold text-center mb-3">الطوابع السحرية ⭐✨</h3>
-                <p class="text-center text-sm font-bold text-slate-600 mb-3 bg-white/60 py-1 px-3 rounded-full">
-                    اضغط على شكل، ثم انقر على اللوحة لوضعه!
-                </p>
-                <div class="grid grid-cols-4 gap-2" id="stamps-gallery">
-                    <!-- Stamps dynamically loaded here -->
-                </div>
-            </div>
-        </div>
-
-        <!-- GALLERY Modal (Saved Drawings) -->
-        <div
-            id="gallery-modal"
-            class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
-            data-ui-backdrop="gallery-modal" data-ui-close="toggle-gallery-modal"
-        >
-            <div
-                class="bg-gradient-to-br from-purple-50 to-pink-50 border-4 border-slate-800 rounded-[36px] max-w-3xl w-full max-h-[85vh] overflow-y-auto p-5 shadow-cartoon-lg relative transform scale-95 transition-transform duration-300"
-                id="gallery-modal-content"
-            >
-                <button
-                    data-ui-click="toggle-gallery-modal" data-ui-value="false"
-                    class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all z-10"
-                >
-                    ❌
-                </button>
-                <h3 class="text-2xl md:text-3xl font-extrabold text-center mb-2">🖼️ معرض رسوماتي</h3>
-                <p class="text-center text-sm font-bold text-slate-600 mb-3 bg-white/60 py-1 px-3 rounded-full">
-                    اضغط على رسمة لإعادة تحميلها، أو احذفها!
-                </p>
-                <div id="gallery-empty" class="text-center py-8 text-slate-500 font-extrabold text-lg hidden">
-                    لا توجد رسومات محفوظة بعد! 🎨 ارسم شيئاً رائعاً واحفظه!
-                </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="gallery-grid">
-                    <!-- Saved drawings dynamically loaded here -->
-                </div>
-            </div>
-        </div>
-
-        <!-- FRIENDS Modal (Guests of Ayhem & Layth) -->
-        <div
-            id="friends-modal"
-            class="fixed inset-0 bg-slate-900/70 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
-            data-ui-backdrop="friends-modal" data-ui-close="toggle-friends-modal"
-        >
-            <div
-                class="bg-gradient-to-br from-pink-50 via-yellow-50 to-cyan-50 border-4 border-slate-800 rounded-[36px] max-w-md w-full max-h-[85vh] overflow-y-auto p-6 shadow-cartoon-lg relative transform scale-95 transition-transform duration-300"
-                id="friends-modal-content"
-            >
-                <button
-                    data-ui-click="toggle-friends-modal" data-ui-value="false"
-                    class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all z-10"
-                >
-                    ❌
-                </button>
-                <h3
-                    class="text-3xl md:text-4xl font-extrabold text-center mb-2 bg-gradient-to-r from-pink-500 via-yellow-500 to-cyan-500 bg-clip-text text-transparent"
-                >
-                    👥 أصدقاء أيهم وليث 👥
-                </h3>
-                <p
-                    class="text-center text-sm font-bold text-slate-600 mb-4 bg-white/70 py-2 px-4 rounded-full inline-block w-full"
-                >
-                    أضف أسماء أصدقائك لظهورهم بجانبكما! 🎉
-                </p>
-
-                <!-- Add Friend Input -->
-                <div class="flex gap-2 mb-4">
-                    <input
-                        type="text"
-                        id="friend-name-input"
-                        placeholder="اكتب اسم الصديق..."
-                        maxlength="12"
-                        class="flex-grow px-4 py-3 border-3 border-slate-800 rounded-2xl font-extrabold text-slate-700 text-center bg-white shadow-cartoon-sm focus:outline-none focus:ring-4 focus:ring-yellow-400"
-                    />
-                    <button
-                        data-ui-click="add-friend"
-                        class="bubble-btn px-4 py-3 bg-green-400 hover:bg-green-300 text-slate-800 font-extrabold rounded-2xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1"
-                    >
-                        <span class="text-2xl">➕</span>
-                        <span class="hidden md:inline">أضف</span>
-                    </button>
-                </div>
-
-                <!-- Guest List -->
-                <div
-                    id="friend-list-container"
-                    class="bg-white/80 border-2 border-slate-800 rounded-3xl p-4 min-h-[120px]"
-                >
-                    <div class="text-center text-slate-400 font-extrabold" id="friend-list-empty">
-                        لا يوجد أصدقاء بعد 🤔
-                        <br />
-                        أضف صديقاً جديداً!
-                    </div>
-                    <div id="friend-list" class="flex flex-col gap-2"></div>
-                </div>
-
-                <div class="mt-4 flex gap-2">
-                    <button
-                        data-ui-click="reset-friends"
-                        class="bubble-btn flex-1 py-2 bg-red-300 hover:bg-red-200 text-slate-800 font-extrabold rounded-2xl border-3 border-slate-800 shadow-cartoon text-sm"
-                    >
-                        🗑️ حذف الكل
-                    </button>
-                    <button
-                        data-ui-click="add-sample-friends"
-                        class="bubble-btn flex-1 py-2 bg-cyan-300 hover:bg-cyan-200 text-slate-800 font-extrabold rounded-2xl border-3 border-slate-800 shadow-cartoon text-sm"
-                    >
-                        🎲 إضافة أصدقاء تجريبيين
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- TEMPLATES Modal (Superheroes + Dinosaurs) -->
-        <div
-            id="hero-modal"
-            class="fixed inset-0 bg-slate-900/70 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
-            data-ui-backdrop="hero-modal" data-ui-close="toggle-hero-modal"
-        >
-            <div
-                class="bg-gradient-to-br from-yellow-50 via-green-50 to-pink-50 border-4 border-slate-800 rounded-[36px] max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-cartoon-lg relative transform scale-95 transition-transform duration-300"
-                id="hero-modal-content"
-            >
-                <button
-                    data-ui-click="toggle-hero-modal" data-ui-value="false"
-                    class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all z-10"
-                >
-                    ❌
-                </button>
-
-                <h3
-                    class="text-3xl md:text-4xl font-extrabold text-center mb-2 bg-gradient-to-r from-red-500 via-green-500 to-blue-500 bg-clip-text text-transparent"
-                >
-                    🦸 اختر رسمة ولوّنها! 🦕
-                </h3>
-                <p
-                    class="text-center text-sm font-bold text-slate-600 mb-4 bg-white/70 py-2 px-4 rounded-full inline-block w-full"
-                >
-                    اختر بطلاً خارقاً أو ديناصوراً وابدأ بتلوينه والرسم فوقه! 🎨✨
-                </p>
-
-                <!-- Category Tabs -->
-                <div class="flex gap-2 mb-4 bg-white/70 p-1.5 rounded-2xl border-2 border-slate-300">
-                    <button
-                        data-ui-click="filter-templates" data-ui-category="all"
-                        id="tmpl-tab-all"
-                        class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-red-400 to-blue-400 text-white font-extrabold text-sm flex items-center justify-center gap-1.5 transition-all"
-                    >
-                        <span>🌟</span>
-                        الكل
-                    </button>
-                    <button
-                        data-ui-click="filter-templates" data-ui-category="hero"
-                        id="tmpl-tab-hero"
-                        class="flex-1 py-2 px-3 rounded-xl text-slate-700 font-extrabold text-sm flex items-center justify-center gap-1.5 hover:bg-white/60 transition-all"
-                    >
-                        <span>🦸</span>
-                        أبطال خارقون
-                    </button>
-                    <button
-                        data-ui-click="filter-templates" data-ui-category="dino"
-                        id="tmpl-tab-dino"
-                        class="flex-1 py-2 px-3 rounded-xl text-slate-700 font-extrabold text-sm flex items-center justify-center gap-1.5 hover:bg-white/60 transition-all"
-                    >
-                        <span>🦕</span>
-                        ديناصورات
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="heroes-gallery">
-                    <!-- Templates dynamically loaded here -->
-                </div>
-
-                <div class="mt-5 p-3 bg-yellow-100 border-2 border-dashed border-yellow-500 rounded-2xl text-center">
-                    <p class="text-xs md:text-sm font-bold text-slate-700">
-                        💡
-                        <strong>نصيحة:</strong>
-                        بعد اختيار الرسمة، استخدم الألوان لتلوينها وأضف الملصقات لتجعلها مضحكة! 🎨
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- HELP HOW-TO Modal -->
-        <div
-            id="help-modal"
-            class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
-            data-ui-backdrop="help-modal" data-ui-close="toggle-help-modal"
-        >
-            <div
-                class="bg-white border-4 border-slate-800 rounded-[36px] max-w-lg w-full p-6 shadow-cartoon-lg relative transform scale-95 transition-transform duration-300"
-                id="help-modal-content"
-            >
-                <button
-                    data-ui-click="toggle-help-modal" data-ui-value="false"
-                    class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all"
-                >
-                    ❌
-                </button>
-
-                <h3
-                    class="text-3xl font-extrabold text-slate-800 text-center mb-4 border-b-4 border-dashed border-yellow-400 pb-2"
-                >
-                    كيف ألعب وأرسم؟ 🎨✨
-                </h3>
-
-                <div class="space-y-4 text-right font-bold text-slate-700">
-                    <div class="flex items-center gap-3 bg-amber-50 p-3 rounded-2xl border-2 border-amber-200">
-                        <span class="text-3xl">🎨</span>
-                        <p class="text-sm">
-                            ارسم بيدك أو بالفأرة داخل اللوحة. استخدم الألوان السحرية والفرشاة كما تحب!
-                        </p>
-                    </div>
-
-                    <div
-                        class="flex items-center gap-3 bg-gradient-to-r from-red-50 to-blue-50 p-3 rounded-2xl border-2 border-red-200"
-                    >
-                        <span class="text-3xl">🦸</span>
-                        <p class="text-sm">
-                            اضغط على
-                            <strong>"أبطال خارقون"</strong>
-                            لاختيار بطل جاهز للتلوين، ثم لوّنه وأضف لمستك الخاصة!
-                        </p>
-                    </div>
-
-                    <div class="flex items-center gap-3 bg-pink-50 p-3 rounded-2xl border-2 border-pink-200">
-                        <span class="text-3xl">👑</span>
-                        <p class="text-sm">
-                            أضف ملصقات مضحكة مثل العيون والنظارات والقبعات. يمكنك جرها وتكبيرها وتدويرها بسهولة!
-                        </p>
-                    </div>
-
-                    <div class="flex items-center gap-3 bg-purple-50 p-3 rounded-2xl border-2 border-purple-200">
-                        <span class="text-3xl">🚀</span>
-                        <p class="text-sm">اضغط على أزرار التحريك لجعل رسمتك ترقص، تقفز، تدور، أو تهتز فوراً!</p>
-                    </div>
-
-                    <div
-                        class="flex items-center gap-3 bg-gradient-to-r from-yellow-100 to-pink-100 p-3 rounded-2xl border-2 border-pink-300"
-                    >
-                        <span class="text-3xl">🪄</span>
-                        <p class="text-sm">
-                            اضغط على
-                            <strong>"أعطِ الحياة للرسمة"</strong>
-                            لتبدأ بالطفو، وتتحدث إليك بفقاعات الكلام المرحة!
-                        </p>
-                    </div>
-                </div>
-
-                <button
-                    data-ui-click="toggle-help-modal" data-ui-value="false"
-                    class="bubble-btn w-full mt-6 py-3 bg-yellow-400 hover:bg-yellow-300 text-slate-800 font-extrabold rounded-2xl border-3 border-slate-800 shadow-cartoon text-lg"
-                >
-                    هيا بنا نبدأ الرسم! 🚀
-                </button>
-            </div>
-        </div>
-
-        <!-- MOBILE TOOLS DRAWER (visible only on small screens) -->
-        <div
-            id="mobile-drawer"
-            class="md:hidden fixed inset-0 z-40 hidden"
-            data-ui-backdrop="mobile-drawer" data-ui-close="toggle-mobile-drawer"
-        >
-            <div class="absolute inset-0 bg-slate-900/50"></div>
-            <div
-                id="mobile-drawer-content"
-                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-pink-100 to-yellow-50 border-t-4 border-slate-800 rounded-t-3xl p-4 shadow-cartoon-lg transform translate-y-full transition-transform duration-300"
-            >
-                <div class="flex justify-between items-center mb-3">
-                    <h3 class="text-lg font-extrabold text-slate-800">🖌️ أدوات الرسم</h3>
-                    <button
-                        data-ui-click="toggle-mobile-drawer"
-                        class="w-8 h-8 bg-red-400 text-white rounded-full font-extrabold border-2 border-slate-800"
-                    >❌</button>
-                </div>
-                <!-- Color Palette (mobile) -->
-                <div class="mb-3">
-                    <p class="text-xs font-bold text-slate-600 mb-1">🎨 الألوان:</p>
-                    <div id="mobile-color-palette" class="flex flex-wrap gap-1.5"></div>
-                </div>
-                <!-- Quick tools row -->
-                <div class="grid grid-cols-4 gap-2">
-                    <button data-ui-click="mobile-tool" data-ui-tool="select-eraser" class="bubble-btn p-2 bg-pink-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">🧽</span>ممحاة
-                    </button>
-                    <button data-ui-click="mobile-tool" data-ui-tool="select-spray" class="bubble-btn p-2 bg-emerald-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">🫧</span>بخاخ
-                    </button>
-                    <button data-ui-click="mobile-tool" data-ui-tool="select-fill-tool" class="bubble-btn p-2 bg-purple-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">🪣</span>دهان
-                    </button>
-                    <button data-ui-click="mobile-tool" data-ui-tool="toggle-mirror" class="bubble-btn p-2 bg-teal-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">🪞</span>مرآة
-                    </button>
-                    <button data-ui-click="undo" class="bubble-btn p-2 bg-blue-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">↩️</span>تراجع
-                    </button>
-                    <button data-ui-click="redo" class="bubble-btn p-2 bg-blue-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">↪️</span>إعادة
-                    </button>
-                    <button data-ui-click="mobile-tool" data-ui-tool="clear-canvas" class="bubble-btn p-2 bg-red-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">💣</span>مسح
-                    </button>
-                    <button data-ui-click="mobile-tool" data-ui-tool="download-drawing-png" class="bubble-btn p-2 bg-sky-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">📥</span>تحميل
-                    </button>
-                </div>
-                <!-- Brush size (mobile) -->
-                <div class="mt-3 flex items-center gap-2">
-                    <span class="text-xs font-bold text-slate-600">🖉</span>
-                    <input type="range" id="mobile-brush-size" min="3" max="50" value="12"
-                        class="flex-grow cursor-pointer accent-pink-500"
-                        data-ui-input="mobile-brush-size"
-                    />
-                    <span class="text-xs font-bold text-slate-600">🖌️</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Vite entry: source modules are bundled into one production asset. -->
-        <script type="module" src="./src/main.js"></script>
-    </body>
+[...]
 </html>
