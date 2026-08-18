@@ -1,6 +1,6 @@
 import { stopAllAnimations, toggleTheme } from "./animations.js";
 import { toggleMusic } from "./audio-controls.js";
-import { renderColors, saveState, toggleModal } from "./drawing.js";
+import { clearHistory, renderColors, saveState, toggleModal } from "./drawing.js";
 import { showEncouragement, triggerConfetti } from "./settings.js";
 import { synth } from "./synth.js";
 import { state } from "./state.js";
@@ -45,8 +45,8 @@ import { state } from "./state.js";
                         toggleMusic();
                     }
 
-                    state.undoStack = [];
-                    state.redoStack = [];
+                    clearHistory();
+                    state.stickerIdCounter = 0;
                     saveState();
 
                     renderColors();
@@ -161,9 +161,6 @@ function loadHeroesData() {
                         return;
                     }
                 }
-
-                // Save current state for undo
-                saveState();
 
                 // Clear the canvas first
                 state.ctx.save();

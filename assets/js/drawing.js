@@ -4,6 +4,7 @@ import { showEncouragement, triggerConfetti } from "./settings.js";
 import { synth } from "./synth.js";
 import { speakArabic } from "./voice-duo.js";
 import { state } from "./state.js";
+import { captureStickerState, restoreStickerState } from "./stickers.js";
 
 /* Canvas tools, history, flood fill, backgrounds, dialogs and mobile tools. */
             /************************************************************
@@ -121,14 +122,12 @@ import { state } from "./state.js";
 
                 // NEW: If Fill mode is active, perform flood fill and return
                 if (state.isFillMode) {
-                    saveState();
-                    performFloodFill(clickX, clickY);
+                    if (performFloodFill(clickX, clickY)) saveState();
                     return;
                 }
 
                 // NEW: If a stamp is selected, place it
                 if (state.activeStamp) {
-                    saveState();
                     placeStamp(e.clientX, e.clientY);
                     state.activeStamp = null;
                     return;
@@ -354,7 +353,7 @@ import { state } from "./state.js";
                     showEncouragement("🪣 خطوط الرسم السوداء تحميك! لوّن داخل الفراغات! 🛡️🖤");
                     speakArabic("خطوط الرسم السوداء تحميك، لوّن داخل الفراغات يا بطل!");
                     synth.playBoing();
-                    return;
+                    return false;
                 }
 
                 // Fill color (current brush color)
@@ -375,7 +374,7 @@ import { state } from "./state.js";
                 }
 
                 // If the source is already the fill color, do nothing
-                if (srcR === fillR && srcG === fillG && srcB === fillB && srcA === fillA) return;
+                if (srcR === fillR && srcG === fillG && srcB === fillB && srcA === fillA) return false;
 
                 // BFS flood fill — #1: use index pointer (O(1) dequeue, avoids O(n) shift)
                 const matchColor = (idx) => {
@@ -419,6 +418,7 @@ import { state } from "./state.js";
                 state.ctx.putImageData(imageData, 0, 0);
                 synth.playPop();
                 showEncouragement("🪣 تم ملء المنطقة بنجاح! رائع!");
+                return true;
             }
 
             /************************************************************
@@ -529,9 +529,6 @@ import { state } from "./state.js";
             function selectCanvasBg(bgId) {
                 if (bgId === state.currentBg) return;
 
-                // Save state before changing background
-                saveState();
-
                 state.currentBg = bgId;
                 synth.playPop();
 
@@ -544,8 +541,8 @@ import { state } from "./state.js";
                     activeBtn.classList.add("ring-4", "ring-yellow-400");
                 }
 
-                // Redraw background
-                drawCanvasBackground();
+                // Redraw background, then snapshot the completed canvas state.
+                drawCanvasBackground().then(saveState);
 
                 showEncouragement(`🎨 تم تغيير خلفية اللوحة!`);
             }
@@ -590,19 +587,21 @@ import { state } from "./state.js";
                 state.ctx.fillRect(0, 0, state.canvas.width, state.canvas.height);
                 state.ctx.restore();
 
-                // Redraw the saved image onto the new background
-                const savedImg = new Image();
-                savedImg.onload = () => {
-                    state.ctx.drawImage(savedImg, 0, 0, layoutW, layoutH);
-                };
-                savedImg.src = tempDataUrl;
+                // Redraw the saved image onto the new background before resolving.
+                return new Promise((resolve) => {
+                    const savedImg = new Image();
+                    savedImg.onload = () => {
+                        state.ctx.drawImage(savedImg, 0, 0, layoutW, layoutH);
+                        resolve();
+                    };
+                    savedImg.onerror = resolve;
+                    savedImg.src = tempDataUrl;
+                });
             }
 
             function clearCanvas() {
                 synth.playBoing();
                 if (confirm("هل أنت متأكد أنك تريد مسح اللوحة بالكامل والبدء من جديد؟ 🧹")) {
-                    // Save state before clearing
-                    saveState();
                     // Use save/restore to clear the entire canvas regardless of transformation
                     state.ctx.save();
                     state.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -618,52 +617,76 @@ import { state } from "./state.js";
                     if (state.isAlive) {
                         toggleGiveLife();
                     }
+                    saveState();
 
                     triggerConfetti();
                     showEncouragement("بداية جديدة مرحة! 🌟🎨");
                 }
             }
 
-            // #11: saveState uses toBlob (async, non-blocking) — stores DataURL as fallback on error
-            function saveState() {
-                // Revoke oldest URL if stack is full to avoid memory leak
-                if (state.undoStack.length >= 25) {
-                    const old = state.undoStack.shift();
-                    if (old && old.startsWith("blob:")) URL.revokeObjectURL(old);
-                }
+            // #11: saveState stores the canvas and sticker layer as one snapshot.
+            function releaseSnapshot(snapshot) {
+                const canvasUrl = typeof snapshot === "string" ? snapshot : snapshot?.canvasUrl;
+                if (canvasUrl && canvasUrl.startsWith("blob:")) URL.revokeObjectURL(canvasUrl);
+            }
+
+            function releaseSnapshots(snapshots) {
+                snapshots.forEach(releaseSnapshot);
+            }
+
+            function captureCurrentCanvas(stickers) {
                 state.canvas.toBlob((blob) => {
                     if (!blob) return;
-                    state.undoStack.push(URL.createObjectURL(blob));
-                    state.redoStack.forEach(u => { if (u && u.startsWith("blob:")) URL.revokeObjectURL(u); });
-                    state.redoStack = [];
+                    state.undoStack.push({
+                        canvasUrl: URL.createObjectURL(blob),
+                        stickers,
+                    });
                     updateUndoRedoButtons();
                 }, "image/webp", 0.85);
             }
 
-            function undo() {
-                if (state.undoStack.length > 0) {
-                    const prevState = state.undoStack.pop();
-                    // push current state to redo (as blob)
-                    state.canvas.toBlob((blob) => {
-                        if (blob) state.redoStack.push(URL.createObjectURL(blob));
-                        updateUndoRedoButtons();
-                    }, "image/webp", 0.85);
-                    restoreCanvas(prevState);
-                    synth.playPop();
+            function clearHistory() {
+                releaseSnapshots(state.undoStack);
+                releaseSnapshots(state.redoStack);
+                state.undoStack = [];
+                state.redoStack = [];
+                updateUndoRedoButtons();
+            }
+
+            function saveState() {
+                const stickers = captureStickerState();
+                if (state.undoStack.length >= 25) {
+                    releaseSnapshot(state.undoStack.shift());
                 }
+                releaseSnapshots(state.redoStack);
+                state.redoStack = [];
+                captureCurrentCanvas(stickers);
+            }
+
+            function undo() {
+                if (state.undoStack.length <= 1) {
+                    updateUndoRedoButtons();
+                    return;
+                }
+
+                const currentState = state.undoStack.pop();
+                state.redoStack.push(currentState);
+                const previousState = state.undoStack[state.undoStack.length - 1];
+                restoreSnapshot(previousState);
+                synth.playPop();
                 updateUndoRedoButtons();
             }
 
             function redo() {
-                if (state.redoStack.length > 0) {
-                    const nextState = state.redoStack.pop();
-                    state.canvas.toBlob((blob) => {
-                        if (blob) state.undoStack.push(URL.createObjectURL(blob));
-                        updateUndoRedoButtons();
-                    }, "image/webp", 0.85);
-                    restoreCanvas(nextState);
-                    synth.playPop();
+                if (state.redoStack.length === 0) {
+                    updateUndoRedoButtons();
+                    return;
                 }
+
+                const nextState = state.redoStack.pop();
+                state.undoStack.push(nextState);
+                restoreSnapshot(nextState);
+                synth.playPop();
                 updateUndoRedoButtons();
             }
 
@@ -672,19 +695,19 @@ import { state } from "./state.js";
                 const undoBtn = document.getElementById("btn-undo");
                 const redoBtn = document.getElementById("btn-redo");
                 if (undoBtn) {
-                    if (state.undoStack.length === 0) {
-                        undoBtn.classList.add("opacity-40", "pointer-events-none");
-                    } else {
-                        undoBtn.classList.remove("opacity-40", "pointer-events-none");
-                    }
+                    undoBtn.classList.toggle("opacity-40", state.undoStack.length <= 1);
+                    undoBtn.classList.toggle("pointer-events-none", state.undoStack.length <= 1);
                 }
                 if (redoBtn) {
-                    if (state.redoStack.length === 0) {
-                        redoBtn.classList.add("opacity-40", "pointer-events-none");
-                    } else {
-                        redoBtn.classList.remove("opacity-40", "pointer-events-none");
-                    }
+                    redoBtn.classList.toggle("opacity-40", state.redoStack.length === 0);
+                    redoBtn.classList.toggle("pointer-events-none", state.redoStack.length === 0);
                 }
+            }
+
+            function restoreSnapshot(snapshot) {
+                if (!snapshot) return;
+                restoreCanvas(snapshot.canvasUrl ?? snapshot);
+                restoreStickerState(snapshot.stickers ?? []);
             }
 
             function restoreCanvas(url) {
@@ -699,8 +722,6 @@ import { state } from "./state.js";
                     const layoutW = state.canvas.offsetWidth || 700;
                     const layoutH = state.canvas.offsetHeight || 480;
                     state.ctx.drawImage(img, 0, 0, layoutW, layoutH);
-                    // Blob URLs can be revoked after draw (no longer needed)
-                    if (url && url.startsWith("blob:")) URL.revokeObjectURL(url);
                 };
                 img.src = url;
             }
@@ -868,4 +889,4 @@ import { state } from "./state.js";
                 });
             }
 
-export { renderColors, selectColor, selectEraser, startDrawing, draw, drawSpray, stopDrawing, selectFillTool, performFloodFill, toggleMirror, toggleStampsModal, renderStampsGallery, selectStamp, placeStamp, selectCanvasBg, drawCanvasBackground, clearCanvas, saveState, undo, redo, updateUndoRedoButtons, restoreCanvas, selectSpray, selectCustomColor, renderMobileColors, toggleMobileDrawer, handleBackdropClick, downloadDrawingPNG, toggleModal };
+export { renderColors, selectColor, selectEraser, startDrawing, draw, drawSpray, stopDrawing, selectFillTool, performFloodFill, toggleMirror, toggleStampsModal, renderStampsGallery, selectStamp, placeStamp, selectCanvasBg, drawCanvasBackground, clearCanvas, clearHistory, saveState, undo, redo, updateUndoRedoButtons, restoreCanvas, restoreSnapshot, selectSpray, selectCustomColor, renderMobileColors, toggleMobileDrawer, handleBackdropClick, downloadDrawingPNG, toggleModal };
