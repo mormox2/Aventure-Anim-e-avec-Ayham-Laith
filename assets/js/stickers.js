@@ -13,7 +13,10 @@ import { state } from "./state.js";
                 const filtered = stickersData.filter((st) => category === "all" || st.category === category);
 
                 filtered.forEach((sticker) => {
-                    const item = document.createElement("div");
+                    const item = document.createElement("button");
+                    item.type = "button";
+                    item.setAttribute("aria-label", `إضافة ${sticker.name}`);
+                    item.title = sticker.name;
                     item.className =
                         "bg-slate-50 border-2 md:border-3 border-slate-800 hover:border-pink-500 hover:bg-pink-50 rounded-2xl p-2 flex items-center justify-center cursor-pointer transition-all hover:scale-110 active:scale-95 shadow-cartoon-sm";
                     item.innerHTML = sticker.svg;

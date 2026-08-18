@@ -97,6 +97,9 @@ function handleClick(event) {
   if (!element) return;
 
   const action = element.dataset.uiClick;
+  if (element.dataset.uiValue !== "false" && typeof element.focus === "function") {
+    element.focus();
+  }
   if (action === "celebrate-name") {
     celebrateName(element.dataset.uiName);
   } else if (action === "trigger-animation") {
