@@ -4,6 +4,10 @@ import { synth } from "./synth.js";
 import { saveCurrentDrawingToGallery } from "./utilities-gallery.js";
 import { state } from "./state.js";
 
+const MAX_PARTICLES = 120;
+let particleFrameId = null;
+let visibilityListenerBound = false;
+
 /* PNG export and pointer particle effects. */
             /************************************************************
              * 13. Export Composite Drawing (Canvas + Stickers) as PNG
@@ -127,7 +131,26 @@ import { state } from "./state.js";
                 state.particlesCtx = state.particlesCanvas.getContext("2d");
                 resizeParticlesCanvas();
                 window.addEventListener("resize", resizeParticlesCanvas);
-                requestAnimationFrame(updateParticles);
+                if (!visibilityListenerBound) {
+                    document.addEventListener("visibilitychange", () => {
+                        if (document.hidden) {
+                            if (particleFrameId !== null) cancelAnimationFrame(particleFrameId);
+                            particleFrameId = null;
+                        } else {
+                            scheduleParticleFrame();
+                        }
+                    });
+                    visibilityListenerBound = true;
+                }
+                scheduleParticleFrame();
+            }
+
+            function scheduleParticleFrame() {
+                if (document.hidden || particleFrameId !== null || !state.particlesCanvas) return;
+                particleFrameId = requestAnimationFrame(() => {
+                    particleFrameId = null;
+                    updateParticles();
+                });
             }
 
             function resizeParticlesCanvas() {
@@ -149,8 +172,10 @@ import { state } from "./state.js";
                     col = "#E2E8F0"; // Cute chalky/pastel bubbles for eraser
                 }
 
-                // Spawn 2 particles at pointer coordinates
-                for (let i = 0; i < 2; i++) {
+                // Spawn at most 2 particles while keeping the buffer bounded.
+                const availableSlots = Math.max(0, MAX_PARTICLES - state.particles.length);
+                const spawnCount = Math.min(2, availableSlots);
+                for (let i = 0; i < spawnCount; i++) {
                     state.particles.push({
                         x: x,
                         y: y,
@@ -165,13 +190,11 @@ import { state } from "./state.js";
                         rotSpeed: (Math.random() - 0.5) * 0.1
                     });
                 }
+                if (spawnCount > 0) scheduleParticleFrame();
             }
 
             function updateParticles() {
-                if (!state.particlesCanvas || !state.particlesCtx) {
-                    requestAnimationFrame(updateParticles);
-                    return;
-                }
+                if (document.hidden || !state.particlesCanvas || !state.particlesCtx) return;
 
                 const dpr = window.devicePixelRatio || 1;
                 const layoutW = state.particlesCanvas.width / dpr;
@@ -214,7 +237,7 @@ import { state } from "./state.js";
                     state.particlesCtx.restore();
                 }
 
-                requestAnimationFrame(updateParticles);
+                if (state.particles.length > 0) scheduleParticleFrame();
             }
 
             function drawStar(starCtx, cx, cy, spikes, outerRadius, innerRadius, rotation = 0) {
