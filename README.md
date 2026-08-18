@@ -105,10 +105,11 @@ Le projet reste une **Single Page Application statique**, mais son code est main
 ├── index.html                    # Structure de l'interface
 ├── src/
 │   └── main.js                   # Entrée ES modules générée pour Vite
-├── public/
-│   └── tailwind-config.js         # Configuration Tailwind servie comme asset statique
+├── tailwind.config.js             # Thème Tailwind compilé localement
+├── postcss.config.js              # Chaîne PostCSS/Tailwind/Autoprefixer
 ├── assets/
 │   ├── css/
+│   │   ├── tailwind.css          # Directives Tailwind compilées par Vite
 │   │   ├── base.css              # Réinitialisation, layout global et typographie
 │   │   ├── animations.css         # Animations et arrière-plans
 │   │   └── components.css         # Contrôles personnalisés et styles partagés
