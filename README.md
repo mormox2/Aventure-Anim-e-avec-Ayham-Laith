@@ -131,10 +131,14 @@ Le projet reste une **Single Page Application statique**, mais son code est main
 │   └── README.md                  # Carte des responsabilités des assets
 ├── README.md                      # Présentation complète et documentation du projet
 ├── LICENSE                        # Licence d'utilisation MIT
-└── .github/workflows/             # Déploiement automatique vers GitHub Pages
+├── scripts/
+│   └── check-bundle-size.mjs       # Budgets de taille des assets de production
+├── .github/workflows/             # Déploiement automatique vers GitHub Pages
 ```
 
 Les icônes, stickers et personnages restent intégrés sous forme de vecteurs **SVG natifs** dans les modules de données et le markup nécessaire. `scripts/generate-entry.mjs` génère `src/main.js` avec des imports ES explicites ; Vite analyse ensuite le graphe des modules et produit le bundle optimisé dans `dist/`, tandis que `public/` contient les fichiers servis tels quels. Le module `ui.js` câble les interactions avec `addEventListener`, sans attributs HTML inline ni pont `globalThis`.
+
+Le script `scripts/check-bundle-size.mjs` vérifie automatiquement les budgets du JavaScript initial, du chunk héros différé et de la feuille CSS afin qu’une régression de taille échoue explicitement pendant la CI.
 
 ---
 ---
