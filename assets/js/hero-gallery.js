@@ -37,6 +37,7 @@ function loadHeroesData() {
                 filtered.forEach((hero) => {
                     const card = document.createElement("button");
                     card.type = "button";
+                    card.dataset.heroCategory = hero.category;
                     // Pick a background gradient based on category
                     const bgGrad =
                         hero.category === "dino"

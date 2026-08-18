@@ -12,7 +12,8 @@ import { state } from "./state.js";
             function getSavedDrawings() {
                 try {
                     const data = localStorage.getItem(GALLERY_KEY);
-                    return data ? JSON.parse(data) : [];
+                    const parsed = data ? JSON.parse(data) : [];
+                    return Array.isArray(parsed) ? parsed : [];
                 } catch (e) {
                     return [];
                 }
