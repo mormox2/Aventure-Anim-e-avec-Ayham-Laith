@@ -1,5 +1,6 @@
 import { draw, redo, renderColors, renderMobileColors, saveState, setParticleSpawner, startDrawing, stopDrawing, toggleMobileDrawer, undo } from "./drawing.js";
 import { initParticles, spawnParticles } from "./export-particles.js";
+import { createPointerMoveScheduler } from "./pointer-scheduler.js";
 import { showEncouragement, triggerConfetti } from "./feedback.js";
 import { setAnimationSpeed } from "./settings.js";
 import { deselectAllStickers, renderStickers } from "./stickers.js";
@@ -28,8 +29,9 @@ import { state } from "./state.js";
                 setParticleSpawner(spawnParticles);
 
                 // Add Canvas drawing event listeners (Pointer Events)
+                const schedulePointerMove = createPointerMoveScheduler(draw);
                 state.canvas.addEventListener("pointerdown", startDrawing);
-                state.canvas.addEventListener("pointermove", draw);
+                state.canvas.addEventListener("pointermove", schedulePointerMove);
                 // #2: save state on pointerup (end of stroke) — not on pointerdown
                 window.addEventListener("pointerup", () => {
                     const wasDrawing = state.isDrawing;

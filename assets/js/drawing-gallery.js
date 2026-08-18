@@ -1,4 +1,5 @@
 import { showEncouragement } from "./feedback.js";
+import { readStoredArray, writeStoredArray } from "./storage.js";
 import { toggleModal } from "./modal-service.js";
 import { saveState } from "./history.js";
 import { synth } from "./synth.js";
@@ -10,13 +11,7 @@ import { state } from "./state.js";
             const GALLERY_KEY = "arsam_wa_harrik_gallery";
 
             function getSavedDrawings() {
-                try {
-                    const data = localStorage.getItem(GALLERY_KEY);
-                    const parsed = data ? JSON.parse(data) : [];
-                    return Array.isArray(parsed) ? parsed : [];
-                } catch (e) {
-                    return [];
-                }
+                return readStoredArray(GALLERY_KEY);
             }
 
             function saveDrawingToGallery(thumbnailUrl) {
@@ -32,7 +27,7 @@ import { state } from "./state.js";
                 }
 
                 try {
-                    localStorage.setItem(GALLERY_KEY, JSON.stringify(drawings));
+                    writeStoredArray(GALLERY_KEY, drawings);
                 } catch (e) {
                     showEncouragement("مساحة التخزين ممتلئة! احذف بعض الرسومات القديمة.");
                 }
@@ -42,7 +37,7 @@ import { state } from "./state.js";
                 let drawings = getSavedDrawings();
                 drawings = drawings.filter((d) => d.id !== drawId);
                 try {
-                    localStorage.setItem(GALLERY_KEY, JSON.stringify(drawings));
+                    writeStoredArray(GALLERY_KEY, drawings);
                 } catch (e) {}
                 renderGalleryGrid();
             }

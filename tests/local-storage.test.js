@@ -13,9 +13,19 @@ describe("persistance localStorage", () => {
     saveFriends(["سارة", "خالد"]);
 
     expect(getFriends()).toEqual(["سارة", "خالد"]);
+    expect(JSON.parse(localStorage.getItem("arsam_wa_harrik_guests"))).toEqual({
+      version: 1,
+      data: ["سارة", "خالد"],
+    });
   });
 
-  it("retourne une collection vide si les données sont invalides", () => {
+  it("relit les tableaux legacy et rejette les formes invalides", () => {
+    localStorage.setItem("arsam_wa_harrik_guests", JSON.stringify(["legacy"]));
+    localStorage.setItem("arsam_wa_harrik_gallery", JSON.stringify([{ id: 1 }]));
+
+    expect(getFriends()).toEqual(["legacy"]);
+    expect(getSavedDrawings()).toEqual([{ id: 1 }]);
+
     localStorage.setItem("arsam_wa_harrik_guests", "not-json");
     localStorage.setItem("arsam_wa_harrik_gallery", "{}");
 
@@ -35,5 +45,9 @@ describe("persistance localStorage", () => {
       }),
     );
     expect(drawings[0].id).toBeTruthy();
+    expect(JSON.parse(localStorage.getItem("arsam_wa_harrik_gallery"))).toEqual({
+      version: 1,
+      data: drawings,
+    });
   });
 });

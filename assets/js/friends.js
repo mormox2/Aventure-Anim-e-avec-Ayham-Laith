@@ -1,4 +1,5 @@
 import { showEncouragement } from "./feedback.js";
+import { readStoredArray, writeStoredArray } from "./storage.js";
 import { toggleModal } from "./modal-service.js";
 import { speakArabic } from "./voice-duo.js";
 import { synth } from "./synth.js";
@@ -50,17 +51,12 @@ import { state } from "./state.js";
             const GUEST_KEY = "arsam_wa_harrik_guests";
 
             function getFriends() {
-                try {
-                    const data = localStorage.getItem(GUEST_KEY);
-                    return data ? JSON.parse(data) : [];
-                } catch (e) {
-                    return [];
-                }
+                return readStoredArray(GUEST_KEY);
             }
 
             function saveFriends(names) {
                 try {
-                    localStorage.setItem(GUEST_KEY, JSON.stringify(names));
+                    writeStoredArray(GUEST_KEY, names);
                 } catch (e) {}
                 renderFriendBadges();
                 renderFriendList();
