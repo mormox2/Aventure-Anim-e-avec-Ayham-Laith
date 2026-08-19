@@ -3,6 +3,8 @@ import { toggleGiveLife } from "./animations.js";
 import { saveState, clearHistory } from "./history.js";
 import { synth } from "./synth.js";
 import { state } from "./state.js";
+import { toggleModal } from "./modal-service.js";
+import { saveCurrentDrawingToGallery } from "./drawing-gallery.js";
 
             function selectCanvasBg(bgId) {
                 if (bgId === state.currentBg) return;
@@ -23,6 +25,45 @@ import { state } from "./state.js";
                 drawCanvasBackground().then(saveState);
 
                 showEncouragement(`🎨 تم تغيير خلفية اللوحة!`);
+            }
+
+            function renderBlankBackground() {
+                if (!state.canvas || !state.ctx) return;
+                const rect = state.canvas.getBoundingClientRect();
+                const layoutH = state.canvas.offsetHeight || rect.height || 480;
+                const dpr = window.devicePixelRatio || 1;
+
+                state.ctx.save();
+                state.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+
+                switch (state.currentBg) {
+                    case "white":
+                        state.ctx.fillStyle = "#FFFFFF";
+                        break;
+                    case "sky":
+                        state.ctx.fillStyle = "#BAE6FD";
+                        break;
+                    case "grass":
+                        state.ctx.fillStyle = "#A7F3D0";
+                        break;
+                    case "sunset": {
+                        const grad = state.ctx.createLinearGradient(0, 0, 0, layoutH * dpr);
+                        grad.addColorStop(0, "#FED7AA");
+                        grad.addColorStop(0.5, "#FDA4AF");
+                        grad.addColorStop(1, "#C4B5FD");
+                        state.ctx.fillStyle = grad;
+                        break;
+                    }
+                    case "dark":
+                        state.ctx.fillStyle = "#334155";
+                        break;
+                    default:
+                        state.ctx.fillStyle = "#FFFFFF";
+                        break;
+                }
+                state.ctx.fillRect(0, 0, state.canvas.width, state.canvas.height);
+                state.ctx.restore();
             }
 
             function drawCanvasBackground() {
@@ -49,13 +90,14 @@ import { state } from "./state.js";
                     case "grass":
                         state.ctx.fillStyle = "#A7F3D0";
                         break;
-                    case "sunset":
+                    case "sunset": {
                         const grad = state.ctx.createLinearGradient(0, 0, 0, layoutH * dpr);
                         grad.addColorStop(0, "#FED7AA");
                         grad.addColorStop(0.5, "#FDA4AF");
                         grad.addColorStop(1, "#C4B5FD");
                         state.ctx.fillStyle = grad;
                         break;
+                    }
                     case "dark":
                         state.ctx.fillStyle = "#334155";
                         break;
@@ -77,31 +119,52 @@ import { state } from "./state.js";
                 });
             }
 
-            function clearCanvas() {
+            function toggleClearModal(show) {
+                toggleModal("clear-confirm-modal", "clear-confirm-modal-content", show);
+            }
+
+            function confirmClearCanvas() {
                 synth.playBoing();
-                if (confirm("هل أنت متأكد أنك تريد مسح اللوحة بالكامل والبدء من جديد؟ 🧹")) {
-                    // Use save/restore to clear the entire canvas regardless of transformation
-                    state.ctx.save();
-                    state.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                    state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
-                    state.ctx.restore();
 
-                    // Remove all stickers
-                    const stickersContainer = document.getElementById("stickers-layer");
+                // 1. Safety automatic backup to gallery so nothing is ever lost by accident
+                try {
+                    saveCurrentDrawingToGallery();
+                } catch (e) {}
+
+                // 2. Clear canvas and restore active background
+                renderBlankBackground();
+
+                // 3. Clear stickers
+                const stickersContainer = document.getElementById("stickers-layer");
+                if (stickersContainer) {
                     stickersContainer.replaceChildren();
-                    state.activeSticker = null;
+                }
+                state.activeSticker = null;
 
-                    // Turn off Alive mode if active
-                    if (state.isAlive) {
-                        toggleGiveLife();
+                // 4. Turn off Alive mode if active
+                if (state.isAlive) {
+                    toggleGiveLife();
+                }
+
+                // 5. Save state for history (allows "تراجع" / Undo if clicked by mistake)
+                saveState();
+
+                // 6. Close confirmation modal
+                toggleClearModal(false);
+
+                triggerConfetti();
+                showEncouragement("🧹 تم مسح اللوحة بنجاح! تم حفظ نسخة في المعرض للأمان ✨");
+            }
+
+            function clearCanvas() {
+                const modal = document.getElementById("clear-confirm-modal");
+                if (modal) {
+                    toggleClearModal(true);
+                } else {
+                    if (confirm("هل أنت متأكد أنك تريد مسح اللوحة والبدء من جديد؟ 🧹")) {
+                        confirmClearCanvas();
                     }
-                    saveState();
-
-                    triggerConfetti();
-                    showEncouragement("بداية جديدة مرحة! 🌟🎨");
                 }
             }
 
-            // #11: saveState stores the canvas and sticker layer as one snapshot.
-
-export { selectCanvasBg, drawCanvasBackground, clearCanvas };
+export { selectCanvasBg, drawCanvasBackground, renderBlankBackground, clearCanvas, confirmClearCanvas, toggleClearModal };

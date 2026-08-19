@@ -760,6 +760,61 @@
             </div>
         </div>
 
+        <!-- CLEAR CANVAS CONFIRMATION Modal (Accident Safety) -->
+        <div
+            id="clear-confirm-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="clear-modal-title"
+            aria-describedby="clear-modal-description"
+            aria-hidden="true"
+            class="fixed inset-0 bg-slate-900/70 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm"
+            data-ui-backdrop="clear-confirm-modal" data-ui-close="toggle-clear-modal"
+        >
+            <div
+                class="bg-gradient-to-br from-yellow-100 via-pink-50 to-red-50 border-4 border-slate-800 rounded-[36px] max-w-sm md:max-w-md w-full p-6 shadow-cartoon-lg relative transform scale-95 transition-transform duration-300 text-center"
+                id="clear-confirm-modal-content"
+            >
+                <button
+                    data-ui-click="toggle-clear-modal" data-ui-value="false"
+                    aria-label="إلغاء مسح اللوحة"
+                    class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all z-10"
+                >
+                    ❌
+                </button>
+
+                <div class="w-16 h-16 mx-auto mb-3 bg-red-200 border-3 border-slate-800 rounded-full flex items-center justify-center text-3xl shadow-cartoon-sm animate-bounce">
+                    🧹
+                </div>
+
+                <h3 id="clear-modal-title" class="text-2xl md:text-3xl font-black text-slate-800 mb-2">
+                    مسح اللوحة بالكامل؟
+                </h3>
+
+                <p id="clear-modal-description" class="text-xs md:text-sm font-bold text-slate-700 mb-5 bg-white/80 p-3 rounded-2xl border-2 border-slate-700 shadow-sm leading-relaxed">
+                    هل أنت متأكد من مسح كل ما رسمته والبدء من جديد؟ 🌟<br>
+                    <span class="text-emerald-700 font-black">🛡️ أمان: سيتم حفظ نسخة تلقائياً في المعرض ويمكنك التراجع في أي وقت!</span>
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-2.5 justify-center">
+                    <button
+                        data-ui-click="confirm-clear-canvas"
+                        class="bubble-btn py-3 px-5 bg-red-400 hover:bg-red-300 text-slate-900 font-black rounded-2xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-2 text-sm md:text-base active:scale-95 transition-all"
+                    >
+                        <span>💣</span>
+                        <span>نعم، امسح وابدأ من جديد!</span>
+                    </button>
+                    <button
+                        data-ui-click="toggle-clear-modal" data-ui-value="false"
+                        class="bubble-btn py-3 px-5 bg-emerald-300 hover:bg-emerald-200 text-slate-900 font-black rounded-2xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-2 text-sm md:text-base active:scale-95 transition-all"
+                    >
+                        <span>💖</span>
+                        <span>لا، احتفظ برسمتي!</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- STAMPS Modal (Shapes & Patterns) -->
         <div
             id="stamps-modal"

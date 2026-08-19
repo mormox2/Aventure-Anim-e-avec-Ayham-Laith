@@ -3,6 +3,7 @@ import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 const { drawingMocks, animationMocks, galleryMocks, settingsMocks } = vi.hoisted(() => ({
   drawingMocks: {
     clearCanvas: vi.fn(),
+    confirmClearCanvas: vi.fn(),
     downloadDrawingPNG: vi.fn(),
     redo: vi.fn(),
     selectCanvasBg: vi.fn(),
@@ -10,6 +11,7 @@ const { drawingMocks, animationMocks, galleryMocks, settingsMocks } = vi.hoisted
     selectEraser: vi.fn(),
     selectFillTool: vi.fn(),
     selectSpray: vi.fn(),
+    toggleClearModal: vi.fn(),
     toggleMirror: vi.fn(),
     toggleMobileDrawer: vi.fn(),
     toggleStampsModal: vi.fn(),

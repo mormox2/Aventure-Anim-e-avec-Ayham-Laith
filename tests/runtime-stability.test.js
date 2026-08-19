@@ -8,6 +8,7 @@ import { toggleFullscreen } from "../assets/js/settings.js";
 import { generateThumbnailDataUrl } from "../assets/js/drawing-gallery.js";
 import { selectColor, selectEraser, selectFillTool, updateCanvasCursor } from "../assets/js/canvas-tools.js";
 import { selectSpray } from "../assets/js/canvas-controls.js";
+import { clearCanvas, confirmClearCanvas, toggleClearModal } from "../assets/js/canvas-backgrounds.js";
 
 describe("Runtime Stability & Bug Prevention", () => {
   beforeEach(() => {
@@ -26,6 +27,8 @@ describe("Runtime Stability & Bug Prevention", () => {
       <div id="mobile-color-palette"></div>
       <div id="stamps-modal" class="hidden"><div id="stamps-modal-content"></div></div>
       <div id="stamps-gallery"></div>
+      <div id="clear-confirm-modal" class="hidden"><div id="clear-confirm-modal-content"></div></div>
+      <div id="stickers-layer"></div>
       <canvas id="drawing-canvas" width="600" height="400"></canvas>
     `;
     state.canvas = document.getElementById("drawing-canvas");
@@ -104,5 +107,17 @@ describe("Runtime Stability & Bug Prevention", () => {
 
     selectColor("#FF0000", null);
     expect(canvas.classList.contains("cursor-brush")).toBe(true);
+  });
+
+  it("clearCanvas ouvre la modale de confirmation et confirmClearCanvas réinitialise avec sauvegarde", () => {
+    const clearModal = document.getElementById("clear-confirm-modal");
+    expect(clearModal.classList.contains("hidden")).toBe(true);
+
+    clearCanvas();
+    expect(clearModal.classList.contains("hidden")).toBe(false);
+
+    confirmClearCanvas();
+    expect(state.ctx.clearRect).toHaveBeenCalled();
+    expect(state.ctx.fillRect).toHaveBeenCalled();
   });
 });

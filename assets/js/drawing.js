@@ -20,8 +20,11 @@ import {
 } from "./canvas-modals.js";
 import {
   clearCanvas,
+  confirmClearCanvas,
   drawCanvasBackground,
+  renderBlankBackground,
   selectCanvasBg,
+  toggleClearModal,
 } from "./canvas-backgrounds.js";
 import {
   clearHistory,
@@ -61,7 +64,10 @@ export {
   placeStamp,
   selectCanvasBg,
   drawCanvasBackground,
+  renderBlankBackground,
   clearCanvas,
+  confirmClearCanvas,
+  toggleClearModal,
   clearHistory,
   saveState,
   undo,
