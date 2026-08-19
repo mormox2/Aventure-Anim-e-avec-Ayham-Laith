@@ -45,6 +45,8 @@ import {
   selectSpray,
   switchMobileDrawerTab,
   toggleMobileDrawer,
+  selectBrushMode,
+  selectShape,
 } from "./canvas-controls.js";
 import { toggleModal } from "./modal-service.js";
 
@@ -90,4 +92,6 @@ export {
   toggleModal,
   setParticleSpawner,
   updateCanvasCursor,
+  selectBrushMode,
+  selectShape,
 };

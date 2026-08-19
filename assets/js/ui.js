@@ -4,10 +4,12 @@ import {
   downloadDrawingPNG,
   filterMobileStickers,
   redo,
+  selectBrushMode,
   selectCanvasBg,
   selectCustomColor,
   selectEraser,
   selectFillTool,
+  selectShape,
   selectSpray,
   switchMobileDrawerTab,
   toggleClearModal,
@@ -51,6 +53,8 @@ const actions = Object.freeze({
   "select-eraser": selectEraser,
   "select-fill-tool": selectFillTool,
   "select-spray": selectSpray,
+  "select-brush-mode": selectBrushMode,
+  "select-shape": selectShape,
   "toggle-clear-modal": toggleClearModal,
   "toggle-friends-modal": toggleFriendsModal,
   "toggle-fullscreen": toggleFullscreen,
@@ -131,6 +135,10 @@ function handleClick(event) {
     animalReact(element.dataset.uiAnimal);
   } else if (action === "select-canvas-bg") {
     selectCanvasBg(element.dataset.uiBg);
+  } else if (action === "select-brush-mode") {
+    selectBrushMode(element.dataset.uiMode);
+  } else if (action === "select-shape") {
+    selectShape(element.dataset.uiShape);
   } else if (action === "mobile-tool") {
     handleMobileTool(element);
   } else {

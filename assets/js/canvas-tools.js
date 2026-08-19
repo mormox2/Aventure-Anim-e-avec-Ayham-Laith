@@ -249,13 +249,13 @@ function updateCanvasCursor() {
                 const clickX = e.clientX - rect.left;
                 const clickY = e.clientY - rect.top;
 
-                // NEW: If Fill mode is active, perform flood fill and return
+                // If Fill mode is active, perform flood fill and return
                 if (state.isFillMode) {
                     if (performFloodFill(clickX, clickY)) saveState();
                     return;
                 }
 
-                // NEW: If a stamp is selected, place it
+                // If a stamp is selected, place it
                 if (state.activeStamp) {
                     placeStamp(e.clientX, e.clientY);
                     state.activeStamp = null;
@@ -263,9 +263,26 @@ function updateCanvasCursor() {
                     return;
                 }
 
+                // Shape mode: record start point + snapshot canvas for live preview
+                if (state.brushMode === "shape") {
+                    state.isDrawing = true;
+                    state.shapeStartX = clickX;
+                    state.shapeStartY = clickY;
+                    state.lastX = clickX;
+                    state.lastY = clickY;
+                    // Capture snapshot so preview can restore it on each drag frame
+                    _shapeSnapshot = state.ctx.getImageData(0, 0, state.canvas.width, state.canvas.height);
+                    synth.playClick();
+                    return;
+                }
+
                 state.isDrawing = true;
                 state.lastX = clickX;
                 state.lastY = clickY;
+                // Initialize Bézier control point
+                state.bezierCpX = clickX;
+                state.bezierCpY = clickY;
+                state.prevSpeed = 0;
 
                 // Spawn magic pointer particles
                 particleSpawner(clickX, clickY);
@@ -274,11 +291,251 @@ function updateCanvasCursor() {
                 synth.playClick();
             }
 
+            /************************************************************
+             * Spray Paint Tool 🫧
+             ************************************************************/
+            function drawSpray(x, y) {
+                const ctx = state.ctx;
+                const radius = state.brushSize * 3;
+                const density = Math.ceil(state.brushSize * 4);
+                const colorStr = state.isRainbowBrush
+                    ? `hsl(${(state.rainbowHue = (state.rainbowHue + 2) % 360)}, 100%, 55%)`
+                    : state.activeColor;
+
+                ctx.globalCompositeOperation = "source-over";
+                ctx.fillStyle = colorStr;
+
+                if (state.currentTheme === "night") {
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = colorStr;
+                } else {
+                    ctx.shadowBlur = 0;
+                }
+
+                for (let i = 0; i < density; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = Math.random() * radius;
+                    const dropX = x + Math.cos(angle) * dist;
+                    const dropY = y + Math.sin(angle) * dist;
+                    const dropR = Math.random() * 1.5 + 0.5;
+                    ctx.beginPath();
+                    ctx.arc(dropX, dropY, dropR, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.shadowBlur = 0;
+
+                // Mirror spray
+                if (state.isMirrorMode) {
+                    const layoutW = state.canvas.offsetWidth || 700;
+                    const mx = layoutW - x;
+                    ctx.save();
+                    ctx.fillStyle = colorStr;
+                    for (let i = 0; i < density; i++) {
+                        const angle = Math.random() * Math.PI * 2;
+                        const dist = Math.random() * radius;
+                        const dropR = Math.random() * 1.5 + 0.5;
+                        ctx.beginPath();
+                        ctx.arc(mx + Math.cos(angle) * dist, y + Math.sin(angle) * dist, dropR, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                }
+            }
+
+            /************************************************************
+             * Star Brush ⭐
+             ************************************************************/
+            function drawStarBrush(x, y, color) {
+                const ctx = state.ctx;
+                const size = state.brushSize * 1.2;
+                const spikes = 5;
+                const outerR = size;
+                const innerR = size * 0.45;
+
+                ctx.save();
+                ctx.globalCompositeOperation = "source-over";
+                ctx.fillStyle = color;
+                ctx.globalAlpha = 0.85;
+                if (state.currentTheme === "night") {
+                    ctx.shadowBlur = 12;
+                    ctx.shadowColor = color;
+                }
+
+                ctx.beginPath();
+                let rotation = (Math.PI / 2) * 3;
+                const step = Math.PI / spikes;
+                ctx.moveTo(x, y - outerR);
+                for (let i = 0; i < spikes; i++) {
+                    ctx.lineTo(x + Math.cos(rotation) * outerR, y + Math.sin(rotation) * outerR);
+                    rotation += step;
+                    ctx.lineTo(x + Math.cos(rotation) * innerR, y + Math.sin(rotation) * innerR);
+                    rotation += step;
+                }
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+
+                // Mirror star
+                if (state.isMirrorMode) {
+                    const layoutW = state.canvas.offsetWidth || 700;
+                    ctx.save();
+                    ctx.globalCompositeOperation = "source-over";
+                    ctx.fillStyle = color;
+                    ctx.globalAlpha = 0.85;
+                    ctx.beginPath();
+                    let rot2 = (Math.PI / 2) * 3;
+                    const mx = layoutW - x;
+                    ctx.moveTo(mx, y - outerR);
+                    for (let i = 0; i < spikes; i++) {
+                        ctx.lineTo(mx + Math.cos(rot2) * outerR, y + Math.sin(rot2) * outerR);
+                        rot2 += step;
+                        ctx.lineTo(mx + Math.cos(rot2) * innerR, y + Math.sin(rot2) * innerR);
+                        rot2 += step;
+                    }
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+
+            /************************************************************
+             * Calligraphy Brush ✒️
+             ************************************************************/
+            function drawCalligraphy(x, y, color) {
+                const ctx = state.ctx;
+                const dx = x - state.lastX;
+                const dy = y - state.lastY;
+                const speed = Math.sqrt(dx * dx + dy * dy);
+                // Smooth speed transition
+                state.prevSpeed = state.prevSpeed * 0.7 + speed * 0.3;
+                // Fast = thin (min 1px), slow = thick (up to brushSize * 2)
+                const minW = Math.max(1, state.brushSize * 0.2);
+                const maxW = state.brushSize * 2;
+                const lineW = Math.max(minW, maxW - state.prevSpeed * 0.6);
+
+                ctx.save();
+                ctx.globalCompositeOperation = "source-over";
+                ctx.strokeStyle = color;
+                ctx.lineWidth = lineW;
+                ctx.lineCap = "round";
+                ctx.lineJoin = "round";
+                ctx.globalAlpha = 0.9;
+                if (state.currentTheme === "night") {
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = color;
+                }
+
+                // Quadratic Bézier for smooth calligraphy
+                const cpX = (state.lastX + x) / 2;
+                const cpY = (state.lastY + y) / 2;
+                ctx.beginPath();
+                ctx.moveTo(state.lastX, state.lastY);
+                ctx.quadraticCurveTo(state.bezierCpX, state.bezierCpY, cpX, cpY);
+                ctx.stroke();
+                state.bezierCpX = cpX;
+                state.bezierCpY = cpY;
+                ctx.restore();
+
+                // Mirror calligraphy
+                if (state.isMirrorMode) {
+                    const layoutW = state.canvas.offsetWidth || 700;
+                    ctx.save();
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = lineW;
+                    ctx.lineCap = "round";
+                    ctx.lineJoin = "round";
+                    ctx.globalAlpha = 0.9;
+                    ctx.beginPath();
+                    ctx.moveTo(layoutW - state.lastX, state.lastY);
+                    ctx.quadraticCurveTo(layoutW - state.bezierCpX, state.bezierCpY, layoutW - cpX, cpY);
+                    ctx.stroke();
+                    ctx.restore();
+                }
+            }
+
+            /************************************************************
+             * Shape Preview (live while dragging) 🔷
+             ************************************************************/
+            function _drawShapeOnCtx(ctx, type, x1, y1, x2, y2, color, lineW) {
+                ctx.save();
+                ctx.globalCompositeOperation = "source-over";
+                ctx.strokeStyle = color;
+                ctx.lineWidth = lineW;
+                ctx.lineCap = "round";
+                ctx.lineJoin = "round";
+                ctx.globalAlpha = 0.9;
+
+                if (type === "line") {
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.stroke();
+                } else if (type === "rect") {
+                    ctx.beginPath();
+                    ctx.rect(x1, y1, x2 - x1, y2 - y1);
+                    ctx.stroke();
+                } else if (type === "circle") {
+                    const rx = Math.abs(x2 - x1) / 2;
+                    const ry = Math.abs(y2 - y1) / 2;
+                    const cx = Math.min(x1, x2) + rx;
+                    const cy = Math.min(y1, y2) + ry;
+                    ctx.beginPath();
+                    ctx.ellipse(cx, cy, rx || 1, ry || 1, 0, 0, Math.PI * 2);
+                    ctx.stroke();
+                } else if (type === "heart") {
+                    const w = x2 - x1;
+                    const h = y2 - y1;
+                    const hx = x1 + w / 2;
+                    const hy = y1 + h / 2;
+                    const scale = Math.min(Math.abs(w), Math.abs(h)) / 2;
+                    ctx.beginPath();
+                    ctx.moveTo(hx, hy + scale * 0.9);
+                    ctx.bezierCurveTo(
+                        hx - scale * 1.5, hy + scale * 0.3,
+                        hx - scale * 2,   hy - scale * 0.8,
+                        hx,               hy - scale * 0.3
+                    );
+                    ctx.bezierCurveTo(
+                        hx + scale * 2,   hy - scale * 0.8,
+                        hx + scale * 1.5, hy + scale * 0.3,
+                        hx,               hy + scale * 0.9
+                    );
+                    ctx.stroke();
+                }
+                ctx.restore();
+            }
+
+            // Offscreen snapshot for shape preview (avoid redraw artifacts)
+            let _shapeSnapshot = null;
+
+            function drawShapePreview(x, y) {
+                if (!_shapeSnapshot) return;
+                // Restore background under shape
+                state.ctx.putImageData(_shapeSnapshot, 0, 0);
+                const color = state.isRainbowBrush
+                    ? `hsl(${state.rainbowHue}, 100%, 55%)`
+                    : state.activeColor;
+                _drawShapeOnCtx(state.ctx, state.shapeType,
+                    state.shapeStartX, state.shapeStartY, x, y,
+                    color, state.brushSize);
+            }
+
+            function finalizeShape(x, y) {
+                drawShapePreview(x, y); // Render final shape
+                _shapeSnapshot = null;
+                saveState();
+                synth.playPop();
+                if (Math.random() < 0.4) showEncouragement();
+            }
+
+            /************************************************************
+             * Core drawPoint — Bézier smoothed
+             ************************************************************/
             function drawPoint(currentX, currentY) {
                 // Spawn magic pointer particles as we draw
                 particleSpawner(currentX, currentY);
 
-                // #7: Spray mode — no stroke, scatter dots
+                // Spray mode — scatter dots
                 if (state.isSprayMode && !state.isEraser) {
                     drawSpray(currentX, currentY);
                     state.lastX = currentX;
@@ -287,86 +544,99 @@ function updateCanvasCursor() {
                     return;
                 }
 
-                state.ctx.beginPath();
-                state.ctx.moveTo(state.lastX, state.lastY);
-                state.ctx.lineTo(currentX, currentY);
+                // Determine active color
+                let activeStroke;
+                if (state.isEraser) {
+                    activeStroke = "rgba(0,0,0,1)";
+                } else if (state.isRainbowBrush) {
+                    state.rainbowHue = (state.rainbowHue + 2) % 360;
+                    activeStroke = `hsl(${state.rainbowHue}, 100%, 55%)`;
+                } else {
+                    activeStroke = state.activeColor;
+                }
 
-                // Line characteristics
-                state.ctx.lineCap = "round";
-                state.ctx.lineJoin = "round";
-                state.ctx.lineWidth = state.brushSize;
+                // Star brush mode
+                if (state.brushMode === "star" && !state.isEraser) {
+                    drawStarBrush(currentX, currentY, activeStroke);
+                    state.lastX = currentX;
+                    state.lastY = currentY;
+                    if (Math.random() < 0.005) showEncouragement();
+                    return;
+                }
+
+                // Calligraphy brush mode
+                if (state.brushMode === "calligraphy" && !state.isEraser) {
+                    drawCalligraphy(currentX, currentY, activeStroke);
+                    state.lastX = currentX;
+                    state.lastY = currentY;
+                    if (Math.random() < 0.005) showEncouragement();
+                    return;
+                }
+
+                // ── Normal brush with quadratic Bézier smoothing ──────────────
+                const ctx = state.ctx;
+                ctx.beginPath();
+                ctx.lineCap = "round";
+                ctx.lineJoin = "round";
+                ctx.lineWidth = state.brushSize;
 
                 if (state.isEraser) {
-                    // Eraser clears drawings with transparency
-                    state.ctx.globalCompositeOperation = "destination-out";
-                    state.ctx.strokeStyle = "rgba(0,0,0,1)";
-                    state.ctx.shadowBlur = 0; // Reset glow for eraser
+                    ctx.globalCompositeOperation = "destination-out";
+                    ctx.strokeStyle = "rgba(0,0,0,1)";
+                    ctx.shadowBlur = 0;
                 } else {
-                    // Normal drawing
-                    state.ctx.globalCompositeOperation = "source-over";
-                    if (state.isRainbowBrush) {
-                        state.rainbowHue = (state.rainbowHue + 2) % 360;
-                        state.ctx.strokeStyle = `hsl(${state.rainbowHue}, 100%, 55%)`;
-                    } else {
-                        state.ctx.strokeStyle = state.activeColor;
-                    }
-
-                    // Apply magic glow in night mode
+                    ctx.globalCompositeOperation = "source-over";
+                    ctx.strokeStyle = activeStroke;
                     if (state.currentTheme === "night") {
-                        state.ctx.shadowBlur = 15;
-                        state.ctx.shadowColor = state.ctx.strokeStyle;
+                        ctx.shadowBlur = 15;
+                        ctx.shadowColor = activeStroke;
                     } else {
-                        state.ctx.shadowBlur = 0;
+                        ctx.shadowBlur = 0;
                     }
                 }
 
-                state.ctx.stroke();
+                // Use quadratic Bézier: draw to midpoint for smooth curves
+                const midX = (state.lastX + currentX) / 2;
+                const midY = (state.lastY + currentY) / 2;
+                ctx.moveTo(state.bezierCpX, state.bezierCpY);
+                ctx.quadraticCurveTo(state.lastX, state.lastY, midX, midY);
+                ctx.stroke();
+                state.bezierCpX = midX;
+                state.bezierCpY = midY;
 
-                // Mirror mode: mirror horizontally
+                // Mirror mode
                 if (state.isMirrorMode) {
                     const layoutW = state.canvas.offsetWidth || 700;
-                    const mirrorLastX = layoutW - state.lastX;
-                    const mirrorCurX = layoutW - currentX;
-                    // Save and restore context to avoid affecting main stroke style
-                    state.ctx.save();
-                    state.ctx.lineCap = "round";
-                    state.ctx.lineJoin = "round";
-                    state.ctx.lineWidth = state.brushSize;
+                    ctx.save();
+                    ctx.lineCap = "round";
+                    ctx.lineJoin = "round";
+                    ctx.lineWidth = state.brushSize;
                     if (state.isEraser) {
-                        state.ctx.globalCompositeOperation = "destination-out";
-                        state.ctx.strokeStyle = "rgba(0,0,0,1)";
-                        state.ctx.shadowBlur = 0;
+                        ctx.globalCompositeOperation = "destination-out";
+                        ctx.strokeStyle = "rgba(0,0,0,1)";
+                        ctx.shadowBlur = 0;
                     } else {
-                        state.ctx.globalCompositeOperation = "source-over";
-                        if (state.isRainbowBrush) {
-                            // Recreate rainbow hue for mirror
-                            state.ctx.strokeStyle = `hsl(${(state.rainbowHue + 2) % 360}, 100%, 55%)`;
-                        } else {
-                            state.ctx.strokeStyle = state.activeColor;
-                        }
-
-                        // Apply magic glow in night mode
+                        ctx.globalCompositeOperation = "source-over";
+                        ctx.strokeStyle = activeStroke;
                         if (state.currentTheme === "night") {
-                            state.ctx.shadowBlur = 15;
-                            state.ctx.shadowColor = state.ctx.strokeStyle;
+                            ctx.shadowBlur = 15;
+                            ctx.shadowColor = activeStroke;
                         } else {
-                            state.ctx.shadowBlur = 0;
+                            ctx.shadowBlur = 0;
                         }
                     }
-                    state.ctx.beginPath();
-                    state.ctx.moveTo(mirrorLastX, state.lastY);
-                    state.ctx.lineTo(mirrorCurX, currentY);
-                    state.ctx.stroke();
-                    state.ctx.restore();
+                    ctx.beginPath();
+                    ctx.moveTo(layoutW - state.bezierCpX, state.bezierCpY);
+                    ctx.quadraticCurveTo(layoutW - state.lastX, state.lastY, layoutW - midX, midY);
+                    ctx.stroke();
+                    ctx.restore();
                 }
 
                 state.lastX = currentX;
                 state.lastY = currentY;
 
-                // Periodic check to trigger motivational speech bubble while drawing
-                if (Math.random() < 0.005) {
-                    showEncouragement();
-                }
+                // Periodic encouragement
+                if (Math.random() < 0.005) showEncouragement();
             }
 
             function draw(e) {
@@ -377,27 +647,37 @@ function updateCanvasCursor() {
 
                 const rect = state.canvas.getBoundingClientRect();
                 const events = (typeof e.getCoalescedEvents === "function") ? e.getCoalescedEvents() : [e];
+                const evList = (events && events.length > 0) ? events : [e];
 
-                if (events && events.length > 0) {
-                    for (const ev of events) {
-                        const currentX = ev.clientX - rect.left;
-                        const currentY = ev.clientY - rect.top;
+                for (const ev of evList) {
+                    const currentX = ev.clientX - rect.left;
+                    const currentY = ev.clientY - rect.top;
+
+                    // Shape mode: just update preview
+                    if (state.brushMode === "shape") {
+                        drawShapePreview(currentX, currentY);
+                        state.lastX = currentX;
+                        state.lastY = currentY;
+                    } else {
                         drawPoint(currentX, currentY);
                     }
-                } else {
-                    const currentX = e.clientX - rect.left;
-                    const currentY = e.clientY - rect.top;
-                    drawPoint(currentX, currentY);
                 }
             }
 
             function stopDrawing(e) {
                 if (state.isDrawing) {
                     state.isDrawing = false;
-                    if (state.ctx) {
-                        state.ctx.globalCompositeOperation = "source-over"; // Reset to default
-                        state.ctx.shadowBlur = 0; // Reset glow
+
+                    // Finalize shape if in shape mode
+                    if (state.brushMode === "shape" && e) {
+                        const rect = state.canvas.getBoundingClientRect();
+                        finalizeShape(e.clientX - rect.left, e.clientY - rect.top);
+                    } else if (state.ctx) {
+                        state.ctx.globalCompositeOperation = "source-over";
+                        state.ctx.shadowBlur = 0;
+                        saveState();
                     }
+
                     if (e && e.pointerId !== undefined && state.canvas && typeof state.canvas.releasePointerCapture === "function") {
                         try {
                             if (typeof state.canvas.hasPointerCapture !== "function" || state.canvas.hasPointerCapture(e.pointerId)) {
@@ -533,4 +813,4 @@ function updateCanvasCursor() {
                 }
             }
 
-export { renderColors, selectColor, selectEraser, startDrawing, draw, drawSpray, stopDrawing, selectFillTool, performFloodFill, toggleMirror, setParticleSpawner, updateCanvasCursor };
+export { renderColors, selectColor, selectEraser, startDrawing, draw, drawSpray, stopDrawing, selectFillTool, performFloodFill, toggleMirror, setParticleSpawner, updateCanvasCursor, drawStarBrush, drawCalligraphy, drawShapePreview, finalizeShape };

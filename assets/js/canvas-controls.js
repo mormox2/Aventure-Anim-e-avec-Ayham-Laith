@@ -266,6 +266,84 @@ import { state } from "./state.js";
             }
 
 
+            /************************************************************
+             * Brush Mode Selectors (calligraphy, star, shape)
+             ************************************************************/
+            function _resetBrushModeButtons() {
+                ["btn-calligraphy", "btn-star-brush", "btn-shape"].forEach((id) => {
+                    const b = document.getElementById(id);
+                    if (b) b.classList.remove("bg-yellow-400", "scale-105");
+                });
+                const calBtn = document.getElementById("btn-calligraphy");
+                if (calBtn) calBtn.classList.add("bg-indigo-300");
+                const starBtn = document.getElementById("btn-star-brush");
+                if (starBtn) starBtn.classList.add("bg-amber-300");
+                const shapeBtn = document.getElementById("btn-shape");
+                if (shapeBtn) shapeBtn.classList.add("bg-cyan-300");
+            }
+
+            function selectBrushMode(mode) {
+                synth.playPop();
+                // Toggle off if clicking the same mode
+                if (state.brushMode === mode) {
+                    state.brushMode = "normal";
+                    _resetBrushModeButtons();
+                    showEncouragement("🖌️ وضع الفرشاة العادي!");
+                    updateCanvasCursor();
+                    return;
+                }
+                // Deactivate conflicting tools
+                state.isEraser = false;
+                state.isSprayMode = false;
+                state.isFillMode = false;
+                state.activeStamp = null;
+                state.brushMode = mode;
+                _resetBrushModeButtons();
+
+                const btnId = mode === "calligraphy" ? "btn-calligraphy"
+                    : mode === "star" ? "btn-star-brush"
+                    : "btn-shape";
+                const btn = document.getElementById(btnId);
+                if (btn) {
+                    btn.classList.remove("bg-indigo-300", "bg-amber-300", "bg-cyan-300");
+                    btn.classList.add("bg-yellow-400", "scale-105");
+                }
+
+                const messages = {
+                    calligraphy: "✒️ وضع الخط العربي الجميل! ارسم ببطء للحصول على خط سميك!",
+                    star: "⭐ وضع فرشاة النجوم السحرية! كل حركة تصنع نجمة!",
+                    shape: "📐 وضع الأشكال! اختر شكلاً ثم اسحب على الرسمة!",
+                };
+                showEncouragement(messages[mode] || "");
+
+                // Reset eraser, spray, fill buttons
+                const eraserBtn = document.getElementById("btn-eraser");
+                if (eraserBtn) { eraserBtn.classList.remove("bg-yellow-400", "scale-105"); eraserBtn.classList.add("bg-pink-300"); }
+                const sprayBtn = document.getElementById("btn-spray");
+                if (sprayBtn) { sprayBtn.classList.remove("bg-yellow-400", "scale-105"); sprayBtn.classList.add("bg-emerald-300"); }
+                const fillBtn = document.getElementById("btn-fill");
+                if (fillBtn) { fillBtn.classList.remove("bg-yellow-400", "scale-105"); fillBtn.classList.add("bg-purple-300"); }
+
+                updateCanvasCursor();
+
+                // Shape sub-panel: show if mode=shape, hide otherwise
+                const shapePanel = document.getElementById("shape-sub-panel");
+                if (shapePanel) shapePanel.classList.toggle("hidden", mode !== "shape");
+            }
+
+            function selectShape(type) {
+                synth.playPop();
+                state.shapeType = type;
+                // Highlight selected shape button
+                ["shape-circle", "shape-rect", "shape-line", "shape-heart"].forEach((id) => {
+                    const b = document.getElementById(id);
+                    if (b) b.classList.remove("ring-2", "ring-yellow-400", "scale-110");
+                });
+                const btn = document.getElementById(`shape-${type}`);
+                if (btn) btn.classList.add("ring-2", "ring-yellow-400", "scale-110");
+                showEncouragement(`📐 شكل ${type === "circle" ? "الدائرة" : type === "rect" ? "المستطيل" : type === "line" ? "الخط" : "القلب"} جاهز!`);
+            }
+
 export {
     selectSpray,
     selectCustomColor,
@@ -275,5 +353,7 @@ export {
     switchMobileDrawerTab,
     toggleMobileDrawer,
     handleBackdropClick,
-    downloadDrawingPNG
+    downloadDrawingPNG,
+    selectBrushMode,
+    selectShape,
 };

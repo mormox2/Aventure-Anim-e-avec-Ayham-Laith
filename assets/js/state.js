@@ -9,4 +9,10 @@ export const state = {
   isResizing: false, isRotating: false, initialPointerX: 0, initialPointerY: 0,
   stickerStartLeft: 0, stickerStartTop: 0, stickerStartWidth: 100, stickerStartHeight: 100,
   stickerStartAngle: 0, stickerStartScale: 1, stickerCenter: { x: 0, y: 0 },
+  // Drawing mode extensions
+  brushMode: "normal",       // "normal" | "calligraphy" | "star" | "shape"
+  shapeType: "circle",       // "circle" | "rect" | "line" | "heart"
+  shapeStartX: 0, shapeStartY: 0, // Shape drawing start point
+  prevSpeed: 0,              // For calligraphy speed-based width
+  bezierCpX: 0, bezierCpY: 0, // Bézier control point (mid-point smoothing)
 };

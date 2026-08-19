@@ -62,6 +62,22 @@ describe("Mobile & Touch Screen Adaptation Tests", () => {
       restore: vi.fn(),
       clearRect: vi.fn(),
       fillRect: vi.fn(),
+      quadraticCurveTo: vi.fn(),
+      bezierCurveTo: vi.fn(),
+      ellipse: vi.fn(),
+      rect: vi.fn(),
+      closePath: vi.fn(),
+      getImageData: vi.fn(() => ({ data: new Uint8ClampedArray(600 * 400 * 4) })),
+      putImageData: vi.fn(),
+      globalCompositeOperation: "source-over",
+      globalAlpha: 1,
+      shadowBlur: 0,
+      shadowColor: "",
+      strokeStyle: "",
+      fillStyle: "",
+      lineWidth: 1,
+      lineCap: "round",
+      lineJoin: "round",
     };
   });
 
@@ -148,7 +164,8 @@ describe("Mobile & Touch Screen Adaptation Tests", () => {
       draw(pointerMoveEvent);
 
       expect(pointerMoveEvent.getCoalescedEvents).toHaveBeenCalled();
-      expect(state.ctx.lineTo).toHaveBeenCalled();
+      // Drawing engine now uses Bézier curves instead of lineTo
+      expect(state.ctx.quadraticCurveTo).toHaveBeenCalled();
       expect(state.ctx.stroke).toHaveBeenCalled();
     });
   });
