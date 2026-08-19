@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 
 const assetDirectory = resolve("dist/assets");
 const budgets = {
-  initialJavaScript: 85 * 1024,
+  initialJavaScript: 100 * 1024, // raised from 85 KB: new drawing engine (Bézier, calligraphy, star, shapes)
   lazyHeroesJavaScript: 60 * 1024,
   stylesheet: 60 * 1024,
 };
