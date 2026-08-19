@@ -4,6 +4,7 @@ import { toggleModal } from "./modal-service.js";
 import { saveState } from "./history.js";
 import { synth } from "./synth.js";
 import { state } from "./state.js";
+import { updateCanvasCursor } from "./canvas-tools.js";
 
 let stampsGalleryRendered = false;
 
@@ -37,6 +38,7 @@ let stampsGalleryRendered = false;
                 state.activeStamp = stamp;
                 synth.playPop();
                 toggleStampsModal(false);
+                updateCanvasCursor();
                 showEncouragement(`⭐ اضغط على اللوحة لوضع ${stamp.name}! يمكنك تغيير حجمها بالفرشاة!`);
             }
 

@@ -49,3 +49,24 @@ input[type="range"]::-webkit-slider-thumb {
 .sticker-element.active .sticker-controls {
     display: block !important;
 }
+
+/* Custom Cartoon Cursors for Canvas */
+.cursor-brush {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M19 13 L27 5 C28.5 3.5 30.5 3.5 31 4 C31.5 4.5 31.5 6.5 30 8 L22 16 Z' fill='%23F59E0B' stroke='%231E293B' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cpath d='M21 11 L28 4' stroke='%23FDE68A' stroke-width='1' stroke-linecap='round'/%3E%3Cpath d='M15 17 L21 11 L18 8 L12 14 Z' fill='%2394A3B8' stroke='%231E293B' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cpath d='M12 14 L18 8 C14 10 9 14 5 21 C3 25 1 29 1 31 C3 31 7 29 11 27 C18 23 12 14 12 14 Z' fill='%233B82F6' stroke='%231E293B' stroke-width='1.5' stroke-linejoin='round'/%3E%3Ccircle cx='2' cy='30' r='1.5' fill='%23F43F5E'/%3E%3C/svg%3E") 2 30, crosshair !important;
+}
+
+.cursor-eraser {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='rotate(-30 16 16)'%3E%3Crect x='6' y='8' width='12' height='18' rx='2' fill='%23F472B6' stroke='%231E293B' stroke-width='1.5'/%3E%3Crect x='18' y='8' width='10' height='18' rx='2' fill='%23E2E8F0' stroke='%231E293B' stroke-width='1.5'/%3E%3Cline x1='18' y1='8' x2='18' y2='26' stroke='%231E293B' stroke-width='1.5'/%3E%3C/g%3E%3Ccircle cx='4' cy='28' r='1.5' fill='%23EC4899'/%3E%3C/svg%3E") 4 28, crosshair !important;
+}
+
+.cursor-spray {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect x='10' y='10' width='14' height='20' rx='3' fill='%2310B981' stroke='%231E293B' stroke-width='1.5'/%3E%3Crect x='14' y='6' width='6' height='4' fill='%2394A3B8' stroke='%231E293B' stroke-width='1.5'/%3E%3Cpath d='M8 6 L2 4 M6 10 L1 12 M7 2 L2 0' stroke='%2338BDF8' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") 2 28, crosshair !important;
+}
+
+.cursor-fill {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M12 4 L22 14 L14 22 L4 12 Z' fill='%23A855F7' stroke='%231E293B' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cpath d='M4 12 L1 23 C1 27 5 31 9 31 C12 31 14 28 14 25 L14 22 Z' fill='%23EC4899' stroke='%231E293B' stroke-width='1.5' stroke-linejoin='round'/%3E%3Ccircle cx='3' cy='29' r='1.5' fill='%23F43F5E'/%3E%3C/svg%3E") 3 29, crosshair !important;
+}
+
+.cursor-stamp {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 20.5,11.2 30.6,12.7 23.3,19.8 25,29.8 16,25.1 7,29.8 8.7,19.8 1.4,12.7 11.5,11.2' fill='%23FACC15' stroke='%231E293B' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 16 16, crosshair !important;
+}

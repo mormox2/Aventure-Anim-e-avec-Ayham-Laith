@@ -1,5 +1,5 @@
 import { colors } from "./data.js";
-import { selectColor } from "./canvas-tools.js";
+import { selectColor, updateCanvasCursor } from "./canvas-tools.js";
 import { showEncouragement, triggerConfetti } from "./feedback.js";
 import { synth } from "./synth.js";
 import { deselectAllStickers } from "./stickers.js";
@@ -11,21 +11,30 @@ import { state } from "./state.js";
                 state.isSprayMode = !state.isSprayMode;
                 state.isEraser = false;
                 state.isFillMode = false;
+                state.activeStamp = null;
 
                 const btn = document.getElementById("btn-spray");
                 if (state.isSprayMode) {
-                    btn.classList.remove("bg-emerald-300");
-                    btn.classList.add("bg-yellow-400", "scale-105");
+                    if (btn) {
+                        btn.classList.remove("bg-emerald-300");
+                        btn.classList.add("bg-yellow-400", "scale-105");
+                    }
                     // reset fill and eraser UI
-                    document.getElementById("btn-eraser").classList.remove("bg-yellow-400", "scale-105");
-                    document.getElementById("btn-eraser").classList.add("bg-pink-300");
+                    const eraserBtn = document.getElementById("btn-eraser");
+                    if (eraserBtn) {
+                        eraserBtn.classList.remove("bg-yellow-400", "scale-105");
+                        eraserBtn.classList.add("bg-pink-300");
+                    }
                     const fillBtn = document.getElementById("btn-fill");
                     if (fillBtn) { fillBtn.classList.remove("bg-yellow-400","scale-105"); fillBtn.classList.add("bg-purple-300"); }
                     showEncouragement("🫧 وضع البخاخ! ارسم وستجد تأثيراً رائعاً!");
                 } else {
-                    btn.classList.remove("bg-yellow-400", "scale-105");
-                    btn.classList.add("bg-emerald-300");
+                    if (btn) {
+                        btn.classList.remove("bg-yellow-400", "scale-105");
+                        btn.classList.add("bg-emerald-300");
+                    }
                 }
+                updateCanvasCursor();
             }
 
             // #8: Custom color picker handler
@@ -33,7 +42,9 @@ import { state } from "./state.js";
                 synth.playPop();
                 state.isEraser = false;
                 state.isSprayMode = false;
+                state.isFillMode = false;
                 state.isRainbowBrush = false;
+                state.activeStamp = null;
                 state.activeColor = hexColor;
 
                 // reset spray and fill button visuals
@@ -41,22 +52,30 @@ import { state } from "./state.js";
                 if (sprayBtn) { sprayBtn.classList.remove("bg-yellow-400","scale-105"); sprayBtn.classList.add("bg-emerald-300"); }
                 const fillBtn = document.getElementById("btn-fill");
                 if (fillBtn) { fillBtn.classList.remove("bg-yellow-400","scale-105"); fillBtn.classList.add("bg-purple-300"); }
-                document.getElementById("btn-eraser").classList.remove("bg-yellow-400","scale-105");
-                document.getElementById("btn-eraser").classList.add("bg-pink-300");
+                const eraserBtn = document.getElementById("btn-eraser");
+                if (eraserBtn) {
+                    eraserBtn.classList.remove("bg-yellow-400","scale-105");
+                    eraserBtn.classList.add("bg-pink-300");
+                }
 
                 // Deselect all palette buttons
                 document.querySelectorAll("#color-palette button").forEach((b) => {
                     b.classList.remove("scale-110");
-                    b.querySelector(".active-dot").classList.remove("opacity-100");
-                    b.querySelector(".active-dot").classList.add("opacity-0");
+                    const activeDot = b.querySelector(".active-dot");
+                    if (activeDot) {
+                        activeDot.classList.remove("opacity-100");
+                        activeDot.classList.add("opacity-0");
+                    }
                 });
 
                 // Update brush preview
-                document.getElementById("brush-preview").style.background = hexColor;
+                const preview = document.getElementById("brush-preview");
+                if (preview) preview.style.background = hexColor;
                 // Sync picker in case called programmatically
                 const picker = document.getElementById("custom-color-picker");
                 if (picker) picker.value = hexColor;
 
+                updateCanvasCursor();
                 showEncouragement("🎨 تم اختيار لون خاص بك!");
             }
 

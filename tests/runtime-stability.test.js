@@ -6,6 +6,8 @@ import { renderMobileColors } from "../assets/js/canvas-controls.js";
 import { toggleStampsModal } from "../assets/js/canvas-modals.js";
 import { toggleFullscreen } from "../assets/js/settings.js";
 import { generateThumbnailDataUrl } from "../assets/js/drawing-gallery.js";
+import { selectColor, selectEraser, selectFillTool, updateCanvasCursor } from "../assets/js/canvas-tools.js";
+import { selectSpray } from "../assets/js/canvas-controls.js";
 
 describe("Runtime Stability & Bug Prevention", () => {
   beforeEach(() => {
@@ -87,5 +89,20 @@ describe("Runtime Stability & Bug Prevention", () => {
     expect(thumb).toBeDefined();
     expect(typeof thumb).toBe("string");
     expect(thumb.startsWith("data:image/")).toBe(true);
+  });
+
+  it("met à jour le curseur de la souris (pinceau, gomme, spray, seau)", () => {
+    const canvas = state.canvas;
+    updateCanvasCursor();
+    expect(canvas.classList.contains("cursor-brush")).toBe(true);
+
+    selectEraser();
+    expect(canvas.classList.contains("cursor-eraser")).toBe(true);
+
+    selectSpray();
+    expect(canvas.classList.contains("cursor-spray")).toBe(true);
+
+    selectColor("#FF0000", null);
+    expect(canvas.classList.contains("cursor-brush")).toBe(true);
   });
 });

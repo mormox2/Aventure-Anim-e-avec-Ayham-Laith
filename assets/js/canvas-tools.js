@@ -107,9 +107,29 @@ function parseColorToRgb(colorStr) {
                 });
             }
 
+function updateCanvasCursor() {
+    const canvas = state.canvas || document.getElementById("drawing-canvas");
+    if (!canvas) return;
+    canvas.classList.remove("cursor-brush", "cursor-eraser", "cursor-spray", "cursor-fill", "cursor-stamp", "cursor-crosshair");
+    if (state.activeStamp) {
+        canvas.classList.add("cursor-stamp");
+    } else if (state.isEraser) {
+        canvas.classList.add("cursor-eraser");
+    } else if (state.isSprayMode) {
+        canvas.classList.add("cursor-spray");
+    } else if (state.isFillMode) {
+        canvas.classList.add("cursor-fill");
+    } else {
+        canvas.classList.add("cursor-brush");
+    }
+}
+
             function selectColor(colorValue, buttonEl) {
                 synth.playPop();
                 state.isEraser = false;
+                state.isSprayMode = false;
+                state.isFillMode = false;
+                state.activeStamp = null;
 
                 // Update state
                 if (colorValue === "rainbow") {
@@ -120,27 +140,52 @@ function parseColorToRgb(colorStr) {
                 }
 
                 // Reset eraser style
-                document.getElementById("btn-eraser").classList.remove("bg-yellow-400", "scale-105");
-                document.getElementById("btn-eraser").classList.add("bg-pink-300");
+                const eraserBtn = document.getElementById("btn-eraser");
+                if (eraserBtn) {
+                    eraserBtn.classList.remove("bg-yellow-400", "scale-105");
+                    eraserBtn.classList.add("bg-pink-300");
+                }
+                const sprayBtn = document.getElementById("btn-spray");
+                if (sprayBtn) {
+                    sprayBtn.classList.remove("bg-yellow-400", "scale-105");
+                    sprayBtn.classList.add("bg-emerald-300");
+                }
+                const fillBtn = document.getElementById("btn-fill");
+                if (fillBtn) {
+                    fillBtn.classList.remove("bg-yellow-400", "scale-105");
+                    fillBtn.classList.add("bg-purple-300");
+                }
 
                 // Update active indicators
                 document.querySelectorAll("#color-palette button").forEach((b) => {
                     b.classList.remove("scale-110");
-                    b.querySelector(".active-dot").classList.remove("opacity-100");
-                    b.querySelector(".active-dot").classList.add("opacity-0");
+                    const activeDot = b.querySelector(".active-dot");
+                    if (activeDot) {
+                        activeDot.classList.remove("opacity-100");
+                        activeDot.classList.add("opacity-0");
+                    }
                 });
 
-                buttonEl.classList.add("scale-110");
-                buttonEl.querySelector(".active-dot").classList.remove("opacity-0");
-                buttonEl.querySelector(".active-dot").classList.add("opacity-100");
+                if (buttonEl) {
+                    buttonEl.classList.add("scale-110");
+                    const activeDot = buttonEl.querySelector(".active-dot");
+                    if (activeDot) {
+                        activeDot.classList.remove("opacity-0");
+                        activeDot.classList.add("opacity-100");
+                    }
+                }
 
                 // Update brush preview
                 const preview = document.getElementById("brush-preview");
-                if (state.isRainbowBrush) {
-                    preview.style.background = "linear-gradient(to right, red, orange, yellow, green, blue, violet)";
-                } else {
-                    preview.style.background = state.activeColor;
+                if (preview) {
+                    if (state.isRainbowBrush) {
+                        preview.style.background = "linear-gradient(to right, red, orange, yellow, green, blue, violet)";
+                    } else {
+                        preview.style.background = state.activeColor;
+                    }
                 }
+
+                updateCanvasCursor();
             }
 
             function selectEraser() {
@@ -149,6 +194,7 @@ function parseColorToRgb(colorStr) {
                 state.isRainbowBrush = false;
                 state.isSprayMode = false;
                 state.isFillMode = false;
+                state.activeStamp = null;
 
                 // Reset spray button
                 const sprayBtn = document.getElementById("btn-spray");
@@ -158,18 +204,26 @@ function parseColorToRgb(colorStr) {
                 if (fillBtn) { fillBtn.classList.remove("bg-yellow-400","scale-105"); fillBtn.classList.add("bg-purple-300"); }
                 // Update Eraser Button look
                 const eraserBtn = document.getElementById("btn-eraser");
-                eraserBtn.classList.remove("bg-pink-300");
-                eraserBtn.classList.add("bg-yellow-400", "scale-105");
+                if (eraserBtn) {
+                    eraserBtn.classList.remove("bg-pink-300");
+                    eraserBtn.classList.add("bg-yellow-400", "scale-105");
+                }
 
                 // De-select colors from palette
                 document.querySelectorAll("#color-palette button").forEach((b) => {
                     b.classList.remove("scale-110");
-                    b.querySelector(".active-dot").classList.remove("opacity-100");
-                    b.querySelector(".active-dot").classList.add("opacity-0");
+                    const activeDot = b.querySelector(".active-dot");
+                    if (activeDot) {
+                        activeDot.classList.remove("opacity-100");
+                        activeDot.classList.add("opacity-0");
+                    }
                 });
 
                 // Update brush preview to checkered pattern or white representing eraser
-                document.getElementById("brush-preview").style.background = "#FFFFFF";
+                const preview = document.getElementById("brush-preview");
+                if (preview) preview.style.background = "#FFFFFF";
+
+                updateCanvasCursor();
             }
 
             /************************************************************
@@ -199,6 +253,7 @@ function parseColorToRgb(colorStr) {
                 if (state.activeStamp) {
                     placeStamp(e.clientX, e.clientY);
                     state.activeStamp = null;
+                    updateCanvasCursor();
                     return;
                 }
 
@@ -395,6 +450,7 @@ function parseColorToRgb(colorStr) {
                     btn.classList.remove("bg-yellow-400", "scale-105");
                     btn.classList.add("bg-purple-300");
                 }
+                updateCanvasCursor();
             }
 
             function performFloodFill(startX, startY) {
@@ -495,4 +551,4 @@ function parseColorToRgb(colorStr) {
                 }
             }
 
-export { renderColors, selectColor, selectEraser, startDrawing, draw, drawSpray, stopDrawing, selectFillTool, performFloodFill, toggleMirror, setParticleSpawner };
+export { renderColors, selectColor, selectEraser, startDrawing, draw, drawSpray, stopDrawing, selectFillTool, performFloodFill, toggleMirror, setParticleSpawner, updateCanvasCursor };

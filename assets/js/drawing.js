@@ -10,6 +10,7 @@ import {
   startDrawing,
   stopDrawing,
   toggleMirror,
+  updateCanvasCursor,
 } from "./canvas-tools.js";
 import {
   placeStamp,
@@ -76,4 +77,5 @@ export {
   downloadDrawingPNG,
   toggleModal,
   setParticleSpawner,
+  updateCanvasCursor,
 };
