@@ -93,4 +93,24 @@ import { synth } from "./synth.js";
             }
 
 
-export { setAnimationSpeed, setTemplateOpacity, toggleHelpModal, animalReact };
+            // Fullscreen API toggle
+            function toggleFullscreen() {
+                synth.playPop();
+                if (!document.fullscreenElement) {
+                    const docEl = document.documentElement;
+                    if (docEl.requestFullscreen) {
+                        docEl.requestFullscreen().catch(() => {});
+                    } else if (docEl.webkitRequestFullscreen) {
+                        docEl.webkitRequestFullscreen();
+                    }
+                    showEncouragement("⛶ تم تفعيل وضع ملء الشاشة!");
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen().catch(() => {});
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    }
+                }
+            }
+
+export { setAnimationSpeed, setTemplateOpacity, toggleHelpModal, animalReact, toggleFullscreen };

@@ -109,8 +109,35 @@ import { state } from "./state.js";
                 }
             }
 
+            function generateThumbnailDataUrl(maxW = 280, maxH = 200) {
+                if (!state.canvas) return null;
+                const thumbCanvas = document.createElement("canvas");
+                const thumbCtx = thumbCanvas.getContext ? thumbCanvas.getContext("2d") : null;
+                if (!thumbCtx) {
+                    try {
+                        return state.canvas.toDataURL ? state.canvas.toDataURL("image/jpeg", 0.7) : null;
+                    } catch (e) {
+                        return null;
+                    }
+                }
+
+                const srcW = state.canvas.width || 700;
+                const srcH = state.canvas.height || 480;
+                const ratio = Math.min(maxW / srcW, maxH / srcH, 1);
+                thumbCanvas.width = Math.max(1, Math.round(srcW * ratio));
+                thumbCanvas.height = Math.max(1, Math.round(srcH * ratio));
+
+                // Fill background
+                thumbCtx.fillStyle = "#FFFFFF";
+                thumbCtx.fillRect(0, 0, thumbCanvas.width, thumbCanvas.height);
+                thumbCtx.drawImage(state.canvas, 0, 0, thumbCanvas.width, thumbCanvas.height);
+
+                return thumbCanvas.toDataURL("image/webp", 0.8) || thumbCanvas.toDataURL("image/jpeg", 0.7);
+            }
+
             function saveCurrentDrawingToGallery() {
-                const dataUrl = state.canvas.toDataURL("image/jpeg", 0.7);
+                if (!state.canvas) return;
+                const dataUrl = generateThumbnailDataUrl() || state.canvas.toDataURL("image/jpeg", 0.7);
                 saveDrawingToGallery(dataUrl);
             }
 
@@ -119,5 +146,4 @@ import { state } from "./state.js";
                 toggleModal("gallery-modal", "gallery-modal-content", show);
             }
 
-
-export { getSavedDrawings, saveDrawingToGallery, deleteDrawingFromGallery, renderGalleryGrid, loadDrawingFromGallery, saveCurrentDrawingToGallery, toggleGalleryModal };
+export { getSavedDrawings, saveDrawingToGallery, deleteDrawingFromGallery, renderGalleryGrid, loadDrawingFromGallery, saveCurrentDrawingToGallery, toggleGalleryModal, generateThumbnailDataUrl };

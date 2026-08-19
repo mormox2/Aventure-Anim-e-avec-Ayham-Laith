@@ -13,6 +13,71 @@ function setParticleSpawner(spawner) {
   particleSpawner = typeof spawner === "function" ? spawner : () => {};
 }
 
+function parseColorToRgb(colorStr) {
+  if (!colorStr) return { r: 255, g: 77, b: 109, a: 255 };
+  if (colorStr.startsWith("#")) {
+    let hex = colorStr.slice(1);
+    if (hex.length === 3) {
+      hex = hex.split("").map((c) => c + c).join("");
+    }
+    const num = parseInt(hex, 16);
+    if (Number.isNaN(num)) return { r: 255, g: 77, b: 109, a: 255 };
+    return {
+      r: (num >> 16) & 255,
+      g: (num >> 8) & 255,
+      b: num & 255,
+      a: 255,
+    };
+  }
+  if (colorStr.startsWith("rgb")) {
+    const parts = colorStr.match(/\d+/g);
+    if (parts && parts.length >= 3) {
+      return {
+        r: parseInt(parts[0], 10),
+        g: parseInt(parts[1], 10),
+        b: parseInt(parts[2], 10),
+        a: parts[3] ? Math.round(parseFloat(parts[3]) * 255) : 255,
+      };
+    }
+  }
+  if (colorStr.startsWith("hsl")) {
+    const parts = colorStr.match(/[\d.]+/g);
+    if (parts && parts.length >= 3) {
+      const h = parseFloat(parts[0]) / 360;
+      const s = parseFloat(parts[1]) / 100;
+      const l = parseFloat(parts[2]) / 100;
+      let r;
+      let g;
+      let b;
+      if (s === 0) {
+        r = g = b = l;
+      } else {
+        const hue2rgb = (p, q, t) => {
+          let adjustedT = t;
+          if (adjustedT < 0) adjustedT += 1;
+          if (adjustedT > 1) adjustedT -= 1;
+          if (adjustedT < 1 / 6) return p + (q - p) * 6 * adjustedT;
+          if (adjustedT < 1 / 2) return q;
+          if (adjustedT < 2 / 3) return p + (q - p) * (2 / 3 - adjustedT) * 6;
+          return p;
+        };
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1 / 3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1 / 3);
+      }
+      return {
+        r: Math.round(r * 255),
+        g: Math.round(g * 255),
+        b: Math.round(b * 255),
+        a: 255,
+      };
+    }
+  }
+  return { r: 255, g: 77, b: 109, a: 255 };
+}
+
             function renderColors() {
                 const palette = document.getElementById("color-palette");
                 palette.replaceChildren();
@@ -360,22 +425,9 @@ function setParticleSpawner(spawner) {
                     return false;
                 }
 
-                // Fill color (current brush color)
-                const tempDiv = document.createElement("div");
-                tempDiv.style.color = state.activeColor;
-                document.body.appendChild(tempDiv);
-                const computedColor = getComputedStyle(tempDiv).color;
-                document.body.removeChild(tempDiv);
-                const match = computedColor.match(/\d+/g);
-                let fillR = 0,
-                    fillG = 0,
-                    fillB = 0,
-                    fillA = 255;
-                if (match && match.length >= 3) {
-                    fillR = parseInt(match[0], 10);
-                    fillG = parseInt(match[1], 10);
-                    fillB = parseInt(match[2], 10);
-                }
+                // Fill color (current brush color or rainbow)
+                const fillColorStr = state.isRainbowBrush ? `hsl(${state.rainbowHue}, 100%, 55%)` : state.activeColor;
+                const { r: fillR, g: fillG, b: fillB, a: fillA } = parseColorToRgb(fillColorStr);
 
                 // If the source is already the fill color, do nothing
                 if (srcR === fillR && srcG === fillG && srcB === fillB && srcA === fillA) return false;

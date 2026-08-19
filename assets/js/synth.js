@@ -24,11 +24,17 @@ import { state } from "./state.js";
                 }
 
                 init() {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (!AudioCtx) return;
                     if (!this.ctx) {
-                        this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                        try {
+                            this.ctx = new AudioCtx();
+                        } catch (e) {
+                            return;
+                        }
                     }
-                    if (this.ctx.state === "suspended") {
-                        this.ctx.resume();
+                    if (this.ctx && this.ctx.state === "suspended") {
+                        this.ctx.resume().catch(() => {});
                     }
                 }
 

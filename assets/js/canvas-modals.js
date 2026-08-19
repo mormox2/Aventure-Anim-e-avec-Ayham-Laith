@@ -5,6 +5,8 @@ import { saveState } from "./history.js";
 import { synth } from "./synth.js";
 import { state } from "./state.js";
 
+let stampsGalleryRendered = false;
+
             function toggleStampsModal(show) {
                 if (!stampsGalleryRendered) {
                     renderStampsGallery();

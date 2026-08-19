@@ -275,9 +275,10 @@ import { state } from "./state.js";
             }
 
             let stickerInteractionChanged = false;
+            let pendingStickerEvent = null;
+            let stickerRafId = null;
 
-            // Combined Global Pointer Move event to handle dragging, resizing, and rotating
-            window.addEventListener("pointermove", (e) => {
+            function applyStickerPointerMove(e) {
                 if (!state.activeSticker) return;
 
                 if (state.isDragging) {
@@ -288,7 +289,7 @@ import { state } from "./state.js";
                     let newTop = state.stickerStartTop + dy;
 
                     // Keep stickers within bounds of the canvas
-                    const cRect = state.canvas.getBoundingClientRect();
+                    const cRect = state.canvas ? state.canvas.getBoundingClientRect() : { width: 800, height: 600 };
                     const padding = 20;
                     newLeft = Math.max(-padding, Math.min(newLeft, cRect.width - state.activeSticker.clientWidth + padding));
                     newTop = Math.max(-padding, Math.min(newTop, cRect.height - state.activeSticker.clientHeight + padding));
@@ -321,9 +322,31 @@ import { state } from "./state.js";
                     const currentScale = state.activeSticker.dataset.scale || 1;
                     state.activeSticker.style.transform = `rotate(${newAngle}deg) scale(${currentScale})`;
                 }
+            }
+
+            // Combined Global Pointer Move event to handle dragging, resizing, and rotating
+            window.addEventListener("pointermove", (e) => {
+                if (!state.activeSticker || (!state.isDragging && !state.isResizing && !state.isRotating)) return;
+                pendingStickerEvent = e;
+                if (stickerRafId === null) {
+                    stickerRafId = requestAnimationFrame(() => {
+                        stickerRafId = null;
+                        if (pendingStickerEvent) {
+                            applyStickerPointerMove(pendingStickerEvent);
+                        }
+                    });
+                }
             });
 
             window.addEventListener("pointerup", () => {
+                if (stickerRafId !== null) {
+                    cancelAnimationFrame(stickerRafId);
+                    stickerRafId = null;
+                }
+                if (pendingStickerEvent) {
+                    applyStickerPointerMove(pendingStickerEvent);
+                    pendingStickerEvent = null;
+                }
                 const shouldSave = stickerInteractionChanged;
                 state.isDragging = false;
                 state.isResizing = false;

@@ -196,7 +196,7 @@ import { state } from "./state.js";
             function toggleTheme() {
                 synth.playPop();
                 const body = document.body;
-                const title = document.getElementById("app-title");
+                const title = document.getElementById("app-title") || document.querySelector("h1");
                 const subtitle = document.getElementById("app-subtitle");
                 const icon = document.getElementById("theme-icon");
                 const text = document.getElementById("theme-text");
@@ -204,9 +204,8 @@ import { state } from "./state.js";
                 const decoRainbow = document.getElementById("deco-rainbow");
                 const decoNight = document.getElementById("deco-night");
 
-                // #14: Use stable data-role selectors instead of fragile children index
-                const subtitleAnd = subtitle.querySelector('[data-role="separator"]');
-                const subtitleAdventure = subtitle.querySelector('[data-role="adventure"]');
+                const subtitleAnd = subtitle?.querySelector('[data-role="separator"]');
+                const subtitleAdventure = subtitle?.querySelector('[data-role="adventure"]');
 
                 if (state.currentTheme === "day") {
                     state.currentTheme = "night";
@@ -214,23 +213,27 @@ import { state } from "./state.js";
                     body.classList.remove("rainbow-bg-glow");
                     body.classList.add("night-bg-glow");
 
-                    title.classList.remove("text-slate-800");
-                    title.classList.add("text-yellow-100");
+                    if (title) {
+                        title.classList.remove("text-slate-800");
+                        title.classList.add("text-yellow-100");
+                    }
 
-                    // Adjust subtitle children for night
+                    // Adjust subtitle children for night if present
                     if (subtitleAnd) subtitleAnd.classList.replace("text-slate-500", "text-yellow-200");
                     if (subtitleAdventure) {
                         subtitleAdventure.classList.remove("text-pink-600", "bg-white/70", "border-pink-200");
                         subtitleAdventure.classList.add("text-yellow-300", "bg-slate-800/60", "border-yellow-400");
                     }
 
-                    icon.textContent = "🌙";
-                    text.textContent = "الليل";
+                    if (icon) icon.textContent = "🌙";
+                    if (text) text.textContent = "الليل";
 
-                    decoClouds.classList.add("opacity-10");
-                    decoRainbow.classList.add("opacity-5");
-                    decoNight.classList.remove("opacity-0");
-                    decoNight.classList.add("opacity-100");
+                    if (decoClouds) decoClouds.classList.add("opacity-10");
+                    if (decoRainbow) decoRainbow.classList.add("opacity-5");
+                    if (decoNight) {
+                        decoNight.classList.remove("opacity-0");
+                        decoNight.classList.add("opacity-100");
+                    }
 
                     showEncouragement("أيهم و ليث، مرحباً بالوضع الليلي الجميل! 🌌🌠");
                 } else {
@@ -239,23 +242,27 @@ import { state } from "./state.js";
                     body.classList.remove("night-bg-glow");
                     body.classList.add("rainbow-bg-glow");
 
-                    title.classList.remove("text-yellow-100");
-                    title.classList.add("text-slate-800");
+                    if (title) {
+                        title.classList.remove("text-yellow-100");
+                        title.classList.add("text-slate-800");
+                    }
 
-                    // Restore subtitle children for day
+                    // Restore subtitle children for day if present
                     if (subtitleAnd) subtitleAnd.classList.replace("text-yellow-200", "text-slate-500");
                     if (subtitleAdventure) {
                         subtitleAdventure.classList.remove("text-yellow-300", "bg-slate-800/60", "border-yellow-400");
                         subtitleAdventure.classList.add("text-pink-600", "bg-white/70", "border-pink-200");
                     }
 
-                    icon.textContent = "☀️";
-                    text.textContent = "النهار";
+                    if (icon) icon.textContent = "☀️";
+                    if (text) text.textContent = "النهار";
 
-                    decoClouds.classList.remove("opacity-10");
-                    decoRainbow.classList.remove("opacity-5");
-                    decoNight.classList.remove("opacity-100");
-                    decoNight.classList.add("opacity-0");
+                    if (decoClouds) decoClouds.classList.remove("opacity-10");
+                    if (decoRainbow) decoRainbow.classList.remove("opacity-5");
+                    if (decoNight) {
+                        decoNight.classList.remove("opacity-100");
+                        decoNight.classList.add("opacity-0");
+                    }
 
                     showEncouragement("أيهم و ليث، أهلاً بالنهار والغيوم اللطيفة! ☀️🌈");
                 }

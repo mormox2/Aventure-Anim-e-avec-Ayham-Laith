@@ -1,3 +1,5 @@
+import { colors } from "./data.js";
+import { selectColor } from "./canvas-tools.js";
 import { showEncouragement, triggerConfetti } from "./feedback.js";
 import { synth } from "./synth.js";
 import { deselectAllStickers } from "./stickers.js";

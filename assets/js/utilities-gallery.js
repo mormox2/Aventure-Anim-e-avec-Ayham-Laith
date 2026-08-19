@@ -7,6 +7,7 @@ import {
 } from "./hero-gallery.js";
 import {
   deleteDrawingFromGallery,
+  generateThumbnailDataUrl,
   getSavedDrawings,
   loadDrawingFromGallery,
   renderGalleryGrid,
@@ -37,6 +38,7 @@ export {
   renderHeroesGallery,
   filterTemplates,
   loadSuperhero,
+  generateThumbnailDataUrl,
   getSavedDrawings,
   saveDrawingToGallery,
   deleteDrawingFromGallery,

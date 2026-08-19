@@ -9,16 +9,21 @@ import { synth } from "./synth.js";
                 const musicText = document.getElementById("music-text");
 
                 synth.toggleMusic((isPlaying) => {
+                    const btn = document.getElementById("btn-music");
                     if (isPlaying) {
-                        musicIcon.textContent = "🎵";
-                        musicText.textContent = "موسيقى نشطة";
-                        document.getElementById("btn-music").classList.remove("bg-purple-400");
-                        document.getElementById("btn-music").classList.add("bg-green-400");
+                        if (musicIcon) musicIcon.textContent = "🎵";
+                        if (musicText) musicText.textContent = "موسيقى نشطة";
+                        if (btn) {
+                            btn.classList.remove("bg-purple-300", "bg-purple-400");
+                            btn.classList.add("bg-green-400");
+                        }
                     } else {
-                        musicIcon.textContent = "🔇";
-                        musicText.textContent = "موسيقى هادئة";
-                        document.getElementById("btn-music").classList.remove("bg-green-400");
-                        document.getElementById("btn-music").classList.add("bg-purple-400");
+                        if (musicIcon) musicIcon.textContent = "🔇";
+                        if (musicText) musicText.textContent = "موسيقى هادئة";
+                        if (btn) {
+                            btn.classList.remove("bg-green-400");
+                            btn.classList.add("bg-purple-300");
+                        }
                     }
                 });
             }

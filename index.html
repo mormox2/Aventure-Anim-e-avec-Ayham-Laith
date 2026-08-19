@@ -100,7 +100,7 @@
                 </div>
                 <div class="flex flex-col">
                     <div class="flex items-center gap-1">
-                        <h1 class="text-sm md:text-2xl font-black tracking-wider text-slate-800 font-changa">
+                        <h1 id="app-title" class="text-sm md:text-2xl font-black tracking-wider text-slate-800 font-changa">
                             ارسم وحرّك!
                         </h1>
                         <span
@@ -141,7 +141,7 @@
                     class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-purple-300 hover:bg-purple-200 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
                 >
                     <span id="music-icon" class="text-sm md:text-xl">🔇</span>
-                    <span class="hidden md:inline">موسيقى</span>
+                    <span id="music-text" class="hidden md:inline">موسيقى</span>
                 </button>
                 <button
                     id="btn-theme"
@@ -149,7 +149,16 @@
                     class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-yellow-300 hover:bg-yellow-200 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
                 >
                     <span id="theme-icon" class="text-sm md:text-xl">☀️</span>
-                    <span class="hidden md:inline">النهار</span>
+                    <span id="theme-text" class="hidden md:inline">النهار</span>
+                </button>
+                <button
+                    id="btn-fullscreen"
+                    data-ui-click="toggle-fullscreen"
+                    class="bubble-btn px-1.5 md:px-3 py-1 md:py-2 bg-emerald-300 hover:bg-emerald-200 text-slate-800 font-extrabold rounded-xl md:rounded-2xl border-2 md:border-4 border-slate-800 shadow-cartoon flex items-center gap-0.5 md:gap-1 text-[10px] md:text-sm"
+                    title="ملء الشاشة"
+                >
+                    <span class="text-sm md:text-xl">⛶</span>
+                    <span class="hidden md:inline">شاشة</span>
                 </button>
                 <button
                     data-ui-click="toggle-hero-modal" data-ui-value="true"
@@ -569,9 +578,18 @@
                     <button
                         data-ui-click="save-drawing"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-emerald-400 hover:bg-emerald-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
+                        title="حفظ الرسمة"
                     >
                         <span class="text-base md:text-lg">💾</span>
                         <span class="hidden md:inline">حفظ</span>
+                    </button>
+                    <button
+                        data-ui-click="share-drawing"
+                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-pink-400 hover:bg-pink-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
+                        title="مشاركة الرسمة"
+                    >
+                        <span class="text-base md:text-lg">📤</span>
+                        <span class="hidden md:inline">مشاركة</span>
                     </button>
                     <button
                         data-ui-click="download-drawing-png"
@@ -1076,30 +1094,36 @@
                     <div id="mobile-color-palette" class="flex flex-wrap gap-1.5"></div>
                 </div>
                 <!-- Quick tools row -->
-                <div class="grid grid-cols-4 gap-2">
-                    <button data-ui-click="mobile-tool" data-ui-tool="select-eraser" class="bubble-btn p-2 bg-pink-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">🧽</span>ممحاة
+                <div class="grid grid-cols-5 gap-1.5">
+                    <button data-ui-click="mobile-tool" data-ui-tool="select-eraser" class="bubble-btn p-1.5 bg-pink-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="ممحاة">
+                        <span class="text-lg">🧽</span>ممحاة
                     </button>
-                    <button data-ui-click="mobile-tool" data-ui-tool="select-spray" class="bubble-btn p-2 bg-emerald-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">🫧</span>بخاخ
+                    <button data-ui-click="mobile-tool" data-ui-tool="select-spray" class="bubble-btn p-1.5 bg-emerald-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="بخاخ">
+                        <span class="text-lg">🫧</span>بخاخ
                     </button>
-                    <button data-ui-click="mobile-tool" data-ui-tool="select-fill-tool" class="bubble-btn p-2 bg-purple-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">🪣</span>دهان
+                    <button data-ui-click="mobile-tool" data-ui-tool="select-fill-tool" class="bubble-btn p-1.5 bg-purple-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="دهان">
+                        <span class="text-lg">🪣</span>دهان
                     </button>
-                    <button data-ui-click="mobile-tool" data-ui-tool="toggle-mirror" class="bubble-btn p-2 bg-teal-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">🪞</span>مرآة
+                    <button data-ui-click="mobile-tool" data-ui-tool="toggle-mirror" class="bubble-btn p-1.5 bg-teal-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="مرآة">
+                        <span class="text-lg">🪞</span>مرآة
                     </button>
-                    <button data-ui-click="undo" class="bubble-btn p-2 bg-blue-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">↩️</span>تراجع
+                    <button data-ui-click="undo" class="bubble-btn p-1.5 bg-blue-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="تراجع">
+                        <span class="text-lg">↩️</span>تراجع
                     </button>
-                    <button data-ui-click="redo" class="bubble-btn p-2 bg-blue-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">↪️</span>إعادة
+                    <button data-ui-click="redo" class="bubble-btn p-1.5 bg-blue-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="إعادة">
+                        <span class="text-lg">↪️</span>إعادة
                     </button>
-                    <button data-ui-click="mobile-tool" data-ui-tool="clear-canvas" class="bubble-btn p-2 bg-red-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">💣</span>مسح
+                    <button data-ui-click="mobile-tool" data-ui-tool="clear-canvas" class="bubble-btn p-1.5 bg-red-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="مسح الكل">
+                        <span class="text-lg">💣</span>مسح
                     </button>
-                    <button data-ui-click="mobile-tool" data-ui-tool="download-drawing-png" class="bubble-btn p-2 bg-sky-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-xs">
-                        <span class="text-xl">📥</span>تحميل
+                    <button data-ui-click="mobile-tool" data-ui-tool="share-drawing" class="bubble-btn p-1.5 bg-pink-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="مشاركة">
+                        <span class="text-lg">📤</span>مشاركة
+                    </button>
+                    <button data-ui-click="mobile-tool" data-ui-tool="download-drawing-png" class="bubble-btn p-1.5 bg-sky-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="تحميل">
+                        <span class="text-lg">📥</span>تحميل
+                    </button>
+                    <button data-ui-click="mobile-tool" data-ui-tool="toggle-fullscreen" class="bubble-btn p-1.5 bg-emerald-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="ملء الشاشة">
+                        <span class="text-lg">⛶</span>شاشة
                     </button>
                 </div>
                 <!-- Brush size (mobile) -->

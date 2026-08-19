@@ -3,9 +3,22 @@ import { synth } from "./synth.js";
 import { state } from "./state.js";
 
 /* Arabic speech synthesis and duo mode. */
-            /************************************************************
-             * 16. Arabic Voice Synthesis (Text-To-Speech) 🗣️🦁
-             ************************************************************/
+            let cachedArabicVoice = null;
+            function getArabicVoice() {
+                if (!('speechSynthesis' in window)) return null;
+                if (cachedArabicVoice) return cachedArabicVoice;
+                const voices = window.speechSynthesis.getVoices();
+                cachedArabicVoice = voices.find(v => v.lang.startsWith('ar') || v.lang.includes('ar-')) || null;
+                return cachedArabicVoice;
+            }
+
+            if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+                window.speechSynthesis.onvoiceschanged = () => {
+                    cachedArabicVoice = null;
+                    getArabicVoice();
+                };
+            }
+
             function speakArabic(text) {
                 if (!('speechSynthesis' in window)) return;
 
@@ -13,14 +26,14 @@ import { state } from "./state.js";
                 window.speechSynthesis.cancel();
 
                 // Clean emojis and symbols from spoken text for better synthesis pronunciation
-                const cleanText = text.replace(/[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDC00-\uDFFF]/g, "");
+                const cleanText = text.replace(/[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDC00-\uDFFF]/g, "").trim();
+                if (!cleanText) return;
 
                 const utterance = new SpeechSynthesisUtterance(cleanText);
                 utterance.lang = 'ar-SA';
 
-                // Locate system Arabic voice
-                const voices = window.speechSynthesis.getVoices();
-                const arVoice = voices.find(v => v.lang.startsWith('ar'));
+                // Locate system Arabic voice if available
+                const arVoice = getArabicVoice();
                 if (arVoice) {
                     utterance.voice = arVoice;
                 }

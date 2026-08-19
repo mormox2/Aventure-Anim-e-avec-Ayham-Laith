@@ -35,6 +35,7 @@ const { drawingMocks, animationMocks, galleryMocks, settingsMocks } = vi.hoisted
     animalReact: vi.fn(),
     setAnimationSpeed: vi.fn(),
     setTemplateOpacity: vi.fn(),
+    toggleFullscreen: vi.fn(),
     toggleHelpModal: vi.fn(),
   },
 }));
@@ -44,7 +45,7 @@ vi.mock("../assets/js/animations.js", () => animationMocks);
 vi.mock("../assets/js/stickers.js", () => ({ filterStickers: vi.fn() }));
 vi.mock("../assets/js/utilities-gallery.js", () => galleryMocks);
 vi.mock("../assets/js/settings.js", () => settingsMocks);
-vi.mock("../assets/js/export-particles.js", () => ({ saveDrawing: vi.fn() }));
+vi.mock("../assets/js/export-particles.js", () => ({ saveDrawing: vi.fn(), shareDrawing: vi.fn() }));
 vi.mock("../assets/js/voice-duo.js", () => ({ toggleSplitMode: vi.fn() }));
 
 const { initializeUI } = await import("../assets/js/ui.js");

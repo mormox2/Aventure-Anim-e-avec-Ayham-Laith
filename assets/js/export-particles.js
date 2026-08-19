@@ -12,42 +12,54 @@ let visibilityListenerBound = false;
             /************************************************************
              * 13. Export Composite Drawing (Canvas + Stickers) as PNG
              ************************************************************/
-            function saveDrawing() {
-                deselectAllStickers(); // Clear outlines for final save
-                synth.playTada();
-                showEncouragement("جاري تحضير صورتك الجميلة... ⏱️✨");
-
+            function createCompositeCanvas() {
                 const exportCanvas = document.createElement("canvas");
                 const exportCtx = exportCanvas.getContext("2d");
 
-                // Use layout width & height to stay immune to active CSS transforms
-                const layoutW = state.canvas.offsetWidth || 700;
-                const layoutH = state.canvas.offsetHeight || 480;
+                const layoutW = state.canvas ? (state.canvas.offsetWidth || state.canvas.width || 700) : 700;
+                const layoutH = state.canvas ? (state.canvas.offsetHeight || state.canvas.height || 480) : 480;
                 const dpr = window.devicePixelRatio || 1;
                 exportCanvas.width = layoutW * dpr;
                 exportCanvas.height = layoutH * dpr;
-                // Scale the export context so we can use logical coords
                 exportCtx.scale(dpr, dpr);
 
-                // 1. Draw Background
-                if (state.currentTheme === "day") {
-                    // Light sky gradient
-                    const grad = exportCtx.createLinearGradient(0, 0, 0, layoutH);
-                    grad.addColorStop(0, "#e0f2fe");
-                    grad.addColorStop(1, "#bae6fd");
-                    exportCtx.fillStyle = grad;
-                } else {
-                    // Dark Indigo
-                    const grad = exportCtx.createLinearGradient(0, 0, 0, layoutH);
-                    grad.addColorStop(0, "#0f172a");
-                    grad.addColorStop(1, "#1e1b4b");
-                    exportCtx.fillStyle = grad;
+                // 1. Draw Background accurately based on currentBg or theme
+                switch (state.currentBg) {
+                    case "sky":
+                        exportCtx.fillStyle = "#BAE6FD";
+                        break;
+                    case "grass":
+                        exportCtx.fillStyle = "#A7F3D0";
+                        break;
+                    case "sunset": {
+                        const grad = exportCtx.createLinearGradient(0, 0, 0, layoutH);
+                        grad.addColorStop(0, "#FED7AA");
+                        grad.addColorStop(0.5, "#FDA4AF");
+                        grad.addColorStop(1, "#C4B5FD");
+                        exportCtx.fillStyle = grad;
+                        break;
+                    }
+                    case "dark":
+                        exportCtx.fillStyle = "#334155";
+                        break;
+                    case "white":
+                    default:
+                        if (state.currentTheme === "night") {
+                            const grad = exportCtx.createLinearGradient(0, 0, 0, layoutH);
+                            grad.addColorStop(0, "#0f172a");
+                            grad.addColorStop(1, "#1e1b4b");
+                            exportCtx.fillStyle = grad;
+                        } else {
+                            exportCtx.fillStyle = "#FFFFFF";
+                        }
+                        break;
                 }
                 exportCtx.fillRect(0, 0, layoutW, layoutH);
 
-                // 2. Draw Main Canvas Painting (source canvas is at DPR resolution, scale to logical)
-                // Source: 0,0 to canvas.width,canvas.height (native px) -> Dest: 0,0 to layoutW,layoutH (logical px)
-                exportCtx.drawImage(state.canvas, 0, 0, state.canvas.width, state.canvas.height, 0, 0, layoutW, layoutH);
+                // 2. Draw Main Canvas Painting
+                if (state.canvas) {
+                    exportCtx.drawImage(state.canvas, 0, 0, state.canvas.width, state.canvas.height, 0, 0, layoutW, layoutH);
+                }
 
                 // 3. Serialize and Draw All Placed Stickers
                 const stickers = Array.from(document.querySelectorAll(".sticker-element"));
@@ -61,65 +73,95 @@ let visibilityListenerBound = false;
                     const angle = parseFloat(sticker.dataset.angle) || 0;
                     const scale = parseFloat(sticker.dataset.scale) || 1;
 
-                    // Convert SVG to dataURL
                     const svgString = new XMLSerializer().serializeToString(svgElement);
                     const svgBlob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
                     const url = URL.createObjectURL(svgBlob);
 
                     return new Promise((resolve) => {
                         const img = new Image();
-                        img.onload = () => {
-                            resolve({ img, left, top, width, height, angle, scale, url });
-                        };
-                        img.onerror = () => {
-                            resolve(null);
-                        };
+                        img.onload = () => resolve({ img, left, top, width, height, angle, scale, url });
+                        img.onerror = () => resolve(null);
                         img.src = url;
                     });
                 });
 
-                Promise.all(loadPromises).then((stickerDataArray) => {
+                return Promise.all(loadPromises).then((stickerDataArray) => {
                     stickerDataArray.forEach((data) => {
                         if (!data) return;
 
                         exportCtx.save();
-
-                        // Translate to center of the sticker to apply rotation and scale
                         const centerX = data.left + data.width / 2;
                         const centerY = data.top + data.height / 2;
 
                         exportCtx.translate(centerX, centerY);
                         exportCtx.rotate((data.angle * Math.PI) / 180);
                         exportCtx.scale(data.scale, data.scale);
-
-                        // Draw image centered on translation point
                         exportCtx.drawImage(data.img, -data.width / 2, -data.height / 2, data.width, data.height);
-
                         exportCtx.restore();
 
-                        // Free URL resources
                         URL.revokeObjectURL(data.url);
                     });
 
-                    // 4. Trigger file download
-                    try {
-                        const link = document.createElement("a");
-                        link.download = `ارسم_وحرّك_${Date.now()}.png`;
-                        link.href = exportCanvas.toDataURL("image/png");
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-
-                        // Save a thumbnail to gallery automatically
-                        saveCurrentDrawingToGallery();
-
-                        triggerConfetti();
-                        showEncouragement("رائع! تم تحميل الرسمة بنجاح 🎉📥");
-                    } catch (err) {
-                        console.error(err);
-                        alert("حدث خطأ ما أثناء حفظ الصورة. حاول مرة أخرى!");
-                    }
+                    return exportCanvas;
                 });
+            }
+
+            async function saveDrawing() {
+                deselectAllStickers();
+                synth.playTada();
+                showEncouragement("جاري تحضير صورتك الجميلة... ⏱️✨");
+
+                try {
+                    const exportCanvas = await createCompositeCanvas();
+                    const link = document.createElement("a");
+                    link.download = `رسمة-أيهم-وليث-${Date.now()}.png`;
+                    link.href = exportCanvas.toDataURL("image/png");
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    saveCurrentDrawingToGallery();
+                    triggerConfetti();
+                    showEncouragement("رائع! تم تحميل الرسمة بنجاح 🎉📥");
+                } catch (err) {
+                    console.error("Save drawing error:", err);
+                    alert("حدث خطأ ما أثناء حفظ الصورة. حاول مرة أخرى!");
+                }
+            }
+
+            async function shareDrawing() {
+                deselectAllStickers();
+                synth.playTada();
+                showEncouragement("جاري تحضير الرسمة للمشاركة... ⏱️✨");
+
+                try {
+                    const exportCanvas = await createCompositeCanvas();
+                    exportCanvas.toBlob(async (blob) => {
+                        if (!blob) {
+                            saveDrawing();
+                            return;
+                        }
+                        const file = new File([blob], `رسمة-أيهم-وليث-${Date.now()}.png`, { type: "image/png" });
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                            try {
+                                await navigator.share({
+                                    title: "رسمة أبطالنا أيهم وليث 🎨✨",
+                                    text: "شاهدوا هذه الرسمة الجميلة التي رسمناها في استوديو الرسوم المتحركة لأيهم وليث! 🌟",
+                                    files: [file],
+                                });
+                                triggerConfetti();
+                                showEncouragement("🎉 تم مشاركة الرسمة بنجاح!");
+                                return;
+                            } catch (shareErr) {
+                                if (shareErr.name === "AbortError") return;
+                            }
+                        }
+                        // Fallback to downloading
+                        saveDrawing();
+                    }, "image/png");
+                } catch (err) {
+                    saveDrawing();
+                }
             }
 
             /************************************************************
@@ -268,4 +310,4 @@ let visibilityListenerBound = false;
                 starCtx.restore();
             }
 
-export { saveDrawing, initParticles, resizeParticlesCanvas, spawnParticles, updateParticles, drawStar };
+export { saveDrawing, shareDrawing, createCompositeCanvas, initParticles, resizeParticlesCanvas, spawnParticles, updateParticles, drawStar };

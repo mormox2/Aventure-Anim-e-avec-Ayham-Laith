@@ -26,8 +26,8 @@ import {
   toggleGalleryModal,
   toggleHeroModal,
 } from "./utilities-gallery.js";
-import { animalReact, setAnimationSpeed, setTemplateOpacity, toggleHelpModal } from "./settings.js";
-import { saveDrawing } from "./export-particles.js";
+import { animalReact, setAnimationSpeed, setTemplateOpacity, toggleFullscreen, toggleHelpModal } from "./settings.js";
+import { saveDrawing, shareDrawing } from "./export-particles.js";
 import { toggleSplitMode } from "./voice-duo.js";
 import { state } from "./state.js";
 
@@ -41,11 +41,13 @@ const actions = Object.freeze({
   "reset-app": resetApp,
   "reset-friends": resetFriends,
   "save-drawing": saveDrawing,
+  "share-drawing": shareDrawing,
   "select-canvas-bg": selectCanvasBg,
   "select-eraser": selectEraser,
   "select-fill-tool": selectFillTool,
   "select-spray": selectSpray,
   "toggle-friends-modal": toggleFriendsModal,
+  "toggle-fullscreen": toggleFullscreen,
   "toggle-gallery-modal": toggleGalleryModal,
   "toggle-give-life": toggleGiveLife,
   "toggle-help-modal": toggleHelpModal,
@@ -60,12 +62,14 @@ const actions = Object.freeze({
 });
 
 const mobileTools = Object.freeze({
-  "select-eraser": selectEraser,
-  "select-spray": selectSpray,
-  "select-fill-tool": selectFillTool,
-  "toggle-mirror": toggleMirror,
   "clear-canvas": clearCanvas,
   "download-drawing-png": downloadDrawingPNG,
+  "select-eraser": selectEraser,
+  "select-fill-tool": selectFillTool,
+  "select-spray": selectSpray,
+  "share-drawing": shareDrawing,
+  "toggle-fullscreen": toggleFullscreen,
+  "toggle-mirror": toggleMirror,
 });
 
 function getActionValue(element) {
