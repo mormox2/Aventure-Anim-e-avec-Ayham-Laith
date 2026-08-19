@@ -1,4 +1,4 @@
-import { draw, redo, renderColors, renderMobileColors, saveState, setParticleSpawner, startDrawing, stopDrawing, toggleMobileDrawer, undo } from "./drawing.js";
+import { draw, redo, renderColors, renderMobileColors, renderMobileStickers, saveState, setParticleSpawner, startDrawing, stopDrawing, toggleMobileDrawer, undo } from "./drawing.js";
 import { initParticles, spawnParticles } from "./export-particles.js";
 import { createPointerMoveScheduler } from "./pointer-scheduler.js";
 import { showEncouragement, triggerConfetti } from "./feedback.js";
@@ -24,6 +24,7 @@ import { state } from "./state.js";
 
                 // Render stickers gallery
                 renderStickers("all");
+                renderMobileStickers("all");
 
                 // Inject the particle trail without coupling canvas-tools to the export module.
                 setParticleSpawner(spawnParticles);
@@ -32,19 +33,21 @@ import { state } from "./state.js";
                 const schedulePointerMove = createPointerMoveScheduler(draw);
                 state.canvas.addEventListener("pointerdown", startDrawing);
                 state.canvas.addEventListener("pointermove", schedulePointerMove);
-                // #2: save state on pointerup (end of stroke) — not on pointerdown
-                window.addEventListener("pointerup", () => {
+                // #2: save state on pointerup / pointercancel (end of stroke) — not on pointerdown
+                const handleStrokeEnd = (e) => {
                     const wasDrawing = state.isDrawing;
-                    stopDrawing();
+                    stopDrawing(e);
                     if (wasDrawing && !state.isFillMode && !state.activeStamp) {
                         // Stroke just finished — save the resulting canvas and sticker state.
                         saveState();
                     }
-                });
-                state.canvas.addEventListener("pointerleave", () => {
-                    if (state.isDrawing) {
+                };
+                window.addEventListener("pointerup", handleStrokeEnd);
+                window.addEventListener("pointercancel", handleStrokeEnd);
+                state.canvas.addEventListener("pointerleave", (e) => {
+                    if (state.isDrawing && (!state.canvas.hasPointerCapture || !state.canvas.hasPointerCapture(e.pointerId))) {
                         state.isDrawing = false;
-                        state.ctx.globalCompositeOperation = "source-over";
+                        if (state.ctx) state.ctx.globalCompositeOperation = "source-over";
                         saveState();
                     }
                 });

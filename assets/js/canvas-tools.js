@@ -238,6 +238,12 @@ function updateCanvasCursor() {
                     e.preventDefault();
                 }
 
+                if (state.canvas && e.pointerId !== undefined && typeof state.canvas.setPointerCapture === "function") {
+                    try {
+                        state.canvas.setPointerCapture(e.pointerId);
+                    } catch (_) {}
+                }
+
                 // Get relative position
                 const rect = state.canvas.getBoundingClientRect();
                 const clickX = e.clientX - rect.left;
@@ -268,16 +274,7 @@ function updateCanvasCursor() {
                 synth.playClick();
             }
 
-            function draw(e) {
-                if (!state.isDrawing) return;
-                if (e.pointerType === "touch") {
-                    e.preventDefault();
-                }
-
-                const rect = state.canvas.getBoundingClientRect();
-                const currentX = e.clientX - rect.left;
-                const currentY = e.clientY - rect.top;
-
+            function drawPoint(currentX, currentY) {
                 // Spawn magic pointer particles as we draw
                 particleSpawner(currentX, currentY);
 
@@ -372,57 +369,42 @@ function updateCanvasCursor() {
                 }
             }
 
-            // #7: Spray paint draw (called inside draw() for spray mode)
-            function drawSpray(x, y) {
-                const density = 35;
-                const radius = state.brushSize * 2;
-                state.ctx.globalCompositeOperation = "source-over";
-                state.ctx.fillStyle = state.isRainbowBrush ? `hsl(${state.rainbowHue}, 100%, 55%)` : state.activeColor;
-                
-                // Add phosphorescent glow in night mode for spray
-                if (state.currentTheme === "night") {
-                    state.ctx.shadowBlur = 10;
-                    state.ctx.shadowColor = state.ctx.fillStyle;
+            function draw(e) {
+                if (!state.isDrawing) return;
+                if (e.pointerType === "touch") {
+                    e.preventDefault();
+                }
+
+                const rect = state.canvas.getBoundingClientRect();
+                const events = (typeof e.getCoalescedEvents === "function") ? e.getCoalescedEvents() : [e];
+
+                if (events && events.length > 0) {
+                    for (const ev of events) {
+                        const currentX = ev.clientX - rect.left;
+                        const currentY = ev.clientY - rect.top;
+                        drawPoint(currentX, currentY);
+                    }
                 } else {
-                    state.ctx.shadowBlur = 0;
+                    const currentX = e.clientX - rect.left;
+                    const currentY = e.clientY - rect.top;
+                    drawPoint(currentX, currentY);
                 }
-
-                for (let i = 0; i < density; i++) {
-                    const angle = Math.random() * Math.PI * 2;
-                    const r = Math.random() * radius;
-                    state.ctx.beginPath();
-                    state.ctx.arc(x + r * Math.cos(angle), y + r * Math.sin(angle), 1, 0, Math.PI * 2);
-                    state.ctx.fill();
-                }
-                if (state.isMirrorMode) {
-                    const layoutW = state.canvas.offsetWidth || 700;
-                    state.ctx.fillStyle = state.isRainbowBrush ? `hsl(${(state.rainbowHue+1)%360}, 100%, 55%)` : state.activeColor;
-                    
-                    // Add glow for mirror spray
-                    if (state.currentTheme === "night") {
-                        state.ctx.shadowBlur = 10;
-                        state.ctx.shadowColor = state.ctx.fillStyle;
-                    } else {
-                        state.ctx.shadowBlur = 0;
-                    }
-
-                    for (let i = 0; i < density; i++) {
-                        const angle = Math.random() * Math.PI * 2;
-                        const r = Math.random() * radius;
-                        state.ctx.beginPath();
-                        state.ctx.arc((layoutW - x) + r * Math.cos(angle), y + r * Math.sin(angle), 1, 0, Math.PI * 2);
-                        state.ctx.fill();
-                    }
-                }
-                if (state.isRainbowBrush) state.rainbowHue = (state.rainbowHue + 1) % 360;
-                state.ctx.shadowBlur = 0; // Always reset after spray block
             }
 
-            function stopDrawing() {
+            function stopDrawing(e) {
                 if (state.isDrawing) {
                     state.isDrawing = false;
-                    state.ctx.globalCompositeOperation = "source-over"; // Reset to default
-                    state.ctx.shadowBlur = 0; // Reset glow
+                    if (state.ctx) {
+                        state.ctx.globalCompositeOperation = "source-over"; // Reset to default
+                        state.ctx.shadowBlur = 0; // Reset glow
+                    }
+                    if (e && e.pointerId !== undefined && state.canvas && typeof state.canvas.releasePointerCapture === "function") {
+                        try {
+                            if (typeof state.canvas.hasPointerCapture !== "function" || state.canvas.hasPointerCapture(e.pointerId)) {
+                                state.canvas.releasePointerCapture(e.pointerId);
+                            }
+                        } catch (_) {}
+                    }
                 }
             }
 

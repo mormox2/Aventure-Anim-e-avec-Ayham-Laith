@@ -37,10 +37,13 @@ import {
 } from "./history.js";
 import {
   downloadDrawingPNG,
+  filterMobileStickers,
   handleBackdropClick,
   renderMobileColors,
+  renderMobileStickers,
   selectCustomColor,
   selectSpray,
+  switchMobileDrawerTab,
   toggleMobileDrawer,
 } from "./canvas-controls.js";
 import { toggleModal } from "./modal-service.js";
@@ -78,6 +81,9 @@ export {
   selectSpray,
   selectCustomColor,
   renderMobileColors,
+  renderMobileStickers,
+  filterMobileStickers,
+  switchMobileDrawerTab,
   toggleMobileDrawer,
   handleBackdropClick,
   downloadDrawingPNG,

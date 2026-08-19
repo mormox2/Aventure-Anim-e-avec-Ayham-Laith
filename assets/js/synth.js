@@ -69,8 +69,8 @@ import { state } from "./state.js";
                     osc.type = "triangle";
                     const now = this.ctx.currentTime;
                     osc.frequency.setValueAtTime(120, now);
-                    osc.frequency.quadraticRampToValueAtTime(500, now + 0.15);
-                    osc.frequency.quadraticRampToValueAtTime(200, now + 0.35);
+                    osc.frequency.exponentialRampToValueAtTime(500, now + 0.15);
+                    osc.frequency.exponentialRampToValueAtTime(200, now + 0.35);
 
                     gain.gain.setValueAtTime(0.35, now);
                     gain.gain.exponentialRampToValueAtTime(0.005, now + 0.35);

@@ -88,22 +88,100 @@ import { state } from "./state.js";
                     const btn = document.createElement("button");
                     btn.type = "button";
                     btn.title = color.name;
-                    btn.className = `w-9 h-9 rounded-full border-3 border-slate-800 shadow-sm bubble-btn ${color.bgClass}`;
+                    btn.setAttribute("aria-label", `اختيار اللون ${color.name}`);
+                    btn.className = `w-9 h-9 md:w-10 md:h-10 rounded-full border-3 border-slate-800 shadow-sm bubble-btn shrink-0 ${color.bgClass}`;
                     btn.addEventListener("click", () => {
-                        selectColor(color.val, document.querySelectorAll("#color-palette button")[colors.indexOf(color)]);
-                        toggleMobileDrawer();
+                        const desktopButtons = document.querySelectorAll("#color-palette button");
+                        const idx = colors.indexOf(color);
+                        selectColor(color.val, desktopButtons[idx]);
                     });
                     container.appendChild(btn);
                 });
             }
 
+            // Populate mobile stickers gallery
+            function renderMobileStickers(category = "all") {
+                const container = document.getElementById("mobile-stickers-gallery");
+                if (!container) return;
+                container.replaceChildren();
+
+                import("./data.js").then(({ stickersData }) => {
+                    import("./stickers.js").then(({ addStickerToCanvas }) => {
+                        const filtered = stickersData.filter((st) => category === "all" || st.category === category);
+                        filtered.forEach((sticker) => {
+                            const item = document.createElement("button");
+                            item.type = "button";
+                            item.setAttribute("aria-label", `إضافة ${sticker.name}`);
+                            item.title = sticker.name;
+                            item.className =
+                                "bg-white border-2 border-slate-800 hover:border-pink-500 hover:bg-pink-50 rounded-2xl p-2 flex items-center justify-center cursor-pointer transition-all hover:scale-105 active:scale-95 shadow-cartoon-sm min-h-[56px]";
+                            item.innerHTML = sticker.svg;
+                            item.addEventListener("click", () => {
+                                addStickerToCanvas(sticker.id);
+                                showEncouragement(`✨ تمت إضافة ${sticker.name}! يمكنك تحريكه وتكبيره بيدك!`);
+                                toggleMobileDrawer();
+                            });
+                            container.appendChild(item);
+                        });
+                    });
+                });
+            }
+
+            function filterMobileStickers(category) {
+                synth.playClick();
+                const tabs = ["all", "eyes", "hats", "faces"];
+                tabs.forEach((t) => {
+                    const btn = document.getElementById(`mobile-tab-${t}`);
+                    if (!btn) return;
+                    if (t === category) {
+                        btn.className = "bubble-btn py-1.5 px-3 rounded-xl border-2 border-slate-800 font-black text-xs bg-amber-400 text-slate-900 ring-2 ring-yellow-300 scale-105";
+                    } else {
+                        btn.className = "bubble-btn py-1.5 px-3 rounded-xl border-2 border-slate-800 font-bold text-xs bg-white text-slate-700 hover:bg-slate-100";
+                    }
+                });
+                renderMobileStickers(category);
+            }
+
+            function switchMobileDrawerTab(tabName) {
+                synth.playClick();
+                const tabButtons = {
+                    tools: document.getElementById("tab-btn-tools"),
+                    stickers: document.getElementById("tab-btn-stickers"),
+                    backgrounds: document.getElementById("tab-btn-backgrounds"),
+                };
+                const tabPanels = {
+                    tools: document.getElementById("panel-tools"),
+                    stickers: document.getElementById("panel-stickers"),
+                    backgrounds: document.getElementById("panel-backgrounds"),
+                };
+
+                Object.keys(tabButtons).forEach((key) => {
+                    if (!tabButtons[key] || !tabPanels[key]) return;
+                    if (key === tabName) {
+                        tabButtons[key].className = "flex-1 py-2 px-2 text-center font-black text-xs md:text-sm rounded-xl border-2 border-slate-800 bg-amber-400 text-slate-900 shadow-cartoon-sm transition-all";
+                        tabPanels[key].classList.remove("hidden");
+                    } else {
+                        tabButtons[key].className = "flex-1 py-2 px-2 text-center font-bold text-xs md:text-sm rounded-xl border-2 border-slate-800 bg-white/80 text-slate-700 hover:bg-white transition-all";
+                        tabPanels[key].classList.add("hidden");
+                    }
+                });
+
+                if (tabName === "stickers") {
+                    renderMobileStickers("all");
+                }
+            }
+
             // #16: Mobile tools drawer toggle
-            function toggleMobileDrawer() {
+            function toggleMobileDrawer(forceState) {
                 const drawer = document.getElementById("mobile-drawer");
                 const content = document.getElementById("mobile-drawer-content");
                 if (!drawer || !content) return;
 
-                if (drawer.classList.contains("hidden")) {
+                const shouldOpen = forceState !== undefined ? forceState : drawer.classList.contains("hidden");
+
+                if (shouldOpen) {
+                    renderMobileColors();
+                    renderMobileStickers("all");
                     drawer.classList.remove("hidden");
                     requestAnimationFrame(() => content.classList.remove("translate-y-full"));
                 } else {
@@ -188,4 +266,14 @@ import { state } from "./state.js";
             }
 
 
-export { selectSpray, selectCustomColor, renderMobileColors, toggleMobileDrawer, handleBackdropClick, downloadDrawingPNG };
+export {
+    selectSpray,
+    selectCustomColor,
+    renderMobileColors,
+    renderMobileStickers,
+    filterMobileStickers,
+    switchMobileDrawerTab,
+    toggleMobileDrawer,
+    handleBackdropClick,
+    downloadDrawingPNG
+};

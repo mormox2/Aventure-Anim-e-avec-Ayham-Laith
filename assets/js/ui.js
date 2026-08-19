@@ -2,12 +2,14 @@ import {
   clearCanvas,
   confirmClearCanvas,
   downloadDrawingPNG,
+  filterMobileStickers,
   redo,
   selectCanvasBg,
   selectCustomColor,
   selectEraser,
   selectFillTool,
   selectSpray,
+  switchMobileDrawerTab,
   toggleClearModal,
   toggleMirror,
   toggleMobileDrawer,
@@ -68,12 +70,15 @@ const actions = Object.freeze({
 const mobileTools = Object.freeze({
   "clear-canvas": clearCanvas,
   "download-drawing-png": downloadDrawingPNG,
+  "reset-app": resetApp,
+  "save-drawing": saveDrawing,
   "select-eraser": selectEraser,
   "select-fill-tool": selectFillTool,
   "select-spray": selectSpray,
   "share-drawing": shareDrawing,
   "toggle-fullscreen": toggleFullscreen,
   "toggle-mirror": toggleMirror,
+  "toggle-stamps-modal": () => toggleStampsModal(true),
 });
 
 function getActionValue(element) {
@@ -97,7 +102,7 @@ function invokeAction(name, element) {
 function handleMobileTool(element) {
   const action = mobileTools[element.dataset.uiTool];
   if (typeof action === "function") action();
-  toggleMobileDrawer();
+  toggleMobileDrawer(false);
 }
 
 function handleClick(event) {
@@ -116,6 +121,10 @@ function handleClick(event) {
     setAnimationSpeed(Number(element.dataset.uiSpeed));
   } else if (action === "filter-stickers") {
     filterStickers(element.dataset.uiCategory);
+  } else if (action === "filter-mobile-stickers") {
+    filterMobileStickers(element.dataset.uiCategory);
+  } else if (action === "switch-mobile-tab") {
+    switchMobileDrawerTab(element.dataset.uiTab);
   } else if (action === "filter-templates") {
     filterTemplates(element.dataset.uiCategory);
   } else if (action === "animal-react") {
@@ -135,15 +144,22 @@ function handleInput(event) {
 
   switch (element.dataset.uiInput) {
     case "custom-color":
+    case "mobile-custom-color":
       selectCustomColor(element.value);
       break;
     case "template-opacity":
+    case "mobile-template-opacity":
       setTemplateOpacity(Number.parseInt(element.value, 10) / 100);
       break;
     case "mobile-brush-size":
       state.brushSize = Number.parseInt(element.value, 10);
       document.getElementById("brush-size").value = element.value;
       document.getElementById("brush-size-val").textContent = element.value;
+      const brushPreview = document.getElementById("brush-preview");
+      if (brushPreview) {
+        brushPreview.style.width = `${element.value}px`;
+        brushPreview.style.height = `${element.value}px`;
+      }
       break;
     default:
       console.warn(`Unknown UI input: ${element.dataset.uiInput}`);

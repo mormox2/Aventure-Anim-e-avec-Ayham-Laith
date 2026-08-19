@@ -123,14 +123,15 @@ import { state } from "./state.js";
                 // Create Controls UI (Visible when active)
                 const controls = document.createElement("div");
                 controls.className =
-                    "sticker-controls hidden absolute -inset-3.5 border-2 border-dashed border-pink-500 rounded-2xl pointer-events-none group-[.active]:block";
+                    "sticker-controls hidden absolute -inset-4 border-2 border-dashed border-pink-500 rounded-2xl pointer-events-none group-[.active]:block";
 
                 // 1. Delete Button (top-right)
                 const deleteBtn = document.createElement("button");
                 deleteBtn.className =
-                    "absolute -top-4 -right-4 bg-rose-500 hover:bg-rose-400 text-white rounded-full w-8 h-8 flex items-center justify-center pointer-events-auto shadow-cartoon-sm border-2 border-slate-800 hover:scale-110 active:scale-95 transition-all text-xs";
+                    "absolute -top-5 -right-5 bg-rose-500 hover:bg-rose-400 text-white rounded-full w-10 h-10 md:w-9 md:h-9 flex items-center justify-center pointer-events-auto shadow-cartoon-sm border-2 border-slate-800 hover:scale-110 active:scale-95 transition-all text-sm touch-none";
                 deleteBtn.textContent = "❌";
                 deleteBtn.title = "حذف الملصق";
+                deleteBtn.setAttribute("aria-label", "حذف الملصق");
                 deleteBtn.addEventListener("click", (e) => {
                     e.stopPropagation();
                     synth.playBoing();
@@ -143,34 +144,42 @@ import { state } from "./state.js";
                 // 2. Rotate Button (top-left)
                 const rotateBtn = document.createElement("button");
                 rotateBtn.className =
-                    "absolute -top-4 -left-4 bg-yellow-400 hover:bg-yellow-300 text-slate-800 rounded-full w-8 h-8 flex items-center justify-center pointer-events-auto shadow-cartoon-sm border-2 border-slate-800 hover:scale-110 active:scale-95 transition-all text-sm";
+                    "absolute -top-5 -left-5 bg-yellow-400 hover:bg-yellow-300 text-slate-800 rounded-full w-10 h-10 md:w-9 md:h-9 flex items-center justify-center pointer-events-auto shadow-cartoon-sm border-2 border-slate-800 hover:scale-110 active:scale-95 transition-all text-base touch-none";
                 rotateBtn.textContent = "🔄";
                 rotateBtn.title = "تدوير الملصق";
+                rotateBtn.setAttribute("aria-label", "تدوير الملصق");
                 // Pointer down for rotation
                 rotateBtn.addEventListener("pointerdown", (e) => {
                     e.stopPropagation();
                     setupStickerPointerData(e, stickerDiv);
                     state.isRotating = true;
+                    if (e.target && typeof e.target.setPointerCapture === "function") {
+                        try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
+                    }
                 });
                 controls.appendChild(rotateBtn);
 
                 // 3. Scale/Resize Button (bottom-right)
                 const resizeBtn = document.createElement("button");
                 resizeBtn.className =
-                    "absolute -bottom-4 -right-4 bg-cyan-400 hover:bg-cyan-300 text-slate-800 rounded-full w-8 h-8 flex items-center justify-center pointer-events-auto shadow-cartoon-sm border-2 border-slate-800 hover:scale-110 active:scale-95 transition-all text-sm";
+                    "absolute -bottom-5 -right-5 bg-cyan-400 hover:bg-cyan-300 text-slate-800 rounded-full w-10 h-10 md:w-9 md:h-9 flex items-center justify-center pointer-events-auto shadow-cartoon-sm border-2 border-slate-800 hover:scale-110 active:scale-95 transition-all text-base touch-none";
                 resizeBtn.textContent = "📐";
                 resizeBtn.title = "تكبير/تصغير";
+                resizeBtn.setAttribute("aria-label", "تكبير أو تصغير الملصق");
                 // Pointer down for resizing
                 resizeBtn.addEventListener("pointerdown", (e) => {
                     e.stopPropagation();
                     setupStickerPointerData(e, stickerDiv);
                     state.isResizing = true;
+                    if (e.target && typeof e.target.setPointerCapture === "function") {
+                        try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
+                    }
                 });
                 controls.appendChild(resizeBtn);
 
                 stickerDiv.appendChild(controls);
 
-                // Pointer down for dragging the whole sticker
+                // Pointer down for dragging / multi-touching the whole sticker
                 stickerDiv.addEventListener("pointerdown", (e) => {
                     // If clicked control button, ignore dragging
                     if (e.target.closest("button")) return;
@@ -178,13 +187,13 @@ import { state } from "./state.js";
                     e.stopPropagation();
                     const isAlreadyActive = stickerDiv.classList.contains("active");
 
-                    deselectAllStickers();
+                    if (!isAlreadyActive) {
+                        deselectAllStickers();
+                        state.activeSticker = stickerDiv;
+                        stickerDiv.classList.add("active");
+                    }
 
-                    state.activeSticker = stickerDiv;
-                    stickerDiv.classList.add("active");
-
-                    setupStickerPointerData(e, stickerDiv);
-                    state.isDragging = true;
+                    handleStickerPointerDown(e, stickerDiv);
 
                     // Play specific category sound on selection if it wasn't already active
                     if (!isAlreadyActive) {
@@ -250,10 +259,42 @@ import { state } from "./state.js";
                 state.activeSticker = null;
             }
 
+            // Multi-touch tracking on stickers
+            const activeStickerPointers = new Map();
+            let initialPinchDistance = 0;
+            let initialPinchAngle = 0;
+            let initialPinchScale = 1;
+            let initialPinchBaseAngle = 0;
+
+            function getPointerId(e) {
+                return e && e.pointerId !== undefined ? e.pointerId : 1;
+            }
+
+            function handleStickerPointerDown(e, sticker) {
+                const pid = getPointerId(e);
+                activeStickerPointers.set(pid, { x: e.clientX, y: e.clientY });
+
+                if (activeStickerPointers.size === 1) {
+                    setupStickerPointerData(e, sticker);
+                    state.isDragging = true;
+                } else if (activeStickerPointers.size === 2) {
+                    // Start 2-finger pinch/rotate gesture
+                    state.isDragging = false;
+                    state.isResizing = true;
+                    state.isRotating = true;
+
+                    const pts = Array.from(activeStickerPointers.values());
+                    initialPinchDistance = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+                    initialPinchAngle = Math.atan2(pts[1].y - pts[0].y, pts[1].x - pts[0].x) * (180 / Math.PI);
+                    initialPinchScale = parseFloat(sticker.dataset.scale) || 1;
+                    initialPinchBaseAngle = parseFloat(sticker.dataset.angle) || 0;
+                }
+            }
+
             // Helper to calculate dimensions & bounds before starting drag/rotate/scale
             function setupStickerPointerData(e, sticker) {
                 const rect = sticker.getBoundingClientRect();
-                const canvasRect = state.canvas.getBoundingClientRect();
+                const canvasRect = state.canvas ? state.canvas.getBoundingClientRect() : { left: 0, top: 0, width: 800, height: 600 };
 
                 state.initialPointerX = e.clientX;
                 state.initialPointerY = e.clientY;
@@ -275,11 +316,36 @@ import { state } from "./state.js";
             }
 
             let stickerInteractionChanged = false;
-            let pendingStickerEvent = null;
-            let stickerRafId = null;
 
             function applyStickerPointerMove(e) {
                 if (!state.activeSticker) return;
+
+                const pid = getPointerId(e);
+                if (activeStickerPointers.has(pid)) {
+                    activeStickerPointers.set(pid, { x: e.clientX, y: e.clientY });
+                }
+
+                // 2-finger multi-touch gesture
+                if (activeStickerPointers.size >= 2) {
+                    const pts = Array.from(activeStickerPointers.values());
+                    const currentDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+                    const currentAngle = Math.atan2(pts[1].y - pts[0].y, pts[1].x - pts[0].x) * (180 / Math.PI);
+
+                    if (initialPinchDistance > 10) {
+                        const scaleDelta = currentDist / initialPinchDistance;
+                        let newScale = initialPinchScale * scaleDelta;
+                        newScale = Math.max(0.4, Math.min(newScale, 3.5)); // kid-safe bounds
+
+                        const angleDelta = currentAngle - initialPinchAngle;
+                        let newAngle = (initialPinchBaseAngle + angleDelta) % 360;
+
+                        state.activeSticker.dataset.scale = newScale;
+                        state.activeSticker.dataset.angle = newAngle;
+                        state.activeSticker.style.transform = `rotate(${newAngle}deg) scale(${newScale})`;
+                        stickerInteractionChanged = true;
+                    }
+                    return;
+                }
 
                 if (state.isDragging) {
                     const dx = e.clientX - state.initialPointerX;
@@ -326,33 +392,32 @@ import { state } from "./state.js";
 
             // Combined Global Pointer Move event to handle dragging, resizing, and rotating
             window.addEventListener("pointermove", (e) => {
-                if (!state.activeSticker || (!state.isDragging && !state.isResizing && !state.isRotating)) return;
-                pendingStickerEvent = e;
-                if (stickerRafId === null) {
-                    stickerRafId = requestAnimationFrame(() => {
-                        stickerRafId = null;
-                        if (pendingStickerEvent) {
-                            applyStickerPointerMove(pendingStickerEvent);
-                        }
-                    });
-                }
+                if (!state.activeSticker || (!state.isDragging && !state.isResizing && !state.isRotating && activeStickerPointers.size === 0)) return;
+                applyStickerPointerMove(e);
             });
 
-            window.addEventListener("pointerup", () => {
-                if (stickerRafId !== null) {
-                    cancelAnimationFrame(stickerRafId);
-                    stickerRafId = null;
-                }
-                if (pendingStickerEvent) {
-                    applyStickerPointerMove(pendingStickerEvent);
-                    pendingStickerEvent = null;
-                }
-                const shouldSave = stickerInteractionChanged;
-                state.isDragging = false;
-                state.isResizing = false;
-                state.isRotating = false;
-                stickerInteractionChanged = false;
-                if (shouldSave) notifyStickerHistoryChange();
-            });
+            const handleStickerPointerEnd = (e) => {
+                const pid = getPointerId(e);
+                activeStickerPointers.delete(pid);
 
-export { renderStickers, filterStickers, addStickerToCanvas, captureStickerState, restoreStickerState, deselectAllStickers, setupStickerPointerData };
+                if (activeStickerPointers.size === 0) {
+                    const shouldSave = stickerInteractionChanged;
+                    state.isDragging = false;
+                    state.isResizing = false;
+                    state.isRotating = false;
+                    stickerInteractionChanged = false;
+                    if (shouldSave) notifyStickerHistoryChange();
+                } else if (activeStickerPointers.size === 1 && state.activeSticker) {
+                    // 1 finger remaining: reset to drag mode with updated starting pos
+                    const remainingPt = Array.from(activeStickerPointers.values())[0];
+                    setupStickerPointerData({ clientX: remainingPt.x, clientY: remainingPt.y }, state.activeSticker);
+                    state.isDragging = true;
+                    state.isResizing = false;
+                    state.isRotating = false;
+                }
+            };
+
+            window.addEventListener("pointerup", handleStickerPointerEnd);
+            window.addEventListener("pointercancel", handleStickerPointerEnd);
+
+export { renderStickers, filterStickers, addStickerToCanvas, captureStickerState, restoreStickerState, deselectAllStickers, setupStickerPointerData, handleStickerPointerDown, applyStickerPointerMove, handleStickerPointerEnd };
