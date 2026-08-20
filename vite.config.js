@@ -1,8 +1,8 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  // Override with VITE_BASE_PATH when deploying under another subpath.
-  base: process.env.VITE_BASE_PATH || "/Aventure-Anim-e-avec-Ayham-Laith/",
+  // Use relative base path so assets load seamlessly regardless of repo name or domain
+  base: process.env.VITE_BASE_PATH || "./",
   publicDir: "public",
   build: {
     outDir: "dist",

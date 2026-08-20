@@ -1,4 +1,4 @@
-const CACHE_NAME = "aventure-anime-v1";
+const CACHE_NAME = "toondraw-v1";
 const PRECACHE_ASSETS = [
   "./",
   "./index.html",

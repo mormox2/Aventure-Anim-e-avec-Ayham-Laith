@@ -5,8 +5,8 @@
 ---
 
 <p align="center">
-  <img src="https://img.shields.io/github/license/mormox2/Aventure-Anim-e-avec-Ayham-Laith?style=for-the-badge&color=ff69b4&labelColor=2d3748" alt="License" />
-  <img src="https://img.shields.io/github/stars/mormox2/Aventure-Anim-e-avec-Ayham-Laith?style=for-the-badge&color=ffd700&labelColor=2d3748" alt="GitHub Stars" />
+  <img src="https://img.shields.io/github/license/mormox2/ToonDraw?style=for-the-badge&color=ff69b4&labelColor=2d3748" alt="License" />
+  <img src="https://img.shields.io/github/stars/mormox2/ToonDraw?style=for-the-badge&color=ffd700&labelColor=2d3748" alt="GitHub Stars" />
   <img src="https://img.shields.io/badge/HTML5-Canvas-orange?style=for-the-badge&logo=html5&labelColor=2d3748" alt="HTML5 Canvas" />
   <img src="https://img.shields.io/badge/Tailwind-CSS-38BDF8?style=for-the-badge&logo=tailwind-css&labelColor=2d3748" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Web_Audio-API-blueviolet?style=for-the-badge&logo=web-audio-api&labelColor=2d3748" alt="Web Audio API" />
@@ -20,7 +20,7 @@
 * [📦 Kit de Lancement & Production / دليل الإطلاق والنشر](LAUNCH_KIT.md)
 * [🌟 Présentation de l'Univers / نبذة عن عالم التطبيق](#-présentation-de-lunivers--نبذة-عن-عالم-التطبيق)
 * [✨ Fonctionnalités Magiques / الميزات السحرية الرائعة](#-fonctionnalités-magiques--الميزات-السحرية-الرائعة)
-* [🛠️ Secrets Techniques / الأسرار التقنية المتقدمة](#️-secrets-techniques--الأسرار-التقنية-المتقدمة)
+* [🛠️ Secrets Techniques / الأسرar التقنية المتقدمة](#️-secrets-techniques--الأسرار-التقنية-المتقدمة)
 * [📂 Structure du Projet / هيكلة المشروع](#-structure-du-projet--هيكلة-المشروع)
 * [🌐 Déployer sur GitHub Pages en 30 secondes / كيف تنشر موقعك على صفحات جيت هاب](#-déployer-sur-github-pages-en-30-secondes--كيف-تنشر-موقعك-على-صفحات-جيت-هاب)
 * [💖 Dédicace Spéciale / إهداء خاص وأصيل](#-dédicace-spéciale--إهداء-خاص-وأصيل)
@@ -48,7 +48,7 @@ pnpm preview
 
 > [!TIP]
 > **Jouer tout de suite :** Si vous avez activé les **GitHub Pages** sur votre dépôt, votre jeu est accessible à l'adresse suivante :
-> `https://<votre-nom-d-utilisateur>.github.io/Aventure-Anim-e-avec-Ayham-Laith/`
+> `https://<votre-nom-d-utilisateur>.github.io/ToonDraw/`
 
 ---
 

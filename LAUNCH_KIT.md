@@ -15,7 +15,7 @@ Bienvenue dans le guide de lancement officiel de **ToonDraw** ! Ce kit fournit t
 3. Dès qu'un commit est poussé sur la branche `main`, le workflow [.github/workflows/pages.yml](.github/workflows/pages.yml) compile le projet et le déploie automatiquement.
 4. L'application est alors accessible en ligne à :
    ```
-   https://<votre-nom-utilisateur>.github.io/Aventure-Anim-e-avec-Ayham-Laith/
+   https://<votre-nom-utilisateur>.github.io/ToonDraw/
    ```
 
 ### Option B : Déploiement sur un Domaine Personnalisé
@@ -64,7 +64,7 @@ L'application est une **Progressive Web App (PWA)** complète. Elle peut être i
 🔒 100% مجاني، آمن للأطفال، بدون إعلانات وبدون جمع بيانات، ويعمل حتى بدون إنترنت!
 
 👉 جرّبوه الآن مباشرة عبر المتصفح:
-https://<votre-nom-utilisateur>.github.io/Aventure-Anim-e-avec-Ayham-Laith/
+https://<votre-nom-utilisateur>.github.io/ToonDraw/
 
 💡 نصيحة: يمكنكم تثبيته كـ تطبيق على الآيباد أو التابلت عبر خيار "إضافة إلى الشاشة الرئيسية"!
 ```
@@ -88,7 +88,7 @@ Découvrez le nouveau studio de dessin interactif :
 🔒 100% gratuit, sécurisé, sans publicité, sans collecte de données et jouable hors-ligne (PWA) !
 
 👉 À tester dès maintenant sur tablette, smartphone ou ordi :
-https://<votre-nom-utilisateur>.github.io/Aventure-Anim-e-avec-Ayham-Laith/
+https://<votre-nom-utilisateur>.github.io/ToonDraw/
 
 💡 Astuce : Sur iPad ou Android, cliquez sur "Ajouter à l'écran d'accueil" pour l'utiliser comme une vraie appli en plein écran !
 ```
