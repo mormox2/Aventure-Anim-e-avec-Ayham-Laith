@@ -567,67 +567,67 @@
                     </div>
                 </div>
 
-                <!-- Bottom Action Bar (ultra-compact, no scroll needed) -->
+                <!-- Bottom Action Bar (ultra-compact, smooth scrollable) -->
                 <div
-                    class="bg-sky-100/95 border-3 border-slate-800 rounded-2xl p-1.5 md:p-2 shadow-cartoon flex items-center justify-center gap-1.5 md:gap-2.5 flex-shrink-0 overflow-x-auto"
+                    class="bg-sky-100/95 border-3 border-slate-800 rounded-2xl p-1 sm:p-1.5 md:p-2 shadow-cartoon flex items-center justify-start 2xl:justify-center gap-1 sm:gap-1.5 md:gap-2 flex-shrink-0 overflow-x-auto scroll-smooth select-none w-full"
                     id="anim-buttons-grid"
                 >
                     <button
                         data-ui-click="trigger-animation" data-ui-animation="dance" data-ui-self="true"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-rose-400 hover:bg-rose-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
+                        class="bubble-btn py-1 md:py-1.5 px-2 md:px-2.5 bg-rose-400 hover:bg-rose-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center gap-1 shrink-0 transition-all active:scale-95 text-[11px] md:text-xs whitespace-nowrap"
                     >
-                        <span class="text-base md:text-lg">💃</span>
-                        <span data-i18n="anim.dance" class="hidden md:inline">ارقص</span>
+                        <span class="text-sm md:text-base">💃</span>
+                        <span data-i18n="anim.dance" class="inline">ارقص</span>
                     </button>
                     <button
                         data-ui-click="trigger-animation" data-ui-animation="jump" data-ui-self="true"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-amber-400 hover:bg-amber-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
+                        class="bubble-btn py-1 md:py-1.5 px-2 md:px-2.5 bg-amber-400 hover:bg-amber-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center gap-1 shrink-0 transition-all active:scale-95 text-[11px] md:text-xs whitespace-nowrap"
                     >
-                        <span class="text-base md:text-lg">🦘</span>
-                        <span data-i18n="anim.jump" class="hidden md:inline">اقفز</span>
+                        <span class="text-sm md:text-base">🦘</span>
+                        <span data-i18n="anim.jump" class="inline">اقفز</span>
                     </button>
                     <button
                         data-ui-click="trigger-animation" data-ui-animation="spin" data-ui-self="true"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-indigo-400 hover:bg-indigo-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
+                        class="bubble-btn py-1 md:py-1.5 px-2 md:px-2.5 bg-indigo-400 hover:bg-indigo-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center gap-1 shrink-0 transition-all active:scale-95 text-[11px] md:text-xs whitespace-nowrap"
                     >
-                        <span class="text-base md:text-lg">🔄</span>
-                        <span data-i18n="anim.spin" class="hidden md:inline">دُر</span>
+                        <span class="text-sm md:text-base">🔄</span>
+                        <span data-i18n="anim.spin" class="inline">دُر</span>
                     </button>
                     <button
                         data-ui-click="trigger-animation" data-ui-animation="shake" data-ui-self="true"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-teal-400 hover:bg-teal-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
+                        class="bubble-btn py-1 md:py-1.5 px-2 md:px-2.5 bg-teal-400 hover:bg-teal-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center gap-1 shrink-0 transition-all active:scale-95 text-[11px] md:text-xs whitespace-nowrap"
                     >
-                        <span class="text-base md:text-lg">🫨</span>
-                        <span data-i18n="anim.shake" class="hidden md:inline">اهتز</span>
+                        <span class="text-sm md:text-base">🫨</span>
+                        <span data-i18n="anim.shake" class="inline">اهتز</span>
                     </button>
                     <button
                         data-ui-click="trigger-animation" data-ui-animation="grow" data-ui-self="true"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-green-400 hover:bg-green-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
+                        class="bubble-btn py-1 md:py-1.5 px-2 md:px-2.5 bg-green-400 hover:bg-green-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center gap-1 shrink-0 transition-all active:scale-95 text-[11px] md:text-xs whitespace-nowrap"
                     >
-                        <span class="text-base md:text-lg">📈</span>
-                        <span data-i18n="anim.grow" class="hidden md:inline">كبّر</span>
+                        <span class="text-sm md:text-base">📈</span>
+                        <span data-i18n="anim.grow" class="inline">كبّر</span>
                     </button>
                     <button
                         data-ui-click="trigger-animation" data-ui-animation="shrink" data-ui-self="true"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-orange-400 hover:bg-orange-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
+                        class="bubble-btn py-1 md:py-1.5 px-2 md:px-2.5 bg-orange-400 hover:bg-orange-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center gap-1 shrink-0 transition-all active:scale-95 text-[11px] md:text-xs whitespace-nowrap"
                     >
-                        <span class="text-base md:text-lg">📉</span>
-                        <span data-i18n="anim.shrink" class="hidden md:inline">صغّر</span>
+                        <span class="text-sm md:text-base">📉</span>
+                        <span data-i18n="anim.shrink" class="inline">صغّر</span>
                     </button>
                     <button
                         data-ui-click="trigger-animation" data-ui-animation="bounce-squish" data-ui-self="true"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-purple-400 hover:bg-purple-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
+                        class="bubble-btn py-1 md:py-1.5 px-2 md:px-2.5 bg-purple-400 hover:bg-purple-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center gap-1 shrink-0 transition-all active:scale-95 text-[11px] md:text-xs whitespace-nowrap"
                     >
-                        <span class="text-base md:text-lg">🏀</span>
-                        <span data-i18n="anim.bounce" class="hidden md:inline">ارتد</span>
+                        <span class="text-sm md:text-base">🏀</span>
+                        <span data-i18n="anim.bounce" class="inline">ارتد</span>
                     </button>
 
-                    <div class="w-0.5 h-6 md:h-8 bg-sky-300 shrink-0 mx-1 md:mx-2"></div>
+                    <div class="w-0.5 h-5 md:h-7 bg-sky-300 shrink-0 mx-0.5 md:mx-1"></div>
 
                     <button
                         id="speed-slow"
                         data-ui-click="set-animation-speed" data-ui-speed="0.6"
-                        class="speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-pink-200 hover:bg-pink-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon-sm transition-all"
+                        class="speed-btn bubble-btn text-sm md:text-base w-8 h-8 md:w-9 md:h-9 flex items-center justify-center bg-pink-200 hover:bg-pink-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon-sm transition-all shrink-0"
                         title="بطيء" data-i18n-title="speed.slow"
                     >
                         🐢
@@ -635,7 +635,7 @@
                     <button
                         id="speed-normal"
                         data-ui-click="set-animation-speed" data-ui-speed="1"
-                        class="speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-amber-400 text-slate-900 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon scale-110 ring-4 ring-yellow-400 z-10 transition-all"
+                        class="speed-btn bubble-btn text-sm md:text-base w-8 h-8 md:w-9 md:h-9 flex items-center justify-center bg-amber-400 text-slate-900 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon scale-105 ring-2 ring-yellow-400 z-10 transition-all shrink-0"
                         title="عادي" data-i18n-title="speed.normal"
                     >
                         ⚡
@@ -643,46 +643,46 @@
                     <button
                         id="speed-fast"
                         data-ui-click="set-animation-speed" data-ui-speed="1.5"
-                        class="speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-emerald-200 hover:bg-emerald-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon-sm transition-all"
+                        class="speed-btn bubble-btn text-sm md:text-base w-8 h-8 md:w-9 md:h-9 flex items-center justify-center bg-emerald-200 hover:bg-emerald-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon-sm transition-all shrink-0"
                         title="سريع" data-i18n-title="speed.fast"
                     >
                         🚀
                     </button>
 
-                    <div class="w-0.5 h-6 md:h-8 bg-sky-300 shrink-0 mx-1 md:mx-2"></div>
+                    <div class="w-0.5 h-5 md:h-7 bg-sky-300 shrink-0 mx-0.5 md:mx-1"></div>
 
                     <button
                         id="btn-give-life"
                         data-ui-click="toggle-give-life"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-gradient-to-r from-yellow-400 to-pink-400 hover:from-yellow-300 hover:to-pink-300 text-slate-900 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
+                        class="bubble-btn py-1 md:py-1.5 px-2 md:px-3 bg-gradient-to-r from-yellow-400 to-pink-400 hover:from-yellow-300 hover:to-pink-300 text-slate-900 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center gap-1 shrink-0 whitespace-nowrap transition-all active:scale-95 text-[11px] md:text-xs"
                     >
-                        <span class="text-base md:text-lg animate-spin" style="animation-duration: 3s">🪄</span>
-                        <span id="give-life-text" data-i18n="anim.give_life" class="hidden md:inline">أعطِ الحياة</span>
+                        <span class="text-sm md:text-base animate-spin" style="animation-duration: 3s">🪄</span>
+                        <span id="give-life-text" data-i18n="anim.give_life" class="inline">أعطِ الحياة</span>
                     </button>
-                    <!-- Save / Download buttons -->
+                    <!-- Save / Share / Download buttons -->
                     <button
                         data-ui-click="save-drawing"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-emerald-400 hover:bg-emerald-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
+                        class="bubble-btn py-1 md:py-1.5 px-2 md:px-2.5 bg-emerald-400 hover:bg-emerald-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center gap-1 shrink-0 whitespace-nowrap transition-all active:scale-95 text-[11px] md:text-xs"
                         title="حفظ الرسمة" data-i18n-title="action.save"
                     >
-                        <span class="text-base md:text-lg">💾</span>
-                        <span data-i18n="action.save" class="hidden md:inline">حفظ</span>
+                        <span class="text-sm md:text-base">💾</span>
+                        <span data-i18n="action.save" class="inline">حفظ</span>
                     </button>
                     <button
                         data-ui-click="share-drawing"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-pink-400 hover:bg-pink-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
+                        class="bubble-btn py-1 md:py-1.5 px-2 md:px-2.5 bg-pink-400 hover:bg-pink-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center gap-1 shrink-0 whitespace-nowrap transition-all active:scale-95 text-[11px] md:text-xs"
                         title="مشاركة الرسمة" data-i18n-title="action.share"
                     >
-                        <span class="text-base md:text-lg">📤</span>
-                        <span data-i18n="action.share" class="hidden md:inline">مشاركة</span>
+                        <span class="text-sm md:text-base">📤</span>
+                        <span data-i18n="action.share" class="inline">مشاركة</span>
                     </button>
                     <button
                         data-ui-click="download-drawing-png"
-                        class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-sky-400 hover:bg-sky-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
+                        class="bubble-btn py-1 md:py-1.5 px-2 md:px-2.5 bg-sky-400 hover:bg-sky-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center gap-1 shrink-0 whitespace-nowrap transition-all active:scale-95 text-[11px] md:text-xs"
                         title="تحميل كصورة PNG" data-i18n-title="action.download"
                     >
-                        <span class="text-base md:text-lg">📥</span>
-                        <span data-i18n="action.download" class="hidden md:inline">تحميل</span>
+                        <span class="text-sm md:text-base">📥</span>
+                        <span data-i18n="action.download" class="inline">تحميل</span>
                     </button>
                 </div>
             </section>

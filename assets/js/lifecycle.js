@@ -136,6 +136,17 @@ import { initializeI18n, t } from "./i18n.js";
                 // Initialize particle trail system
                 initParticles();
 
+                // Smooth horizontal mouse-wheel scrolling for bottom action bar
+                const animGrid = document.getElementById("anim-buttons-grid");
+                if (animGrid) {
+                    animGrid.addEventListener("wheel", (e) => {
+                        if (e.deltaY !== 0) {
+                            e.preventDefault();
+                            animGrid.scrollLeft += e.deltaY;
+                        }
+                    }, { passive: false });
+                }
+
                 // Register Service Worker for offline PWA support
                 if ("serviceWorker" in navigator && window.location.protocol.startsWith("http")) {
                     window.addEventListener("load", () => {

@@ -20,25 +20,25 @@ import { speakText } from "./voice-duo.js";
 
                 if (slowBtn) {
                     if (speed === 0.6) {
-                        slowBtn.className = "speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-pink-400 text-slate-900 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon scale-110 ring-4 ring-yellow-400 z-10 transition-all";
+                        slowBtn.className = "speed-btn bubble-btn text-sm md:text-base w-8 h-8 md:w-9 md:h-9 flex items-center justify-center bg-pink-400 text-slate-900 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon scale-105 ring-2 ring-yellow-400 z-10 transition-all shrink-0";
                     } else {
-                        slowBtn.className = "speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-pink-200 hover:bg-pink-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon-sm transition-all";
+                        slowBtn.className = "speed-btn bubble-btn text-sm md:text-base w-8 h-8 md:w-9 md:h-9 flex items-center justify-center bg-pink-200 hover:bg-pink-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon-sm transition-all shrink-0";
                     }
                 }
 
                 if (normalBtn) {
                     if (speed === 1) {
-                        normalBtn.className = "speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-amber-400 text-slate-900 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon scale-110 ring-4 ring-yellow-400 z-10 transition-all";
+                        normalBtn.className = "speed-btn bubble-btn text-sm md:text-base w-8 h-8 md:w-9 md:h-9 flex items-center justify-center bg-amber-400 text-slate-900 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon scale-105 ring-2 ring-yellow-400 z-10 transition-all shrink-0";
                     } else {
-                        normalBtn.className = "speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-amber-200 hover:bg-amber-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon-sm transition-all";
+                        normalBtn.className = "speed-btn bubble-btn text-sm md:text-base w-8 h-8 md:w-9 md:h-9 flex items-center justify-center bg-amber-200 hover:bg-amber-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon-sm transition-all shrink-0";
                     }
                 }
 
                 if (fastBtn) {
                     if (speed === 1.5) {
-                        fastBtn.className = "speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-emerald-400 text-slate-900 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon scale-110 ring-4 ring-yellow-400 z-10 transition-all";
+                        fastBtn.className = "speed-btn bubble-btn text-sm md:text-base w-8 h-8 md:w-9 md:h-9 flex items-center justify-center bg-emerald-400 text-slate-900 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon scale-105 ring-2 ring-yellow-400 z-10 transition-all shrink-0";
                     } else {
-                        fastBtn.className = "speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-emerald-200 hover:bg-emerald-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon-sm transition-all";
+                        fastBtn.className = "speed-btn bubble-btn text-sm md:text-base w-8 h-8 md:w-9 md:h-9 flex items-center justify-center bg-emerald-200 hover:bg-emerald-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon-sm transition-all shrink-0";
                     }
                 }
 
