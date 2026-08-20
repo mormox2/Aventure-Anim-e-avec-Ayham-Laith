@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 
 const assetDirectory = resolve("dist/assets");
 const budgets = {
-  initialJavaScript: 125 * 1024, // raised from 100 KB: full trilingual i18n dictionaries (AR/FR/EN), voice synthesis, QR modal
+  initialJavaScript: 140 * 1024, // raised from 125 KB: full trilingual dictionaries (AR/FR/EN), social sharing, and kids-lock security mode
   lazyHeroesJavaScript: 75 * 1024, // expanded template library with 21 rich SVG characters
   stylesheet: 70 * 1024, // cartoon styling, trilingual RTL/LTR typography & modals
 };

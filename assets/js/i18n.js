@@ -20,6 +20,8 @@ const translations = {
     "btn.theme.day": "النهار",
     "btn.theme.night": "الليل",
     "btn.fullscreen": "شاشة",
+    "btn.kids_lock": "قفل الأطفال",
+    "btn.kids_lock_title": "وضع قفل الأطفال وملاء الشاشة 🔒",
     "btn.heroes": "رسومات",
     "btn.friends": "أصدقاء",
     "btn.gallery": "معرض",
@@ -27,6 +29,15 @@ const translations = {
     "btn.qr": "QR كود",
     "btn.help": "كيف",
     "btn.lang": "العربية",
+
+    // Kids Lock
+    "kids_lock.activated_toast": "🔒 تم تفعيل وضع قفل الأطفال وملاء الشاشة!",
+    "kids_lock.hold_to_unlock": "اضغط 3ث للإلغاء 🔒",
+    "kids_lock.unlocked_toast": "🔓 تم إلغاء القفل بنجاح!",
+    "kids_lock.challenge_title": "🔒 سؤال التحقق للوالدين",
+    "kids_lock.challenge_desc": "اختر الإجابة الصحيحة لإلغاء القفل والخروج:",
+    "kids_lock.challenge_btn_math": "🧮 سؤال الأذكياء",
+    "kids_lock.wrong_answer": "إجابة غير صحيحة، حاول مجدداً! 🤔",
 
     // Left Toolbar - Drawing Tools
     "tools.title": "أدوات الرسم 🖌️",
@@ -146,6 +157,7 @@ const translations = {
     "modal.help.step3": "أضف ملصقات مضحكة مثل العيون والنظارات والقبعات. يمكنك جرها وتكبيرها وتدويرها بسهولة!",
     "modal.help.step4": "اضغط على أزرار التحريك لجعل رسمتك ترقص، تقفز، تدور، أو تهتز فوراً!",
     "modal.help.step5": "اضغط على 'أعطِ الحياة للرسمة' لتبدأ بالطفو، وتتحدث إليك بفقاعات الكلام المرحة!",
+    "modal.help.step6": "اضغط على زر '🔒 قفل الأطفال' لقفل الخروج وملء الشاشة. على أجهزة iPad استخدم 'Accès Guidé' وعلى أجهزة Android استخدم 'Épinglage d'application' لمنع الطفل تماماً من مغادرة اللعبة!",
     "modal.help.btn_start": "هيا بنا نبدأ الرسم! 🚀",
 
     // QR Modal
@@ -192,8 +204,8 @@ const translations = {
     "share.message_text": "انظروا إلى هذه الرسمة الرائعة التي صنعتها على ToonDraw! ارسموا وحرّكوا معنا مجاناً 🎨✨",
 
     // Toast and voice
-    "welcome.toast": "أهلاً أيهم و ليث! 🎨✨ هيا نبدأ مغامرة الرسم الممتعة!",
-    "welcome.voice": "أهلاً بكم في تون درو! هيا نرسم ونستمتع معاً!",
+    "welcome.toast": "أهلاً بك في استوديو الرسم والتحريك للأطفال! 🎨✨ هيا نرسم معاً!",
+    "welcome.voice": "أهلاً بك! أنا جاهز للرسم والتحريك معك، هيا بنا!",
   },
 
   fr: {
@@ -209,6 +221,8 @@ const translations = {
     "btn.theme.day": "Jour",
     "btn.theme.night": "Nuit",
     "btn.fullscreen": "Plein écran",
+    "btn.kids_lock": "Verrouillage",
+    "btn.kids_lock_title": "Mode Verrouillage Enfant & Plein Écran 🔒",
     "btn.heroes": "Dessins",
     "btn.friends": "Amis",
     "btn.gallery": "Galerie",
@@ -216,6 +230,15 @@ const translations = {
     "btn.qr": "QR Code",
     "btn.help": "Aide",
     "btn.lang": "Français",
+
+    // Kids Lock
+    "kids_lock.activated_toast": "🔒 Mode Verrouillage Enfant activé !",
+    "kids_lock.hold_to_unlock": "Maintenez 3s 🔒",
+    "kids_lock.unlocked_toast": "🔓 Déverrouillage réussi !",
+    "kids_lock.challenge_title": "🔒 Défi Parental de Sécurité",
+    "kids_lock.challenge_desc": "Choisissez la bonne réponse pour déverrouiller et quitter :",
+    "kids_lock.challenge_btn_math": "🧮 Défi calcul",
+    "kids_lock.wrong_answer": "Mauvaise réponse, réessayez ! 🤔",
 
     // Left Toolbar - Drawing Tools
     "tools.title": "Outils de dessin 🖌️",
@@ -335,6 +358,7 @@ const translations = {
     "modal.help.step3": "Ajoutez des stickers rigolos comme des yeux, lunettes et chapeaux. Déplacez-les facilement !",
     "modal.help.step4": "Appuyez sur les boutons d'animation pour faire danser, sauter ou tourner votre dessin !",
     "modal.help.step5": "Cliquez sur 'Donner vie' pour voir votre personnage flotter et vous parler avec humour !",
+    "modal.help.step6": "Activez le bouton '🔒 Verrouillage' pour le plein écran sécurisé. Sur iPad, activez 'Accès Guidé' (Triple-clic) et sur Android 'Épinglage d'application' pour empêcher totalement l'enfant de sortir !",
     "modal.help.btn_start": "C'est parti, dessinons ! 🚀",
 
     // QR Modal
@@ -398,6 +422,8 @@ const translations = {
     "btn.theme.day": "Day",
     "btn.theme.night": "Night",
     "btn.fullscreen": "Fullscreen",
+    "btn.kids_lock": "Kids Lock",
+    "btn.kids_lock_title": "Kids Lock & Safe Fullscreen 🔒",
     "btn.heroes": "Drawings",
     "btn.friends": "Friends",
     "btn.gallery": "Gallery",
@@ -405,6 +431,15 @@ const translations = {
     "btn.qr": "QR Code",
     "btn.help": "Help",
     "btn.lang": "English",
+
+    // Kids Lock
+    "kids_lock.activated_toast": "🔒 Kids Lock Mode activated!",
+    "kids_lock.hold_to_unlock": "Hold 3s to unlock 🔒",
+    "kids_lock.unlocked_toast": "🔓 Kids Lock deactivated!",
+    "kids_lock.challenge_title": "🔒 Parental Security Challenge",
+    "kids_lock.challenge_desc": "Select the correct answer to unlock and exit:",
+    "kids_lock.challenge_btn_math": "🧮 Math challenge",
+    "kids_lock.wrong_answer": "Incorrect answer, try again! 🤔",
 
     // Left Toolbar - Drawing Tools
     "tools.title": "Drawing Tools 🖌️",
@@ -524,6 +559,7 @@ const translations = {
     "modal.help.step3": "Add funny stickers like eyes, sunglasses, and hats. Easily move, scale, and rotate them!",
     "modal.help.step4": "Click animation buttons to make your drawing dance, jump, spin, or shake instantly!",
     "modal.help.step5": "Click 'Give Life' to watch your character float and speak funny speech bubbles!",
+    "modal.help.step6": "Tap '🔒 Kids Lock' for safe fullscreen. On iPad use 'Guided Access' (Triple-click) and on Android use 'App Pinning' to keep kids securely in the app!",
     "modal.help.btn_start": "Let's Start Drawing! 🚀",
 
     // QR Modal

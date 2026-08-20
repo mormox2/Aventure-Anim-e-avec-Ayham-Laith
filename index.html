@@ -198,6 +198,16 @@
                     <span data-i18n="btn.fullscreen" class="hidden xl:inline">شاشة</span>
                 </button>
                 <button
+                    id="btn-kids-lock"
+                    data-ui-click="toggle-kids-lock"
+                    class="bubble-btn px-1.5 md:px-2.5 py-1 md:py-1.5 min-w-[34px] md:min-w-[38px] bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-slate-900 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-0.5 md:gap-1 text-[10px] md:text-xs shrink-0"
+                    title="وضع قفل الأطفال وملاء الشاشة 🔒"
+                    data-i18n-title="btn.kids_lock_title"
+                >
+                    <span id="kids-lock-icon" class="text-sm md:text-lg">🔒</span>
+                    <span id="kids-lock-label" data-i18n="btn.kids_lock" class="hidden xl:inline">قفل الأطفال</span>
+                </button>
+                <button
                     data-ui-click="toggle-hero-modal" data-ui-value="true"
                     class="bubble-btn px-1.5 md:px-2.5 py-1 md:py-1.5 min-w-[34px] md:min-w-[38px] bg-gradient-to-r from-red-400 to-blue-400 text-white font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-0.5 md:gap-1 text-[10px] md:text-xs shrink-0 animate-pulse"
                     style="animation-duration: 2s"
@@ -1218,6 +1228,15 @@
                             لتبدأ بالطفو، وتتحدث إليك بفقاعات الكلام المرحة!
                         </p>
                     </div>
+
+                    <div
+                        class="flex items-center gap-3 bg-gradient-to-r from-amber-50 to-orange-50 p-3 rounded-2xl border-2 border-amber-300"
+                    >
+                        <span class="text-3xl">🔒</span>
+                        <p data-i18n="modal.help.step6" class="text-sm">
+                            اضغط على زر '🔒 قفل الأطفال' لقفل الخروج وملء الشاشة. على أجهزة iPad استخدم 'Accès Guidé' وعلى أجهزة Android استخدم 'Épinglage d'application' لمنع الطفل تماماً من مغادرة اللعبة!
+                        </p>
+                    </div>
                 </div>
 
                 <button
@@ -1509,6 +1528,98 @@
                     <span>📸</span>
                     <span data-i18n="share.download_social">تحميل للنشر على إنستغرام وتيك توك 📸</span>
                 </button>
+            </div>
+        </div>
+
+        <!-- FLOATING KIDS LOCK OVERLAY / UNLOCK BADGE (Fixed in safe corner) -->
+        <div
+            id="kids-lock-overlay"
+            class="fixed top-2 md:top-3 right-2 md:right-3 z-50 hidden items-center gap-2 bg-white/95 backdrop-blur-md border-3 border-slate-800 rounded-full px-2.5 py-1 shadow-cartoon select-none"
+        >
+            <!-- Hold to unlock button with circular progress -->
+            <button
+                id="kids-lock-unlock-btn"
+                type="button"
+                class="relative flex items-center gap-1.5 bg-amber-400 hover:bg-amber-300 active:scale-95 text-slate-900 font-black text-xs md:text-sm px-2.5 py-1 rounded-full border-2 border-slate-800 shadow-cartoon-sm cursor-pointer select-none transition-all touch-none"
+                title="Maintenez 3 secondes pour déverrouiller"
+            >
+                <div class="relative w-5 h-5 flex items-center justify-center shrink-0">
+                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                        <circle cx="18" cy="18" r="14" fill="none" stroke="#fed7aa" stroke-width="4"></circle>
+                        <circle
+                            id="kids-lock-progress-circle"
+                            cx="18"
+                            cy="18"
+                            r="14"
+                            fill="none"
+                            stroke="#ea580c"
+                            stroke-width="4"
+                            stroke-dasharray="100"
+                            stroke-dashoffset="100"
+                            stroke-linecap="round"
+                            style="transition: stroke-dashoffset 0.05s linear;"
+                        ></circle>
+                    </svg>
+                    <span class="absolute inset-0 flex items-center justify-center text-[10px]">🔒</span>
+                </div>
+                <span id="kids-lock-hold-text" data-i18n="kids_lock.hold_to_unlock">Maintenez 3s 🔒</span>
+            </button>
+
+            <!-- Quick parent challenge shortcut -->
+            <button
+                type="button"
+                data-ui-click="open-parent-challenge"
+                class="bubble-btn bg-sky-300 hover:bg-sky-200 text-slate-900 font-black text-xs px-2 py-1 rounded-full border-2 border-slate-800 shadow-cartoon-sm transition-all"
+                title="Défi parental"
+            >
+                <span data-i18n="kids_lock.challenge_btn_math">🧮 سؤال</span>
+            </button>
+        </div>
+
+        <!-- KIDS LOCK PARENTAL CHALLENGE MODAL -->
+        <div
+            id="kids-lock-challenge-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="kids-lock-challenge-title"
+            aria-hidden="true"
+            class="fixed inset-0 bg-slate-900/70 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
+            data-ui-backdrop="kids-lock-challenge-modal" data-ui-close="close-parent-challenge"
+        >
+            <div
+                class="bg-white border-4 border-slate-800 rounded-[36px] max-w-sm w-full p-6 shadow-cartoon-lg relative transform scale-95 transition-transform duration-300 text-center"
+                id="kids-lock-challenge-content"
+            >
+                <button
+                    data-ui-click="close-parent-challenge"
+                    aria-label="Fermer"
+                    class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] transition-all"
+                >
+                    ❌
+                </button>
+
+                <h3
+                    id="kids-lock-challenge-title"
+                    data-i18n="kids_lock.challenge_title"
+                    class="text-xl md:text-2xl font-black text-slate-800 mb-1 border-b-4 border-dashed border-amber-400 pb-2 flex items-center justify-center gap-2"
+                >
+                    🔒 سؤال الوالدين للتحقق
+                </h3>
+
+                <p
+                    data-i18n="kids_lock.challenge_desc"
+                    class="text-xs md:text-sm font-extrabold text-slate-600 mb-4 bg-amber-50 py-1.5 px-3 rounded-full border border-amber-200"
+                >
+                    اختر الإجابة الصحيحة لإلغاء القفل والخروج:
+                </p>
+
+                <div id="kids-lock-question" class="text-3xl md:text-4xl font-black text-slate-800 bg-gradient-to-r from-amber-100 to-yellow-100 py-3 px-6 rounded-2xl border-3 border-slate-800 shadow-cartoon-sm mb-5 font-mono">
+                    3 + 4 = ?
+                </div>
+
+                <div id="kids-lock-options-container" class="grid grid-cols-3 gap-3 mb-2">
+                    <!-- Options populated dynamically -->
+                </div>
             </div>
         </div>
 

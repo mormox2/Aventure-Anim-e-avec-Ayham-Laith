@@ -5,6 +5,7 @@ import { showEncouragement, triggerConfetti } from "./feedback.js";
 import { setAnimationSpeed } from "./settings.js";
 import { deselectAllStickers, renderStickers } from "./stickers.js";
 import { renderFriendBadges, saveCurrentDrawingToGallery } from "./utilities-gallery.js";
+import { isKidsLockActive } from "./kids-lock.js";
 import { state } from "./state.js";
 import { initializeI18n, t } from "./i18n.js";
 
@@ -110,10 +111,15 @@ import { initializeI18n, t } from "./i18n.js";
                     if (e.ctrlKey && e.key === "y") { e.preventDefault(); redo(); }
                     if (e.ctrlKey && e.shiftKey && e.key === "Z") { e.preventDefault(); redo(); }
                     if (e.key === "Escape") {
+                        if (isKidsLockActive()) {
+                            e.preventDefault();
+                            showEncouragement(t("kids_lock.hold_to_unlock", "Maintenez 3s 🔒"));
+                            return;
+                        }
                         deselectAllStickers();
                         state.activeStamp = null;
                         // close any open modal
-                        ["stamps-modal","gallery-modal","friends-modal","hero-modal","help-modal","qr-modal","lang-modal","share-modal"].forEach(id => {
+                        ["stamps-modal","gallery-modal","friends-modal","hero-modal","help-modal","qr-modal","lang-modal","share-modal","kids-lock-challenge-modal"].forEach(id => {
                             const el = document.getElementById(id);
                             if (el && !el.classList.contains("hidden")) {
                                 el.classList.add("opacity-0");

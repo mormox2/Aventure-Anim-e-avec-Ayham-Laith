@@ -52,6 +52,13 @@ import {
   copyShareLink,
   downloadSocialImage,
 } from "./social-share.js";
+import {
+  toggleKidsLock,
+  startHoldUnlock,
+  cancelHoldUnlock,
+  openParentChallengeModal,
+  closeParentChallengeModal,
+} from "./kids-lock.js";
 import { state } from "./state.js";
 
 const actions = Object.freeze({
@@ -82,6 +89,7 @@ const actions = Object.freeze({
   "toggle-give-life": toggleGiveLife,
   "toggle-help-modal": toggleHelpModal,
   "toggle-hero-modal": toggleHeroModal,
+  "toggle-kids-lock": toggleKidsLock,
   "toggle-lang-modal": toggleLangModal,
   "toggle-mirror": toggleMirror,
   "toggle-mobile-drawer": toggleMobileDrawer,
@@ -91,6 +99,8 @@ const actions = Object.freeze({
   "toggle-split-mode": toggleSplitMode,
   "toggle-stamps-modal": toggleStampsModal,
   "toggle-theme": toggleTheme,
+  "open-parent-challenge": openParentChallengeModal,
+  "close-parent-challenge": closeParentChallengeModal,
   undo,
 });
 
@@ -104,6 +114,7 @@ const mobileTools = Object.freeze({
   "select-spray": selectSpray,
   "share-drawing": openShareModal,
   "toggle-fullscreen": toggleFullscreen,
+  "toggle-kids-lock": toggleKidsLock,
   "toggle-lang-modal": () => toggleLangModal(true),
   "toggle-mirror": toggleMirror,
   "toggle-qr-modal": () => toggleQrModal(true),
@@ -232,4 +243,13 @@ export function initializeUI() {
   document.addEventListener("click", handleBackdropClick);
   document.addEventListener("input", handleInput);
   bindFriendInput();
+
+  const unlockBtn = document.getElementById("kids-lock-unlock-btn");
+  if (unlockBtn) {
+    unlockBtn.addEventListener("pointerdown", startHoldUnlock);
+    unlockBtn.addEventListener("pointerup", cancelHoldUnlock);
+    unlockBtn.addEventListener("pointerleave", cancelHoldUnlock);
+    unlockBtn.addEventListener("pointercancel", cancelHoldUnlock);
+    unlockBtn.addEventListener("contextmenu", (e) => e.preventDefault());
+  }
 }
