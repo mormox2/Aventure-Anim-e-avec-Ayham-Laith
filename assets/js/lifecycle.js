@@ -113,7 +113,7 @@ import { initializeI18n, t } from "./i18n.js";
                         deselectAllStickers();
                         state.activeStamp = null;
                         // close any open modal
-                        ["stamps-modal","gallery-modal","friends-modal","hero-modal","help-modal","qr-modal","lang-modal"].forEach(id => {
+                        ["stamps-modal","gallery-modal","friends-modal","hero-modal","help-modal","qr-modal","lang-modal","share-modal"].forEach(id => {
                             const el = document.getElementById(id);
                             if (el && !el.classList.contains("hidden")) {
                                 el.classList.add("opacity-0");

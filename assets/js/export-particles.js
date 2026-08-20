@@ -2,6 +2,7 @@ import { showEncouragement, triggerConfetti } from "./feedback.js";
 import { deselectAllStickers } from "./stickers.js";
 import { synth } from "./synth.js";
 import { saveCurrentDrawingToGallery } from "./utilities-gallery.js";
+import { openShareModal } from "./social-share.js";
 import { state } from "./state.js";
 
 const MAX_PARTICLES = 120;
@@ -129,39 +130,8 @@ let visibilityListenerBound = false;
                 }
             }
 
-            async function shareDrawing() {
-                deselectAllStickers();
-                synth.playTada();
-                showEncouragement("جاري تحضير الرسمة للمشاركة... ⏱️✨");
-
-                try {
-                    const exportCanvas = await createCompositeCanvas();
-                    exportCanvas.toBlob(async (blob) => {
-                        if (!blob) {
-                            saveDrawing();
-                            return;
-                        }
-                        const file = new File([blob], `رسمة-أيهم-وليث-${Date.now()}.png`, { type: "image/png" });
-                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                            try {
-                                await navigator.share({
-                                    title: "رسمة أبطالنا أيهم وليث 🎨✨",
-                                    text: "شاهدوا هذه الرسمة الجميلة التي رسمناها في استوديو الرسوم المتحركة لأيهم وليث! 🌟",
-                                    files: [file],
-                                });
-                                triggerConfetti();
-                                showEncouragement("🎉 تم مشاركة الرسمة بنجاح!");
-                                return;
-                            } catch (shareErr) {
-                                if (shareErr.name === "AbortError") return;
-                            }
-                        }
-                        // Fallback to downloading
-                        saveDrawing();
-                    }, "image/png");
-                } catch (err) {
-                    saveDrawing();
-                }
+            function shareDrawing() {
+                openShareModal();
             }
 
             /************************************************************

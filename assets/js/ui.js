@@ -45,6 +45,13 @@ import {
 } from "./settings.js";
 import { saveDrawing, shareDrawing } from "./export-particles.js";
 import { toggleSplitMode } from "./voice-duo.js";
+import {
+  toggleShareModal,
+  openShareModal,
+  shareToSocial,
+  copyShareLink,
+  downloadSocialImage,
+} from "./social-share.js";
 import { state } from "./state.js";
 
 const actions = Object.freeze({
@@ -53,13 +60,15 @@ const actions = Object.freeze({
   "clear-canvas": clearCanvas,
   "confirm-clear-canvas": confirmClearCanvas,
   "copy-qr-link": copyQrLink,
+  "copy-share-link": copyShareLink,
   "download-drawing-png": downloadDrawingPNG,
+  "download-social-image": downloadSocialImage,
   "filter-templates": filterTemplates,
   redo,
   "reset-app": resetApp,
   "reset-friends": resetFriends,
   "save-drawing": saveDrawing,
-  "share-drawing": shareDrawing,
+  "share-drawing": openShareModal,
   "select-canvas-bg": selectCanvasBg,
   "select-eraser": selectEraser,
   "select-fill-tool": selectFillTool,
@@ -78,6 +87,7 @@ const actions = Object.freeze({
   "toggle-mobile-drawer": toggleMobileDrawer,
   "toggle-music": toggleMusic,
   "toggle-qr-modal": toggleQrModal,
+  "toggle-share-modal": toggleShareModal,
   "toggle-split-mode": toggleSplitMode,
   "toggle-stamps-modal": toggleStampsModal,
   "toggle-theme": toggleTheme,
@@ -92,11 +102,12 @@ const mobileTools = Object.freeze({
   "select-eraser": selectEraser,
   "select-fill-tool": selectFillTool,
   "select-spray": selectSpray,
-  "share-drawing": shareDrawing,
+  "share-drawing": openShareModal,
   "toggle-fullscreen": toggleFullscreen,
   "toggle-lang-modal": () => toggleLangModal(true),
   "toggle-mirror": toggleMirror,
   "toggle-qr-modal": () => toggleQrModal(true),
+  "toggle-share-modal": () => toggleShareModal(true),
   "toggle-stamps-modal": () => toggleStampsModal(true),
 });
 
@@ -156,6 +167,8 @@ function handleClick(event) {
     selectBrushMode(element.dataset.uiMode);
   } else if (action === "select-shape") {
     selectShape(element.dataset.uiShape);
+  } else if (action === "share-social") {
+    shareToSocial(element.dataset.uiPlatform);
   } else if (action === "mobile-tool") {
     handleMobileTool(element);
   } else {

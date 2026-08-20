@@ -164,6 +164,23 @@ const translations = {
     "mobile.btn.open_stamps": "فتح قائمة الطوابع والأشكال السحرية",
     "mobile.btn.show_qr": "عرض QR Code لمشاركة التطبيق",
 
+    // Social Share Modal
+    "modal.share.title": "شارك رسمتك الجميلة! 🚀✨",
+    "modal.share.subtitle": "انشر إبداعك على وسائل التواصل الاجتماعي أو أرسله لعائلتك وأصدقائك! 🎉",
+    "share.preview_title": "🎨 بطاقة الرسمة",
+    "share.whatsapp": "واتساب",
+    "share.twitter": "X / تويتر",
+    "share.facebook": "فيسبوك",
+    "share.telegram": "تيليجرام",
+    "share.pinterest": "بينتيريست",
+    "share.native": "مشاركة عبر التطبيقات 📲",
+    "share.copy_link": "نسخ الرابط",
+    "share.copied": "تم نسخ الرابط بنجاح! 📋✨",
+    "share.copied_short": "تم النسخ!",
+    "share.download_social": "تحميل للنشر على إنستغرام وتيك توك 📸",
+    "share.download_toast": "📸 تم تحميل الرسمة بجودة عالية! مثالية للستوري والواتساب!",
+    "share.message_text": "انظروا إلى هذه الرسمة الرائعة التي صنعتها على ToonDraw! ارسموا وحرّكوا معنا مجاناً 🎨✨",
+
     // Toast and voice
     "welcome.toast": "أهلاً أيهم و ليث! 🎨✨ هيا نبدأ مغامرة الرسم الممتعة!",
     "welcome.voice": "أهلاً بكم في تون درو! هيا نرسم ونستمتع معاً!",
@@ -309,6 +326,23 @@ const translations = {
     // Language Modal
     "modal.lang.title": "🌐 Choisissez votre langue",
     "modal.lang.subtitle": "Sélectionnez votre langue préférée pour le jeu et les voix !",
+
+    // Social Share Modal
+    "modal.share.title": "Partagez votre dessin ! 🚀✨",
+    "modal.share.subtitle": "Publiez votre création sur vos réseaux sociaux ou envoyez-la à vos proches ! 🎉",
+    "share.preview_title": "🎨 Carte du dessin",
+    "share.whatsapp": "WhatsApp",
+    "share.twitter": "X (Twitter)",
+    "share.facebook": "Facebook",
+    "share.telegram": "Telegram",
+    "share.pinterest": "Pinterest",
+    "share.native": "Partager via les applications 📲",
+    "share.copy_link": "Copier le lien",
+    "share.copied": "Lien copié dans le presse-papier ! 📋✨",
+    "share.copied_short": "Copié !",
+    "share.download_social": "Télécharger pour Instagram & TikTok 📸",
+    "share.download_toast": "📸 Image téléchargée en haute qualité ! Parfaite pour vos stories et statuts !",
+    "share.message_text": "Regardez ce magnifique dessin créé sur ToonDraw ! Venez dessiner et animer gratuitement 🎨✨",
 
     // Mobile Drawer
     "mobile.tab.tools": "🎨 Outils",
@@ -471,6 +505,23 @@ const translations = {
     // Language Modal
     "modal.lang.title": "🌐 Choose Your Language",
     "modal.lang.subtitle": "Pick your favorite language for the UI and voice cheers!",
+
+    // Social Share Modal
+    "modal.share.title": "Share Your Masterpiece! 🚀✨",
+    "modal.share.subtitle": "Share your artwork on social media or send it directly to friends and family! 🎉",
+    "share.preview_title": "🎨 Artwork Card",
+    "share.whatsapp": "WhatsApp",
+    "share.twitter": "X (Twitter)",
+    "share.facebook": "Facebook",
+    "share.telegram": "Telegram",
+    "share.pinterest": "Pinterest",
+    "share.native": "Share via Apps 📲",
+    "share.copy_link": "Copy Link",
+    "share.copied": "Link copied to clipboard! 📋✨",
+    "share.copied_short": "Copied!",
+    "share.download_social": "Download for Instagram & TikTok 📸",
+    "share.download_toast": "📸 High quality image downloaded! Perfect for stories and status!",
+    "share.message_text": "Check out this awesome cartoon drawing I created on ToonDraw! Come draw and animate with us for free 🎨✨",
 
     // Mobile Drawer
     "mobile.tab.tools": "🎨 Tools",
