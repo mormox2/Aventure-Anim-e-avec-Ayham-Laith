@@ -22,6 +22,9 @@ Les modules utilisent désormais des imports nommés directs et ne dépendent pl
 - `js/settings.js` : paramètres et messages d’encouragement.
 - `js/export-particles.js` : export PNG et particules.
 - `js/voice-duo.js` : synthèse vocale et mode duo.
+- `js/i18n.js` : moteur d'internationalisation trilingue (Arabe, Français, Anglais) et détection automatique.
+- `js/social-share.js` : partage réseaux sociaux, Web Share API, copie de lien et export stories.
+- `js/kids-lock.js` : mode verrouillage enfant, déverrouillage par maintien 3s, défi mathématique parental et capture de la touche Échap.
 - `js/ui.js` : délégation des clics et entrées via `addEventListener`.
 
 Le script `scripts/generate-entry.mjs` génère `src/main.js` avec des imports explicites, dont la feuille Tailwind locale, puis initialise `ui.js` et le gestionnaire d’accessibilité. Les attributs HTML inline et le pont `globalThis` ont été supprimés ; les interactions sont désormais câblées depuis les modules. Les SVG héros et dinosaures sont chargés par `import()` seulement lorsque la galerie est ouverte.

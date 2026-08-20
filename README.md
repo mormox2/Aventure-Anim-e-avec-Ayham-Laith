@@ -78,9 +78,12 @@ Ici, le dessin n'est plus statique : les enfants dessinent à l'aide d'outils ma
 
 | Fonctionnalité / الميزة | Description en Français | الوصف بالعربية |
 | :--- | :--- | :--- |
+| **🔒 Mode Verrouillage Enfant** | Plein écran sécurisé avec déverrouillage parental par maintien 3s ou défi calcul rapide. | وضع قفل الأطفال الآمن مع إلغاء القفل بالضغط 3ث أو حل مسألة رياضية للوالدين. |
+| **🌐 Support Trilingue Intelligent** | Arabe (RTL), Français et Anglais avec détection automatique de la langue du navigateur. | دعم كامل لـ 3 لغات (العربية، الفرنسية، الإنجليزية) مع اكتشاف تلقائي للغة المتصفح. |
+| **📤 Partage Réseaux & Stories** | Partage en 1 clic (WhatsApp, X, Facebook, Telegram, Pinterest) et export HD Instagram/TikTok. | مشاركة مباشرة على واتساب، تويتر، فيسبوك وتيليجرام وتصدير عالي الجودة للقصص. |
 | **🖌️ Pinceaux Magiques** | Pinceau classique, Bombe de peinture (Spray) et Pot de remplissage intelligent. | فرشاة رسم ذكية، بخاخ ألوان ممتع، ودهان تعبئة ذكي للمساحات المغلقة. |
 | **🪞 Miroir Magique** | Dessin symétrique en temps réel pour créer de jolis masques ou visages. | مرآة سحرية ترسم بشكل متماثل على النصفين لتسهيل رسم الأشكال الجميلة. |
-| **🚀 Animations Instantanées** | 7 mouvements : Arpenter/Danser, Sauter, Tourner, Secouer, Grandir, Rétrécir, Rebondir. | 7 حركات سحرية: الرقص، القفز، الدوران، الاهتزاز، التكبير، التصغير، والارتداد. |
+| **🚀 Animations Instantanées** | 7 mouvements : Danser, Sauter, Tourner, Secouer, Grandir, Rétrécir, Rebondir. | 7 حركات سحرية: الرقص، القفز، الدوران، الاهتزاز، التكبير، التصغير، والارتداد. |
 | **🪄 Don de Vie (Floating Mode)** | Met le dessin en apesanteur avec une animation de flottement réaliste et des répliques audio. | وضع "أعطِ الحياة": يجعل الرسمة تطفو كالبالون وتتحدث بفقاعات كلامية مضحكة. |
 | **🎭 Stickers & Tampons** | Yeux animés 👀, chapeaux 🎩, moustaches, couronnes, étoiles et cœurs à glisser/déposer. | ملصقات تفاعلية تتحرك وطوابع سحرية (نجوم، قلوب) قابلة للسحب، الدوران، والتكبير. |
 | **🤝 Mode Duo (Split-Screen)** | Divise l'ardoise en deux pour dessiner ensemble : côté Ayham 👑 et côté Laith ⚡. | وضع ثنائي مشترك: يقسم اللوحة لقسمين متساويين ليرسم أيهم وليث معاً في نفس الوقت. |
@@ -94,15 +97,20 @@ Ici, le dessin n'est plus statique : les enfants dessinent à l'aide d'outils ma
 
 Derrière cette app extrêmement fluide et réactive se cache une ingénierie soignée utilisant les API natives du navigateur :
 
-1. **Double Canvas HTML5 (نظام اللوحة الثنائي)** :
+1. **Double Canvas HTML5 & Optimisation Pointer Events** :
    * Le **Canvas de Dessin** capture les tracés, gère les algorithmes de remplissage par diffusion (Flood Fill) et maintient une pile d'historique pour le système d'annulation (Undo/Redo).
    * Le **Canvas de Particules** superpose en arrière-plan un effet de traînée magique (étoiles brillantes et bulles translucides) qui suit le doigt ou la souris de l'enfant.
-2. **Synthétiseur Audio Web Audio API (مؤلف الأصوات الرقمي)** :
+2. **Système de Sécurité & Kids Lock** :
+   * Capture de la touche Échap via `Keyboard Lock API` et protection anti-fermeture de fenêtre via `beforeunload`.
+   * Déverrouillage sécurisé par maintien de 3 secondes (`requestAnimationFrame`) ou validation de défi mathématique parental.
+3. **Moteur d'Internationalisation Réactif (i18n)** :
+   * Détection automatique de la langue selon les préférences système (`navigator.languages`), avec bascule dynamique RTL/LTR et synthèse vocale adaptée.
+4. **Synthétiseur Audio Web Audio API (مؤلف الأصوات الرقمي)** :
    * Pas besoin de télécharger de lourds fichiers audio MP3 ! Le jeu intègre son propre synthétiseur mathématique qui génère à la volée des effets sonores amusants (*Boing, Pop, Tada, Clic*) à base d'ondes sinusoïdales et de filtres passe-bas pour un rendu très "cartoon".
-3. **Synthèse Vocale Multilingue (النطق الصوتي بالذكاء الاصطناعي)** :
-   * Utilisation de l'API `speechSynthesis` pour lire les phrases d'encouragement en arabe (`ar-SA`).
+5. **Synthèse Vocale Multilingue (النطق الصوتي بالذكاء الاصطناعي)** :
+   * Utilisation de l'API `speechSynthesis` pour lire les phrases d'encouragement en arabe (`ar-SA`), français (`fr-FR`) et anglais (`en-US`).
    * Modification dynamique du timbre vocal (`pitch = 1.35`) pour donner à la voix une intonation de personnage de dessin animé enfantin et amical.
-4. **Design Néobrutaliste avec Tailwind CSS (التصميم العصري الأنيق)** :
+6. **Design Néobrutaliste avec Tailwind CSS (التصميم العصري الأنيق)** :
    * Mise en page 100% adaptative (responsive) sur tablettes, smartphones et ordinateurs.
    * Utilisation des classes personnalisées de Tailwind pour simuler le rendu néo-brutaliste (ombres rigides `shadow-cartoon` et bordures accentuées).
 
@@ -110,10 +118,10 @@ Derrière cette app extrêmement fluide et réactive se cache une ingénierie so
 
 ## 📂 Structure du Projet / هيكلة المشروع
 
-Le projet reste une **Single Page Application statique**, mais son code est maintenant organisé par responsabilité afin de faciliter la maintenance et les évolutions :
+Le projet est une **Single Page Application modulaire et moderne**, organisée par domaine de responsabilité :
 
 ```bash
-├── index.html                    # Structure de l'interface
+├── index.html                    # Structure de l'interface & modales
 ├── src/
 │   └── main.js                   # Entrée ES modules générée pour Vite
 ├── tailwind.config.js             # Thème Tailwind compilé localement
@@ -129,6 +137,9 @@ Le projet reste une **Single Page Application statique**, mais son code est main
 │   │   ├── data.js                # Palettes, stickers, tampons et messages légers
 │   │   │   └── data/heroes.js     # SVG héros et dinosaures chargé à la demande
 │   │   ├── state.js               # État partagé de l'application
+│   │   ├── i18n.js                # Moteur d'internationalisation trilingue (AR/FR/EN)
+│   │   ├── kids-lock.js           # Mode verrouillage enfant & Parental Gate
+│   │   ├── social-share.js        # Partage réseaux sociaux & export stories
 │   │   ├── ui.js                  # Écouteurs addEventListener et délégation UI
 │   │   ├── lifecycle.js           # Initialisation, dimensionnement et événements canvas
 │   │   ├── drawing.js             # Façade de compatibilité de l’API canvas
@@ -151,7 +162,7 @@ Le projet reste une **Single Page Application statique**, mais son code est main
 │   │   ├── export-particles.js    # Export PNG et particules
 │   │   └── voice-duo.js            # Synthèse vocale et mode duo
 │   └── README.md                  # Carte des responsabilités des assets
-├── tests/                         # Tests Vitest/jsdom
+├── tests/                         # Tests unitaires Vitest / jsdom
 ├── README.md                      # Présentation complète et documentation du projet
 ├── LICENSE                        # Licence d'utilisation MIT
 ├── scripts/
