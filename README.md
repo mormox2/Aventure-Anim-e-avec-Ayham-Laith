@@ -5,6 +5,7 @@
 ---
 
 <p align="center">
+  <img src="https://img.shields.io/badge/Deployed%20with-Vercel-black?style=for-the-badge&logo=vercel" alt="Vercel" />
   <img src="https://img.shields.io/github/license/mormox2/ToonDraw?style=for-the-badge&color=ff69b4&labelColor=2d3748" alt="License" />
   <img src="https://img.shields.io/github/stars/mormox2/ToonDraw?style=for-the-badge&color=ffd700&labelColor=2d3748" alt="GitHub Stars" />
   <img src="https://img.shields.io/badge/HTML5-Canvas-orange?style=for-the-badge&logo=html5&labelColor=2d3748" alt="HTML5 Canvas" />
@@ -20,9 +21,8 @@
 * [📦 Kit de Lancement & Production / دليل الإطلاق والنشر](LAUNCH_KIT.md)
 * [🌟 Présentation de l'Univers / نبذة عن عالم التطبيق](#-présentation-de-lunivers--نبذة-عن-عالم-التطبيق)
 * [✨ Fonctionnalités Magiques / الميزات السحرية الرائعة](#-fonctionnalités-magiques--الميزات-السحرية-الرائعة)
-* [🛠️ Secrets Techniques / الأسرar التقنية المتقدمة](#️-secrets-techniques--الأسرار-التقنية-المتقدمة)
+* [🛠️ Secrets Techniques / الأسرار التقنية المتقدمة](#️-secrets-techniques--الأسرار-التقنية-المتقدمة)
 * [📂 Structure du Projet / هيكلة المشروع](#-structure-du-projet--هيكلة-المشروع)
-* [🌐 Déployer sur GitHub Pages en 30 secondes / كيف تنشر موقعك على صفحات جيت هاب](#-déployer-sur-github-pages-en-30-secondes--كيف-تنشر-موقعك-على-صفحات-جيت-هاب)
 * [💖 Dédicace Spéciale / إهداء خاص وأصيل](#-dédicace-spéciale--إهداء-خاص-وأصيل)
 * [📄 Licence / الترخيص القانوني](#-licence--الترخيص-القانوني)
 
@@ -30,7 +30,12 @@
 
 ## 🚀 Démo Live & Déploiement / التجربة الحية والتشغيل
 
-Le projet est une **Single Page Application (SPA)** écrite en HTML, CSS et JavaScript, avec Vite comme serveur de développement et bundler de production. La version publiée reste directement accessible depuis GitHub Pages.
+Le projet est une **Single Page Application (SPA)** écrite en HTML, CSS et JavaScript, avec Vite comme serveur de développement et bundler de production.
+
+> [!TIP]
+> **Jouer tout de suite en ligne :**
+> - 🌐 **Lien officiel ultra-rapide (Vercel) :** [https://toondraw.vercel.app](https://toondraw.vercel.app)
+> - 📦 **Miroir (GitHub Pages) :** [https://mormox2.github.io/ToonDraw/](https://mormox2.github.io/ToonDraw/)
 
 ### Développement local
 
@@ -45,10 +50,6 @@ Pour produire une version optimisée :
 pnpm run build
 pnpm preview
 ```
-
-> [!TIP]
-> **Jouer tout de suite :** Si vous avez activé les **GitHub Pages** sur votre dépôt, votre jeu est accessible à l'adresse suivante :
-> `https://<votre-nom-d-utilisateur>.github.io/ToonDraw/`
 
 ---
 

@@ -7,23 +7,16 @@ Bienvenue dans le guide de lancement officiel de **ToonDraw** ! Ce kit fournit t
 
 ## 🌐 1. Déploiement Officiel
 
-### Option A : Déploiement Automatique via GitHub Pages (Recommandé)
+### Option A : Déploiement Principal Vercel (Recommandé - URL Courte)
+L'application est déployée en continu et accessible à l'adresse officielle :
+👉 **[https://toondraw.vercel.app](https://toondraw.vercel.app)**
 
-1. Rendez-vous sur votre dépôt GitHub : **Settings** ➔ **Pages**.
-2. Sous **Build and deployment** :
-   * **Source** : `GitHub Actions`
-3. Dès qu'un commit est poussé sur la branche `main`, le workflow [.github/workflows/pages.yml](.github/workflows/pages.yml) compile le projet et le déploie automatiquement.
-4. L'application est alors accessible en ligne à :
-   ```
-   https://<votre-nom-utilisateur>.github.io/ToonDraw/
-   ```
+### Option B : Déploiement Miroir GitHub Pages
+Chaque commit sur la branche `main` est également compilé automatiquement via le workflow [.github/workflows/pages.yml](.github/workflows/pages.yml) et disponible sur :
+👉 **[https://mormox2.github.io/ToonDraw/](https://mormox2.github.io/ToonDraw/)**
 
-### Option B : Déploiement sur un Domaine Personnalisé
-
-Dans **Settings** ➔ **Pages** ➔ **Custom domain** :
-1. Saisissez votre domaine (ex : `art.ayham-laith.com` ou `kids-draw.org`).
-2. Configurez les enregistrements DNS (CNAME ou A) chez votre registrar.
-3. Cochez **Enforce HTTPS** pour activer le certificat SSL automatique.
+### Option C : Déploiement sur un Domaine Personnalisé
+Vous pouvez lier votre propre nom de domaine (ex: `toondraw.art` ou `kids-draw.org`) directement dans les paramètres de **Vercel** ou **GitHub Pages**.
 
 ---
 
@@ -64,7 +57,7 @@ L'application est une **Progressive Web App (PWA)** complète. Elle peut être i
 🔒 100% مجاني، آمن للأطفال، بدون إعلانات وبدون جمع بيانات، ويعمل حتى بدون إنترنت!
 
 👉 جرّبوه الآن مباشرة عبر المتصفح:
-https://<votre-nom-utilisateur>.github.io/ToonDraw/
+https://toondraw.vercel.app
 
 💡 نصيحة: يمكنكم تثبيته كـ تطبيق على الآيباد أو التابلت عبر خيار "إضافة إلى الشاشة الرئيسية"!
 ```
@@ -88,7 +81,7 @@ Découvrez le nouveau studio de dessin interactif :
 🔒 100% gratuit, sécurisé, sans publicité, sans collecte de données et jouable hors-ligne (PWA) !
 
 👉 À tester dès maintenant sur tablette, smartphone ou ordi :
-https://<votre-nom-utilisateur>.github.io/ToonDraw/
+https://toondraw.vercel.app
 
 💡 Astuce : Sur iPad ou Android, cliquez sur "Ajouter à l'écran d'accueil" pour l'utiliser comme une vraie appli en plein écran !
 ```
