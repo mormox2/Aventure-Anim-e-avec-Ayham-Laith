@@ -547,14 +547,55 @@ const translations = {
 
 let currentLang = "ar";
 
-function getInitialLanguage() {
-  if (typeof localStorage !== "undefined") {
-    const saved = localStorage.getItem("toondraw_lang");
-    if (saved && ["ar", "fr", "en"].includes(saved)) {
-      return saved;
-    }
+function detectBrowserLanguage() {
+  if (typeof navigator === "undefined") return "ar";
+
+  const candidates = [];
+  if (Array.isArray(navigator.languages) && navigator.languages.length > 0) {
+    candidates.push(...navigator.languages);
   }
-  return "ar";
+  if (navigator.language) {
+    candidates.push(navigator.language);
+  }
+  if (navigator.userLanguage) {
+    candidates.push(navigator.userLanguage);
+  }
+
+  for (const candidate of candidates) {
+    if (typeof candidate !== "string") continue;
+    const clean = candidate.trim().toLowerCase();
+    if (clean.startsWith("ar")) return "ar";
+    if (clean.startsWith("fr")) return "fr";
+    if (clean.startsWith("en")) return "en";
+  }
+
+  return "en";
+}
+
+function getInitialLanguage() {
+  // 1. URL search param priority (e.g. ?lang=fr or ?lang=en)
+  if (typeof window !== "undefined" && window.location && window.location.search) {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const urlLang = params.get("lang");
+      if (urlLang && ["ar", "fr", "en"].includes(urlLang.toLowerCase())) {
+        return urlLang.toLowerCase();
+      }
+    } catch (e) {}
+  }
+
+  // 2. Saved user preference in localStorage
+  if (typeof localStorage !== "undefined") {
+    try {
+      const saved = localStorage.getItem("toondraw_lang");
+      if (saved && ["ar", "fr", "en"].includes(saved)) {
+        return saved;
+      }
+    } catch (e) {}
+  }
+
+  // 3. Browser language auto-detection
+  return detectBrowserLanguage();
 }
 
 function t(key, fallback = "") {
@@ -647,6 +688,7 @@ function initializeI18n() {
 export {
   translations,
   currentLang,
+  detectBrowserLanguage,
   getInitialLanguage,
   getCurrentLanguage,
   setLanguage,

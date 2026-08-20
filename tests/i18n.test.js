@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import {
+  detectBrowserLanguage,
   getCurrentLanguage,
   initializeI18n,
   setLanguage,
@@ -82,5 +83,54 @@ describe("Internationalisation (i18n) - Arabe, Français, Anglais", () => {
     expect(lang).toBe("en");
     expect(getCurrentLanguage()).toBe("en");
     expect(document.documentElement.dir).toBe("ltr");
+  });
+
+  it("détecte automatiquement la langue du navigateur (Français, Arabe, Anglais)", () => {
+    const originalLanguage = navigator.language;
+    const originalLanguages = navigator.languages;
+
+    try {
+      // Test French detection
+      Object.defineProperty(navigator, "language", { value: "fr-FR", configurable: true });
+      Object.defineProperty(navigator, "languages", { value: ["fr-FR", "fr", "en"], configurable: true });
+      expect(detectBrowserLanguage()).toBe("fr");
+
+      // Test Arabic detection
+      Object.defineProperty(navigator, "language", { value: "ar-EG", configurable: true });
+      Object.defineProperty(navigator, "languages", { value: ["ar-EG", "ar"], configurable: true });
+      expect(detectBrowserLanguage()).toBe("ar");
+
+      // Test English detection
+      Object.defineProperty(navigator, "language", { value: "en-US", configurable: true });
+      Object.defineProperty(navigator, "languages", { value: ["en-US", "en"], configurable: true });
+      expect(detectBrowserLanguage()).toBe("en");
+
+      // Test unsupported locale fallback to English
+      Object.defineProperty(navigator, "language", { value: "es-ES", configurable: true });
+      Object.defineProperty(navigator, "languages", { value: ["es-ES", "es"], configurable: true });
+      expect(detectBrowserLanguage()).toBe("en");
+    } finally {
+      Object.defineProperty(navigator, "language", { value: originalLanguage, configurable: true });
+      Object.defineProperty(navigator, "languages", { value: originalLanguages, configurable: true });
+    }
+  });
+
+  it("initialise la langue automatiquement selon le navigateur quand le localStorage est vide", () => {
+    const originalLanguage = navigator.language;
+    const originalLanguages = navigator.languages;
+
+    try {
+      Object.defineProperty(navigator, "language", { value: "fr-CA", configurable: true });
+      Object.defineProperty(navigator, "languages", { value: ["fr-CA", "fr"], configurable: true });
+
+      const lang = initializeI18n();
+      expect(lang).toBe("fr");
+      expect(getCurrentLanguage()).toBe("fr");
+      expect(document.documentElement.lang).toBe("fr");
+      expect(document.documentElement.dir).toBe("ltr");
+    } finally {
+      Object.defineProperty(navigator, "language", { value: originalLanguage, configurable: true });
+      Object.defineProperty(navigator, "languages", { value: originalLanguages, configurable: true });
+    }
   });
 });
