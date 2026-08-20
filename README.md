@@ -19,6 +19,7 @@
 
 * [🚀 Démo Live & Déploiement / التجربة الحية والتشغيل](#-démo-live--déploiement--التجربة-الحية-والتشغيل)
 * [📦 Kit de Lancement & Production / دليل الإطلاق والنشر](LAUNCH_KIT.md)
+* [🚀 Kit Product Hunt / إطلاق بروداكت هنت](PRODUCT_HUNT_LAUNCH.md)
 * [🌟 Présentation de l'Univers / نبذة عن عالم التطبيق](#-présentation-de-lunivers--نبذة-عن-عالم-التطبيق)
 * [✨ Fonctionnalités Magiques / الميزات السحرية الرائعة](#-fonctionnalités-magiques--الميزات-السحرية-الرائعة)
 * [🛠️ Secrets Techniques / الأسرار التقنية المتقدمة](#️-secrets-techniques--الأسرار-التقنية-المتقدمة)
