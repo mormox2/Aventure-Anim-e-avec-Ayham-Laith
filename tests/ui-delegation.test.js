@@ -39,10 +39,12 @@ const { drawingMocks, animationMocks, galleryMocks, settingsMocks } = vi.hoisted
   },
   settingsMocks: {
     animalReact: vi.fn(),
+    copyQrLink: vi.fn(),
     setAnimationSpeed: vi.fn(),
     setTemplateOpacity: vi.fn(),
     toggleFullscreen: vi.fn(),
     toggleHelpModal: vi.fn(),
+    toggleQrModal: vi.fn(),
   },
 }));
 
@@ -92,5 +94,22 @@ describe("délégation des actions UI", () => {
 
     expect(settingsMocks.setAnimationSpeed).toHaveBeenCalledWith(0.5);
     expect(settingsMocks.setTemplateOpacity).not.toHaveBeenCalled();
+  });
+
+  it("délègue toggle-qr-modal et copy-qr-link", () => {
+    const qrBtn = document.createElement("button");
+    qrBtn.dataset.uiClick = "toggle-qr-modal";
+    qrBtn.dataset.uiValue = "true";
+    document.body.appendChild(qrBtn);
+    qrBtn.click();
+
+    expect(settingsMocks.toggleQrModal).toHaveBeenCalledWith(true);
+
+    const copyBtn = document.createElement("button");
+    copyBtn.dataset.uiClick = "copy-qr-link";
+    document.body.appendChild(copyBtn);
+    copyBtn.click();
+
+    expect(settingsMocks.copyQrLink).toHaveBeenCalledTimes(1);
   });
 });

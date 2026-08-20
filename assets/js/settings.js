@@ -67,6 +67,26 @@ import { synth } from "./synth.js";
                 toggleModal("help-modal", "help-modal-content", show);
             }
 
+            function toggleQrModal(show) {
+                toggleModal("qr-modal", "qr-modal-content", show);
+            }
+
+            function copyQrLink() {
+                const url = "https://toondraw.vercel.app";
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(() => {
+                        synth.playTada();
+                        showEncouragement("📋 تم نسخ الرابط بنجاح! شاركه مع أحبائك 🚀");
+                    }).catch(() => {
+                        synth.playPop();
+                        showEncouragement("👉 الرابط: https://toondraw.vercel.app");
+                    });
+                } else {
+                    synth.playPop();
+                    showEncouragement("👉 الرابط: https://toondraw.vercel.app");
+                }
+            }
+
             // Peeking Animals Fun interactions
             function animalReact(animal) {
                 synth.playBoing();
@@ -113,4 +133,5 @@ import { synth } from "./synth.js";
                 }
             }
 
-export { setAnimationSpeed, setTemplateOpacity, toggleHelpModal, animalReact, toggleFullscreen };
+export { setAnimationSpeed, setTemplateOpacity, toggleHelpModal, toggleQrModal, copyQrLink, animalReact, toggleFullscreen };
+

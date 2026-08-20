@@ -36,6 +36,14 @@ Le projet est une **Single Page Application (SPA)** écrite en HTML, CSS et Java
 > **Jouer tout de suite en ligne :**
 > - 🌐 **Lien officiel ultra-rapide (Vercel) :** [https://toondraw.vercel.app](https://toondraw.vercel.app)
 > - 📦 **Miroir (GitHub Pages) :** [https://mormox2.github.io/ToonDraw/](https://mormox2.github.io/ToonDraw/)
+>
+> <p align="center">
+>   <a href="https://toondraw.vercel.app">
+>     <img src="public/qr-code.svg" width="200" alt="ToonDraw Official QR Code" />
+>   </a>
+>   <br/>
+>   <sub><b>📱 Scannez avec votre téléphone ou tablette pour jouer instantanément ! / امسح الرمز للعب فوراً</b></sub>
+> </p>
 
 ### Développement local
 

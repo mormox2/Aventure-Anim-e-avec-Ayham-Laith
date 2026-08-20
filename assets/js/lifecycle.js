@@ -109,7 +109,7 @@ import { state } from "./state.js";
                         deselectAllStickers();
                         state.activeStamp = null;
                         // close any open modal
-                        ["stamps-modal","gallery-modal","friends-modal","hero-modal","help-modal"].forEach(id => {
+                        ["stamps-modal","gallery-modal","friends-modal","hero-modal","help-modal","qr-modal"].forEach(id => {
                             const el = document.getElementById(id);
                             if (el && !el.classList.contains("hidden")) {
                                 el.classList.add("opacity-0");

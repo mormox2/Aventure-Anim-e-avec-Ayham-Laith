@@ -32,7 +32,15 @@ import {
   toggleGalleryModal,
   toggleHeroModal,
 } from "./utilities-gallery.js";
-import { animalReact, setAnimationSpeed, setTemplateOpacity, toggleFullscreen, toggleHelpModal } from "./settings.js";
+import {
+  animalReact,
+  copyQrLink,
+  setAnimationSpeed,
+  setTemplateOpacity,
+  toggleFullscreen,
+  toggleHelpModal,
+  toggleQrModal,
+} from "./settings.js";
 import { saveDrawing, shareDrawing } from "./export-particles.js";
 import { toggleSplitMode } from "./voice-duo.js";
 import { state } from "./state.js";
@@ -42,6 +50,7 @@ const actions = Object.freeze({
   "add-sample-friends": addSampleFriends,
   "clear-canvas": clearCanvas,
   "confirm-clear-canvas": confirmClearCanvas,
+  "copy-qr-link": copyQrLink,
   "download-drawing-png": downloadDrawingPNG,
   "filter-templates": filterTemplates,
   redo,
@@ -65,6 +74,7 @@ const actions = Object.freeze({
   "toggle-mirror": toggleMirror,
   "toggle-mobile-drawer": toggleMobileDrawer,
   "toggle-music": toggleMusic,
+  "toggle-qr-modal": toggleQrModal,
   "toggle-split-mode": toggleSplitMode,
   "toggle-stamps-modal": toggleStampsModal,
   "toggle-theme": toggleTheme,
@@ -82,6 +92,7 @@ const mobileTools = Object.freeze({
   "share-drawing": shareDrawing,
   "toggle-fullscreen": toggleFullscreen,
   "toggle-mirror": toggleMirror,
+  "toggle-qr-modal": () => toggleQrModal(true),
   "toggle-stamps-modal": () => toggleStampsModal(true),
 });
 

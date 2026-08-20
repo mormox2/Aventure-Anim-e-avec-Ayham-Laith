@@ -20,7 +20,19 @@ Vous pouvez lier votre propre nom de domaine (ex: `toondraw.art` ou `kids-draw.o
 
 ---
 
-## 📲 2. Guide d'Installation PWA (Tablette & Smartphone)
+## 📲 2. QR Code Officiel & Impression
+
+Le projet intègre un QR Code officiel pointant vers `https://toondraw.vercel.app` disponible en 2 formats :
+* 📄 **Vecteur SVG ultra-net :** `public/qr-code.svg`
+* 🖼️ **Haute résolution PNG (1024x1024) :** `public/qr-code.png` (idéal pour imprimer des affiches d'écoles, flyers ou stickers).
+
+<p align="center">
+  <img src="public/qr-code.svg" width="180" alt="QR Code ToonDraw" />
+</p>
+
+---
+
+## 📲 3. Guide d'Installation PWA (Tablette & Smartphone)
 
 L'application est une **Progressive Web App (PWA)** complète. Elle peut être installée comme une véritable application native :
 
