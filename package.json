@@ -1,8 +1,8 @@
 {
-  "name": "aventure-anime-avec-ayham-laith",
+  "name": "toondraw",
   "version": "1.0.0",
   "private": true,
-  "description": "Studio de dessin cartoon interactif pour enfants, avec canvas, stickers et animations.",
+  "description": "ToonDraw - Studio de dessin cartoon interactif pour enfants avec canvas, stickers, super-héros et animations.",
   "type": "module",
   "packageManager": "pnpm@11.20.0",
   "scripts": {

@@ -9,8 +9,8 @@ describe("PWA Manifest and Offline Configuration", () => {
     expect(existsSync(manifestPath)).toBe(true);
 
     const manifest = JSON.parse(readFileSync(manifestPath, "utf-8"));
-    expect(manifest.name).toBe("ارسم وحرّك مع أيهم و ليث");
-    expect(manifest.short_name).toBe("ارسم وحرّك");
+    expect(manifest.name).toBe("ToonDraw - ارسم وحرّك مع أيهم و ليث");
+    expect(manifest.short_name).toBe("ToonDraw");
     expect(manifest.dir).toBe("rtl");
     expect(manifest.lang).toBe("ar");
     expect(manifest.display).toBe("standalone");

@@ -1,7 +1,7 @@
 # 🚀 Kit de Lancement & Déploiement en Production
-## ارسم وحرّك مع أيهم و ليث / Aventure Animée avec Ayham & Laith
+## ToonDraw 🎨 ارسم وحرّك مع أيهم و ليث
 
-Bienvenue dans le guide de lancement officiel du projet ! Ce kit fournit tous les éléments clés pour déployer, partager, configurer et diffuser l'application auprès des familles, enfants, écoles et communautés.
+Bienvenue dans le guide de lancement officiel de **ToonDraw** ! Ce kit fournit tous les éléments clés pour déployer, partager, configurer et diffuser l'application auprès des familles, enfants, écoles et communautés.
 
 ---
 
@@ -52,9 +52,9 @@ L'application est une **Progressive Web App (PWA)** complète. Elle peut être i
 ```text
 🎨✨ مفاجأة سحرية للأطفال! 🦸‍♂️🚀
 يسرّنا إطلاق استوديو الرسم التفاعلي الجديد:
-«ارسم وحرّك مع أيهم و ليث»! 👑⚡
+«ToonDraw - ارسم وحرّك مع أيهم و ليث»! 👑⚡
 
-🌟 ماذا يقدّم التطبيق لأطفالكم؟
+🌟 ماذا يقدّم ToonDraw لأطفالكم؟
 🖌️ فرش رسم وألوان سحرية وبخاخ وبوتقة تلوين ذكية
 ✨ ملصقات كرتونية حية ترمش وتتحرك
 🎭 وضع «أعطِ الحياة» لتحريك الرسومات في الفضاء
@@ -76,7 +76,7 @@ https://<votre-nom-utilisateur>.github.io/Aventure-Anim-e-avec-Ayham-Laith/
 ```text
 🎨✨ Grande nouvelle pour les enfants et les familles ! 🦸‍♂️🚀
 Découvrez le nouveau studio de dessin interactif :
-« Aventure Animée avec Ayham & Laith » ! 👑⚡
+« ToonDraw (ارسم وحرّك مع أيهم و ليث) » ! 👑⚡
 
 🌟 Au programme pour les artistes en herbe :
 🖌️ Pinceaux magiques, spray multicolore et remplissage intelligent
