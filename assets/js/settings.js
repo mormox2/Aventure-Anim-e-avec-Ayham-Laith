@@ -94,14 +94,14 @@ import { speakText } from "./voice-duo.js";
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(url).then(() => {
                         synth.playTada();
-                        showEncouragement("📋 تم نسخ الرابط بنجاح! شاركه مع أحبائك 🚀");
+                        showEncouragement(t("modal.qr.link_copied", "📋 تم نسخ الرابط بنجاح! شاركه مع أحبائك 🚀"));
                     }).catch(() => {
                         synth.playPop();
-                        showEncouragement("👉 الرابط: https://toondraw.vercel.app");
+                        showEncouragement(`👉 ${url}`);
                     });
                 } else {
                     synth.playPop();
-                    showEncouragement("👉 الرابط: https://toondraw.vercel.app");
+                    showEncouragement(`👉 ${url}`);
                 }
             }
 
@@ -117,19 +117,20 @@ import { speakText } from "./voice-duo.js";
                     bubble = document.getElementById("cat-bubble");
                 }
 
-                // Show bubble message
-                bubble.classList.remove("opacity-0");
-                setTimeout(() => {
-                    bubble.classList.add("opacity-0");
-                }, 2500);
+                if (bubble) {
+                    // Show bubble message
+                    bubble.classList.remove("opacity-0");
+                    setTimeout(() => {
+                        bubble.classList.add("opacity-0");
+                    }, 2500);
+                }
 
                 showEncouragement(
                     animal === "bunny"
-                        ? "الأرنب اللطيف يحييكما يا أيهم و ليث! 🐰🌈"
-                        : "القطة الوديعة تحبكما يا أيهم و ليث! 🐱💖",
+                        ? t("animal.bunny", "Salut Ayham & Laith ! 🐰✨")
+                        : t("animal.cat", "Miaou ! Superbe dessin ! 🐱💖")
                 );
             }
-
 
             // Fullscreen API toggle
             function toggleFullscreen() {
@@ -141,7 +142,7 @@ import { speakText } from "./voice-duo.js";
                     } else if (docEl.webkitRequestFullscreen) {
                         docEl.webkitRequestFullscreen();
                     }
-                    showEncouragement("⛶ تم تفعيل وضع ملء الشاشة!");
+                    showEncouragement(t("feedback.fullscreen", "⛶ Mode plein écran activé !"));
                 } else {
                     if (document.exitFullscreen) {
                         document.exitFullscreen().catch(() => {});

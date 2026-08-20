@@ -96,11 +96,21 @@ const translations = {
     "animal.cat": "مياو! رسمة أيهم و ليث مذهلة! 🐱💖",
     "sidebar.tip": "👦 أيهم و ليث 👦 جرّبوا أبطال خارقون! 🎨",
 
-    // Clear Modal
+    // Clear / Reset Modal
     "modal.clear.title": "مسح اللوحة بالكامل؟",
     "modal.clear.description": "هل أنت متأكد من مسح كل ما رسمته والبدء من جديد؟ 🌟 سيتم حفظ نسخة تلقائياً في المعرض ويمكنك التراجع في أي وقت!",
     "modal.clear.btn_confirm": "نعم، امسح وابدأ من جديد!",
     "modal.clear.btn_cancel": "لا، احتفظ برسمتي!",
+    "modal.reset.confirm": "هل تريد مسح اللوحة والملصقات وإعادة ضبط كل شيء؟ 🥳",
+    "modal.reset.success": "تم تصفير لوحتك السحرية بنجاح! جاهز للإبداع؟ 🚀",
+    "duo.active_toast": "👦🤝👦 وضع الرسام الثنائي نشط! أيهم على اليسار وليث على اليمين!",
+    "duo.active_voice": "رائع! وضع الرسام الثنائي نشط، أيهم وليث يرسمان معاً!",
+    "duo.deactivated_toast": "تم إلغاء وضع الرسام الثنائي! 🛑",
+    "feedback.fullscreen": "⛶ تم تفعيل وضع ملء الشاشة!",
+    "modal.qr.link_copied": "📋 تم نسخ الرابط بنجاح! شاركه مع أحبائك 🚀",
+    "sticker.delete": "حذف الملصق",
+    "sticker.rotate": "تدوير الملصق",
+    "sticker.resize": "تكبير أو تصغير الملصق",
 
     // Stamps Modal
     "modal.stamps.title": "الطوابع السحرية ⭐✨",
@@ -275,11 +285,21 @@ const translations = {
     "animal.cat": "Miaou ! Superbe dessin ! 🐱💖",
     "sidebar.tip": "👦 Ayham & Laith 👦 Essayez les coloriages ! 🎨",
 
-    // Clear Modal
+    // Clear / Reset Modal
     "modal.clear.title": "Effacer toute la toile ?",
     "modal.clear.description": "Êtes-vous sûr de vouloir tout effacer et recommencer à zéro ? 🌟 Une sauvegarde automatique sera conservée dans la galerie !",
     "modal.clear.btn_confirm": "Oui, nouvelle toile !",
     "modal.clear.btn_cancel": "Non, garder mon dessin !",
+    "modal.reset.confirm": "Voulez-vous effacer la toile, les stickers et tout réinitialiser ? 🥳",
+    "modal.reset.success": "Votre toile magique a été réinitialisée ! Prêt pour un nouveau chef-d'œuvre ? 🚀",
+    "duo.active_toast": "👦🤝👦 Mode Duo activé ! Ayham à gauche et Laith à droite !",
+    "duo.active_voice": "Super ! Le mode duo est activé, dessinons ensemble !",
+    "duo.deactivated_toast": "Mode Duo désactivé ! 🛑",
+    "feedback.fullscreen": "⛶ Mode plein écran activé !",
+    "modal.qr.link_copied": "📋 Lien copié avec succès ! Partagez-le avec vos proches 🚀",
+    "sticker.delete": "Supprimer le sticker",
+    "sticker.rotate": "Faire pivoter le sticker",
+    "sticker.resize": "Agrandir ou rétrécir le sticker",
 
     // Stamps Modal
     "modal.stamps.title": "Tampons Magiques ⭐✨",
@@ -454,11 +474,21 @@ const translations = {
     "animal.cat": "Meow! Awesome drawing! 🐱💖",
     "sidebar.tip": "👦 Ayham & Laith 👦 Try the coloring book! 🎨",
 
-    // Clear Modal
+    // Clear / Reset Modal
     "modal.clear.title": "Clear the whole canvas?",
     "modal.clear.description": "Are you sure you want to clear your drawing and start fresh? 🌟 A copy will automatically be saved to your gallery!",
     "modal.clear.btn_confirm": "Yes, clear and restart!",
     "modal.clear.btn_cancel": "No, keep my drawing!",
+    "modal.reset.confirm": "Do you want to clear the canvas, stickers and restart everything? 🥳",
+    "modal.reset.success": "Your magic canvas has been reset! Ready to create? 🚀",
+    "duo.active_toast": "👦🤝👦 Duo Painter Mode active! Ayham on left and Laith on right!",
+    "duo.active_voice": "Awesome! Duo painter mode is active, let's draw together!",
+    "duo.deactivated_toast": "Duo Painter Mode deactivated! 🛑",
+    "feedback.fullscreen": "⛶ Fullscreen mode activated!",
+    "modal.qr.link_copied": "📋 App link copied successfully! Share it with your loved ones 🚀",
+    "sticker.delete": "Delete sticker",
+    "sticker.rotate": "Rotate sticker",
+    "sticker.resize": "Resize sticker",
 
     // Stamps Modal
     "modal.stamps.title": "Magic Stamps ⭐✨",

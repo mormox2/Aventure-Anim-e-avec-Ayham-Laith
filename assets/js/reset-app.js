@@ -5,10 +5,11 @@ import { clearHistory, saveState } from "./history.js";
 import { renderColors } from "./canvas-tools.js";
 import { synth } from "./synth.js";
 import { state } from "./state.js";
+import { t } from "./i18n.js";
 
             function resetApp() {
                 synth.playTada();
-                if (confirm("هل تريد مسح اللوحة والملصقات وإعادة ضبط كل شيء؟ 🥳")) {
+                if (confirm(t("modal.reset.confirm", "Voulez-vous effacer la toile, les stickers et tout réinitialiser ? 🥳"))) {
                     state.ctx.save();
                     state.ctx.setTransform(1, 0, 0, 1, 0, 0);
                     state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
@@ -48,7 +49,7 @@ import { state } from "./state.js";
 
                     renderColors();
                     triggerConfetti();
-                    showEncouragement("تم تصفير لوحتك السحرية بنجاح! جاهز للإبداع؟ 🚀");
+                    showEncouragement(t("modal.reset.success", "Votre toile magique a été réinitialisée ! Prêt pour un nouveau chef-d'œuvre ? 🚀"));
                 }
             }
 
