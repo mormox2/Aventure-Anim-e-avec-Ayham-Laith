@@ -1022,23 +1022,25 @@
 
                 <h3
                     id="hero-modal-title"
-                    class="text-3xl md:text-4xl font-extrabold text-center mb-2 bg-gradient-to-r from-red-500 via-green-500 to-blue-500 bg-clip-text text-transparent"
+                    class="text-2xl md:text-4xl font-black text-center mb-1.5 bg-gradient-to-r from-pink-500 via-purple-500 to-sky-500 bg-clip-text text-transparent flex items-center justify-center gap-2"
                 >
-                    🦸 اختر رسمة ولوّنها! 🦕
+                    <span>🎨</span>
+                    <span>اختر رسمة ولوّنها!</span>
+                    <span>✨</span>
                 </h3>
                 <p
                     id="hero-modal-description"
-                    class="text-center text-sm font-bold text-slate-600 mb-4 bg-white/70 py-2 px-4 rounded-full inline-block w-full"
+                    class="text-center text-xs md:text-sm font-extrabold text-slate-700 mb-3 bg-white/80 py-1.5 px-4 rounded-full border border-slate-200 shadow-xs inline-block w-full"
                 >
-                    اختر بطلاً خارقاً أو ديناصوراً وابدأ بتلوينه والرسم فوقه! 🎨✨
+                    اختر بطلاً، ديناصوراً أو كائناً سحرياً وابدأ بتلوينه بألوانك المفضلة! 🌈
                 </p>
 
                 <!-- Category Tabs -->
-                <div class="flex gap-2 mb-4 bg-white/70 p-1.5 rounded-2xl border-2 border-slate-300">
+                <div class="flex flex-wrap sm:flex-nowrap gap-1.5 md:gap-2 mb-4 bg-white/80 p-1.5 rounded-2xl border-2 border-slate-300 shadow-xs">
                     <button
                         data-ui-click="filter-templates" data-ui-category="all"
                         id="tmpl-tab-all"
-                        class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-red-400 to-blue-400 text-white font-extrabold text-sm flex items-center justify-center gap-1.5 transition-all"
+                        class="flex-1 py-2 px-2.5 rounded-xl bg-gradient-to-r from-pink-500 via-purple-500 to-sky-500 text-white font-black text-xs md:text-sm flex items-center justify-center gap-1 shadow-cartoon-sm border-2 border-slate-800 transition-all"
                     >
                         <span>🌟</span>
                         الكل
@@ -1046,18 +1048,26 @@
                     <button
                         data-ui-click="filter-templates" data-ui-category="hero"
                         id="tmpl-tab-hero"
-                        class="flex-1 py-2 px-3 rounded-xl text-slate-700 font-extrabold text-sm flex items-center justify-center gap-1.5 hover:bg-white/60 transition-all"
+                        class="flex-1 py-2 px-2 md:px-3 rounded-xl text-slate-700 font-extrabold text-xs md:text-sm flex items-center justify-center gap-1 hover:bg-white/80 transition-all border-2 border-transparent"
                     >
                         <span>🦸</span>
-                        أبطال خارقون
+                        أبطال
                     </button>
                     <button
                         data-ui-click="filter-templates" data-ui-category="dino"
                         id="tmpl-tab-dino"
-                        class="flex-1 py-2 px-3 rounded-xl text-slate-700 font-extrabold text-sm flex items-center justify-center gap-1.5 hover:bg-white/60 transition-all"
+                        class="flex-1 py-2 px-2 md:px-3 rounded-xl text-slate-700 font-extrabold text-xs md:text-sm flex items-center justify-center gap-1 hover:bg-white/80 transition-all border-2 border-transparent"
                     >
                         <span>🦕</span>
                         ديناصورات
+                    </button>
+                    <button
+                        data-ui-click="filter-templates" data-ui-category="fantasy"
+                        id="tmpl-tab-fantasy"
+                        class="flex-1 py-2 px-2 md:px-3 rounded-xl text-slate-700 font-extrabold text-xs md:text-sm flex items-center justify-center gap-1 hover:bg-white/80 transition-all border-2 border-transparent"
+                    >
+                        <span>🔮</span>
+                        سحر وخيال
                     </button>
                 </div>
 

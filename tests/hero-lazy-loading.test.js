@@ -17,8 +17,18 @@ describe("galerie héros lazy", () => {
   it("rend uniquement les héros de la catégorie demandée", async () => {
     await renderHeroesGallery("dino");
 
-    const cards = [...document.querySelectorAll("#heroes-gallery button")];
-    expect(cards.length).toBeGreaterThan(0);
-    expect(cards.every((card) => card.dataset.heroCategory === "dino")).toBe(true);
+    const dinoCards = [...document.querySelectorAll("#heroes-gallery button")];
+    expect(dinoCards.length).toBeGreaterThan(0);
+    expect(dinoCards.every((card) => card.dataset.heroCategory === "dino")).toBe(true);
+
+    await renderHeroesGallery("fantasy");
+    const fantasyCards = [...document.querySelectorAll("#heroes-gallery button")];
+    expect(fantasyCards.length).toBeGreaterThan(0);
+    expect(fantasyCards.every((card) => card.dataset.heroCategory === "fantasy")).toBe(true);
+
+    await renderHeroesGallery("hero");
+    const heroCards = [...document.querySelectorAll("#heroes-gallery button")];
+    expect(heroCards.length).toBeGreaterThan(0);
+    expect(heroCards.every((card) => card.dataset.heroCategory === "hero")).toBe(true);
   });
 });
