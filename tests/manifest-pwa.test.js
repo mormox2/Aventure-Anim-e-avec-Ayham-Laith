@@ -36,4 +36,16 @@ describe("PWA Manifest and Offline Configuration", () => {
   it("exports a defined MAX_HISTORY_SNAPSHOTS bound", () => {
     expect(MAX_HISTORY_SNAPSHOTS).toBe(25);
   });
+
+  it("verifies index.html has complete SEO, OpenGraph and Apple touch icons", () => {
+    const indexPath = resolve("index.html");
+    expect(existsSync(indexPath)).toBe(true);
+    const html = readFileSync(indexPath, "utf-8");
+    expect(html).toContain('name="description"');
+    expect(html).toContain('property="og:title"');
+    expect(html).toContain('property="og:description"');
+    expect(html).toContain('name="twitter:card"');
+    expect(html).toContain('rel="apple-touch-icon"');
+  });
 });
+

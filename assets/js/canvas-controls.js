@@ -1,8 +1,8 @@
-import { colors } from "./data.js";
+import { colors, stickersData } from "./data.js";
 import { selectColor, updateCanvasCursor } from "./canvas-tools.js";
 import { showEncouragement, triggerConfetti } from "./feedback.js";
 import { synth } from "./synth.js";
-import { deselectAllStickers } from "./stickers.js";
+import { deselectAllStickers, addStickerToCanvas } from "./stickers.js";
 import { state } from "./state.js";
 
             // #7: Spray tool selector
@@ -105,25 +105,21 @@ import { state } from "./state.js";
                 if (!container) return;
                 container.replaceChildren();
 
-                import("./data.js").then(({ stickersData }) => {
-                    import("./stickers.js").then(({ addStickerToCanvas }) => {
-                        const filtered = stickersData.filter((st) => category === "all" || st.category === category);
-                        filtered.forEach((sticker) => {
-                            const item = document.createElement("button");
-                            item.type = "button";
-                            item.setAttribute("aria-label", `إضافة ${sticker.name}`);
-                            item.title = sticker.name;
-                            item.className =
-                                "bg-white border-2 border-slate-800 hover:border-pink-500 hover:bg-pink-50 rounded-2xl p-2 flex items-center justify-center cursor-pointer transition-all hover:scale-105 active:scale-95 shadow-cartoon-sm min-h-[56px]";
-                            item.innerHTML = sticker.svg;
-                            item.addEventListener("click", () => {
-                                addStickerToCanvas(sticker.id);
-                                showEncouragement(`✨ تمت إضافة ${sticker.name}! يمكنك تحريكه وتكبيره بيدك!`);
-                                toggleMobileDrawer();
-                            });
-                            container.appendChild(item);
-                        });
+                const filtered = stickersData.filter((st) => category === "all" || st.category === category);
+                filtered.forEach((sticker) => {
+                    const item = document.createElement("button");
+                    item.type = "button";
+                    item.setAttribute("aria-label", `إضافة ${sticker.name}`);
+                    item.title = sticker.name;
+                    item.className =
+                        "bg-white border-2 border-slate-800 hover:border-pink-500 hover:bg-pink-50 rounded-2xl p-2 flex items-center justify-center cursor-pointer transition-all hover:scale-105 active:scale-95 shadow-cartoon-sm min-h-[56px]";
+                    item.innerHTML = sticker.svg;
+                    item.addEventListener("click", () => {
+                        addStickerToCanvas(sticker.id);
+                        showEncouragement(`✨ تمت إضافة ${sticker.name}! يمكنك تحريكه وتكبيره بيدك!`);
+                        toggleMobileDrawer();
                     });
+                    container.appendChild(item);
                 });
             }
 

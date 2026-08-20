@@ -17,6 +17,7 @@
 ## 📌 Sommaire / الفهرس
 
 * [🚀 Démo Live & Déploiement / التجربة الحية والتشغيل](#-démo-live--déploiement--التجربة-الحية-والتشغيل)
+* [📦 Kit de Lancement & Production / دليل الإطلاق والنشر](LAUNCH_KIT.md)
 * [🌟 Présentation de l'Univers / نبذة عن عالم التطبيق](#-présentation-de-lunivers--نبذة-عن-عالم-التطبيق)
 * [✨ Fonctionnalités Magiques / الميزات السحرية الرائعة](#-fonctionnalités-magiques--الميزات-السحرية-الرائعة)
 * [🛠️ Secrets Techniques / الأسرار التقنية المتقدمة](#️-secrets-techniques--الأسرار-التقنية-المتقدمة)
