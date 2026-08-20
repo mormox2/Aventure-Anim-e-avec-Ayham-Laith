@@ -39,43 +39,12 @@ import { state } from "./state.js";
 
             // #8: Custom color picker handler
             function selectCustomColor(hexColor) {
-                synth.playPop();
-                state.isEraser = false;
-                state.isSprayMode = false;
-                state.isFillMode = false;
-                state.isRainbowBrush = false;
-                state.activeStamp = null;
-                state.activeColor = hexColor;
+                selectColor(hexColor, null);
 
-                // reset spray and fill button visuals
-                const sprayBtn = document.getElementById("btn-spray");
-                if (sprayBtn) { sprayBtn.classList.remove("bg-yellow-400","scale-105"); sprayBtn.classList.add("bg-emerald-300"); }
-                const fillBtn = document.getElementById("btn-fill");
-                if (fillBtn) { fillBtn.classList.remove("bg-yellow-400","scale-105"); fillBtn.classList.add("bg-purple-300"); }
-                const eraserBtn = document.getElementById("btn-eraser");
-                if (eraserBtn) {
-                    eraserBtn.classList.remove("bg-yellow-400","scale-105");
-                    eraserBtn.classList.add("bg-pink-300");
-                }
-
-                // Deselect all palette buttons
-                document.querySelectorAll("#color-palette button").forEach((b) => {
-                    b.classList.remove("scale-110");
-                    const activeDot = b.querySelector(".active-dot");
-                    if (activeDot) {
-                        activeDot.classList.remove("opacity-100");
-                        activeDot.classList.add("opacity-0");
-                    }
-                });
-
-                // Update brush preview
-                const preview = document.getElementById("brush-preview");
-                if (preview) preview.style.background = hexColor;
                 // Sync picker in case called programmatically
                 const picker = document.getElementById("custom-color-picker");
                 if (picker) picker.value = hexColor;
 
-                updateCanvasCursor();
                 showEncouragement("🎨 تم اختيار لون خاص بك!");
             }
 

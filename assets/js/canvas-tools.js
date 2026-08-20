@@ -78,9 +78,13 @@ function parseColorToRgb(colorStr) {
   return { r: 255, g: 77, b: 109, a: 255 };
 }
 
+            let activeColorButton = null;
+
             function renderColors() {
                 const palette = document.getElementById("color-palette");
+                if (!palette) return;
                 palette.replaceChildren();
+                activeColorButton = null;
 
                 colors.forEach((color) => {
                     const btn = document.createElement("button");
@@ -88,12 +92,12 @@ function parseColorToRgb(colorStr) {
                     btn.title = color.name;
                     btn.setAttribute("aria-label", `اختيار اللون ${color.name}`);
                     btn.addEventListener("click", () => selectColor(color.val, btn));
-                    btn.className = `w-9 h-9 lg:w-10 lg:h-10 rounded-full border-3 border-slate-800 shadow-cartoon-sm hover:scale-110 active:scale-95 bubble-btn flex items-center justify-center relative overflow-hidden transition-all ${color.bgClass}`;
+                    btn.className = `w-9 h-9 lg:w-10 lg:h-10 rounded-full border-3 border-slate-800 shadow-cartoon-sm hover:scale-110 active:scale-95 bubble-btn flex items-center justify-center relative overflow-hidden transition-transform ${color.bgClass}`;
 
-                    // Active indicator dot
+                    // Active indicator dot (pointer-events-none so click target is cleanly the button)
                     const dot = document.createElement("div");
                     dot.className =
-                        "w-2.5 h-2.5 bg-white rounded-full border border-slate-800 opacity-0 transition-opacity active-dot";
+                        "w-2.5 h-2.5 bg-white rounded-full border border-slate-800 opacity-0 active-dot pointer-events-none transition-opacity";
                     btn.appendChild(dot);
 
                     // Set default active color button
@@ -101,6 +105,7 @@ function parseColorToRgb(colorStr) {
                         dot.classList.remove("opacity-0");
                         dot.classList.add("opacity-100");
                         btn.classList.add("scale-110");
+                        activeColorButton = btn;
                     }
 
                     palette.appendChild(btn);
@@ -139,40 +144,53 @@ function updateCanvasCursor() {
                     state.activeColor = colorValue;
                 }
 
-                // Reset eraser style
+                // Reset tool buttons if active
                 const eraserBtn = document.getElementById("btn-eraser");
-                if (eraserBtn) {
+                if (eraserBtn && eraserBtn.classList.contains("bg-yellow-400")) {
                     eraserBtn.classList.remove("bg-yellow-400", "scale-105");
                     eraserBtn.classList.add("bg-pink-300");
                 }
                 const sprayBtn = document.getElementById("btn-spray");
-                if (sprayBtn) {
+                if (sprayBtn && sprayBtn.classList.contains("bg-yellow-400")) {
                     sprayBtn.classList.remove("bg-yellow-400", "scale-105");
                     sprayBtn.classList.add("bg-emerald-300");
                 }
                 const fillBtn = document.getElementById("btn-fill");
-                if (fillBtn) {
+                if (fillBtn && fillBtn.classList.contains("bg-yellow-400")) {
                     fillBtn.classList.remove("bg-yellow-400", "scale-105");
                     fillBtn.classList.add("bg-purple-300");
                 }
 
-                // Update active indicators
-                document.querySelectorAll("#color-palette button").forEach((b) => {
-                    b.classList.remove("scale-110");
-                    const activeDot = b.querySelector(".active-dot");
-                    if (activeDot) {
-                        activeDot.classList.remove("opacity-100");
-                        activeDot.classList.add("opacity-0");
+                // Fast O(1) active color button toggle
+                if (activeColorButton && activeColorButton !== buttonEl) {
+                    activeColorButton.classList.remove("scale-110");
+                    const oldDot = activeColorButton.querySelector(".active-dot");
+                    if (oldDot) {
+                        oldDot.classList.remove("opacity-100");
+                        oldDot.classList.add("opacity-0");
                     }
-                });
+                }
 
                 if (buttonEl) {
                     buttonEl.classList.add("scale-110");
-                    const activeDot = buttonEl.querySelector(".active-dot");
-                    if (activeDot) {
-                        activeDot.classList.remove("opacity-0");
-                        activeDot.classList.add("opacity-100");
+                    const newDot = buttonEl.querySelector(".active-dot");
+                    if (newDot) {
+                        newDot.classList.remove("opacity-0");
+                        newDot.classList.add("opacity-100");
                     }
+                    activeColorButton = buttonEl;
+                } else {
+                    // If buttonEl not provided, find and activate matching button
+                    const allBtns = document.querySelectorAll("#color-palette button");
+                    allBtns.forEach((b) => {
+                        b.classList.remove("scale-110");
+                        const d = b.querySelector(".active-dot");
+                        if (d) {
+                            d.classList.remove("opacity-100");
+                            d.classList.add("opacity-0");
+                        }
+                    });
+                    activeColorButton = null;
                 }
 
                 // Update brush preview
@@ -209,17 +227,18 @@ function updateCanvasCursor() {
                     eraserBtn.classList.add("bg-yellow-400", "scale-105");
                 }
 
-                // De-select colors from palette
-                document.querySelectorAll("#color-palette button").forEach((b) => {
-                    b.classList.remove("scale-110");
-                    const activeDot = b.querySelector(".active-dot");
-                    if (activeDot) {
-                        activeDot.classList.remove("opacity-100");
-                        activeDot.classList.add("opacity-0");
+                // Fast O(1) de-selection of active color button
+                if (activeColorButton) {
+                    activeColorButton.classList.remove("scale-110");
+                    const dot = activeColorButton.querySelector(".active-dot");
+                    if (dot) {
+                        dot.classList.remove("opacity-100");
+                        dot.classList.add("opacity-0");
                     }
-                });
+                    activeColorButton = null;
+                }
 
-                // Update brush preview to checkered pattern or white representing eraser
+                // Update brush preview to white representing eraser
                 const preview = document.getElementById("brush-preview");
                 if (preview) preview.style.background = "#FFFFFF";
 
