@@ -19,6 +19,9 @@ describe("Internationalisation (i18n) - Arabe, Français, Anglais", () => {
     expect(t("app.title")).toBe("ارسم وحرّك!");
     expect(t("btn.gallery")).toBe("معرض");
     expect(t("tools.eraser")).toBe("الممحاة");
+    expect(t("hero.ayham")).toBe("أيهم");
+    expect(t("tools.custom_color")).toBe("🎨 لون مخصص:");
+    expect(t("tools.bg_color")).toBe("🎨 خلفية اللوحة:");
   });
 
   it("change la langue en français et ajuste la direction en LTR", () => {
@@ -30,6 +33,9 @@ describe("Internationalisation (i18n) - Arabe, Français, Anglais", () => {
     expect(t("app.title")).toBe("ToonDraw !");
     expect(t("btn.gallery")).toBe("Galerie");
     expect(t("tools.eraser")).toBe("Gomme");
+    expect(t("hero.ayham")).toBe("Ayham");
+    expect(t("tools.custom_color")).toBe("🎨 Couleur personnalisée :");
+    expect(t("tools.bg_color")).toBe("🎨 Couleur du fond :");
     expect(t("anim.dance")).toBe("Danser");
   });
 
@@ -42,6 +48,9 @@ describe("Internationalisation (i18n) - Arabe, Français, Anglais", () => {
     expect(t("app.title")).toBe("ToonDraw!");
     expect(t("btn.gallery")).toBe("Gallery");
     expect(t("tools.eraser")).toBe("Eraser");
+    expect(t("hero.laith")).toBe("Laith");
+    expect(t("tools.custom_color")).toBe("🎨 Custom color:");
+    expect(t("tools.bg_color")).toBe("🎨 Canvas background:");
     expect(t("anim.jump")).toBe("Jump");
   });
 
@@ -52,6 +61,7 @@ describe("Internationalisation (i18n) - Arabe, Français, Anglais", () => {
         <span data-i18n="action.save">حفظ</span>
       </button>
       <input id="friend-input" data-i18n-placeholder="modal.friends.placeholder" placeholder="اكتب..." />
+      <span id="custom-color-label" data-i18n="tools.custom_color">لون مخصص</span>
       <span id="lang-current-label">العربية</span>
     `;
 
@@ -62,6 +72,7 @@ describe("Internationalisation (i18n) - Arabe, Français, Anglais", () => {
     expect(document.getElementById("save-btn").getAttribute("title")).toBe("Sauvegarder");
     expect(document.querySelector("#save-btn span").textContent).toBe("Sauvegarder");
     expect(document.getElementById("friend-input").getAttribute("placeholder")).toBe("Nom de l'ami...");
+    expect(document.getElementById("custom-color-label").textContent).toBe("🎨 Couleur personnalisée :");
     expect(document.getElementById("lang-current-label").textContent).toBe("Français");
   });
 

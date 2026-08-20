@@ -11,6 +11,11 @@ const translations = {
     // Header & Global
     "app.title": "ارسم وحرّك!",
     "app.subtitle": "استوديو الرسوم المتحركة للأطفال",
+    "hero.ayham": "أيهم",
+    "hero.laith": "ليث",
+    "hero.ayham.title": "اضغط لتحية أيهم! ⚡",
+    "hero.laith.title": "اضغط لتحية ليث! 🦁",
+    "app.draw_badge": "رسم",
     "btn.music": "موسيقى",
     "btn.theme.day": "النهار",
     "btn.theme.night": "الليل",
@@ -26,7 +31,8 @@ const translations = {
     // Left Toolbar - Drawing Tools
     "tools.title": "أدوات الرسم 🖌️",
     "tools.choose_color": "اختر لونك السحري:",
-    "tools.custom_color": "لون مخصص:",
+    "tools.custom_color": "🎨 لون مخصص:",
+    "tools.custom_color_hint": "اضغط لاختيار أي لون تريده!",
     "tools.brush_size": "حجم الفرشاة:",
     "tools.eraser": "الممحاة",
     "tools.spray": "بخاخ",
@@ -35,9 +41,21 @@ const translations = {
     "tools.brush_mode.calligraphy": "خط عربي",
     "tools.brush_mode.star": "نجوم",
     "tools.brush_mode.shape": "أشكال",
+    "tools.choose_shape": "اختر الشكل:",
+    "shape.circle": "دائرة",
+    "shape.rect": "مستطيل",
+    "shape.line": "خط مستقيم",
+    "shape.heart": "قلب",
     "tools.stamps": "طوابع سحرية",
     "tools.opacity": "شفافية",
-    "tools.bg_color": "خلفية",
+    "tools.bg_color": "🎨 خلفية اللوحة:",
+
+    // Backgrounds
+    "bg.white": "أبيض",
+    "bg.sky": "سماء زرقاء",
+    "bg.grass": "عشب أخضر",
+    "bg.sunset": "غروب شمس",
+    "bg.night": "ليلي",
 
     // Animations Bar
     "anim.dance": "ارقص",
@@ -68,6 +86,15 @@ const translations = {
     "action.share": "مشاركة",
     "action.download": "تحميل",
     "action.reset": "ابدأ من جديد",
+
+    // Split mode
+    "split.ayham": "👑 قسم أيهم",
+    "split.laith": "⚡ قسم ليث",
+
+    // Animals & Feedback
+    "animal.bunny": "أهلاً أيهم و ليث! 🐰✨",
+    "animal.cat": "مياو! رسمة أيهم و ليث مذهلة! 🐱💖",
+    "sidebar.tip": "👦 أيهم و ليث 👦 جرّبوا أبطال خارقون! 🎨",
 
     // Clear Modal
     "modal.clear.title": "مسح اللوحة بالكامل؟",
@@ -146,6 +173,11 @@ const translations = {
     // Header & Global
     "app.title": "ToonDraw !",
     "app.subtitle": "Studio de dessin animé pour enfants",
+    "hero.ayham": "Ayham",
+    "hero.laith": "Laith",
+    "hero.ayham.title": "Cliquez pour saluer Ayham ! ⚡",
+    "hero.laith.title": "Cliquez pour saluer Laith ! 🦁",
+    "app.draw_badge": "Dessin",
     "btn.music": "Musique",
     "btn.theme.day": "Jour",
     "btn.theme.night": "Nuit",
@@ -161,18 +193,31 @@ const translations = {
     // Left Toolbar - Drawing Tools
     "tools.title": "Outils de dessin 🖌️",
     "tools.choose_color": "Choisissez votre couleur magique :",
-    "tools.custom_color": "Couleur personnalisée :",
+    "tools.custom_color": "🎨 Couleur personnalisée :",
+    "tools.custom_color_hint": "Touchez pour choisir votre couleur !",
     "tools.brush_size": "Taille du pinceau :",
     "tools.eraser": "Gomme",
     "tools.spray": "Spray",
     "tools.paint_bucket": "Peinture magique",
     "tools.magic_mirror": "Miroir magique",
-    "tools.brush_mode.calligraphy": "Calligraphie",
+    "tools.brush_mode.calligraphy": "Plume",
     "tools.brush_mode.star": "Étoiles",
     "tools.brush_mode.shape": "Formes",
+    "tools.choose_shape": "Choisir une forme :",
+    "shape.circle": "Cercle",
+    "shape.rect": "Rectangle",
+    "shape.line": "Ligne",
+    "shape.heart": "Cœur",
     "tools.stamps": "Tampons magiques",
     "tools.opacity": "Transparence",
-    "tools.bg_color": "Fond",
+    "tools.bg_color": "🎨 Couleur du fond :",
+
+    // Backgrounds
+    "bg.white": "Blanc",
+    "bg.sky": "Ciel bleu",
+    "bg.grass": "Herbe verte",
+    "bg.sunset": "Coucher de soleil",
+    "bg.night": "Nuit étoilée",
 
     // Animations Bar
     "anim.dance": "Danser",
@@ -203,6 +248,15 @@ const translations = {
     "action.share": "Partager",
     "action.download": "Télécharger",
     "action.reset": "Recommencer",
+
+    // Split mode
+    "split.ayham": "👑 Côté Ayham",
+    "split.laith": "⚡ Côté Laith",
+
+    // Animals & Feedback
+    "animal.bunny": "Salut Ayham & Laith ! 🐰✨",
+    "animal.cat": "Miaou ! Superbe dessin ! 🐱💖",
+    "sidebar.tip": "👦 Ayham & Laith 👦 Essayez les coloriages ! 🎨",
 
     // Clear Modal
     "modal.clear.title": "Effacer toute la toile ?",
@@ -281,6 +335,11 @@ const translations = {
     // Header & Global
     "app.title": "ToonDraw!",
     "app.subtitle": "Interactive Cartoon Studio for Kids",
+    "hero.ayham": "Ayham",
+    "hero.laith": "Laith",
+    "hero.ayham.title": "Click to cheer Ayham! ⚡",
+    "hero.laith.title": "Click to cheer Laith! 🦁",
+    "app.draw_badge": "Draw",
     "btn.music": "Music",
     "btn.theme.day": "Day",
     "btn.theme.night": "Night",
@@ -296,18 +355,31 @@ const translations = {
     // Left Toolbar - Drawing Tools
     "tools.title": "Drawing Tools 🖌️",
     "tools.choose_color": "Pick your magic color:",
-    "tools.custom_color": "Custom color:",
+    "tools.custom_color": "🎨 Custom color:",
+    "tools.custom_color_hint": "Tap to pick any color you like!",
     "tools.brush_size": "Brush Size:",
     "tools.eraser": "Eraser",
     "tools.spray": "Spray",
     "tools.paint_bucket": "Magic Fill",
     "tools.magic_mirror": "Magic Mirror",
-    "tools.brush_mode.calligraphy": "Calligraphy",
+    "tools.brush_mode.calligraphy": "Pen",
     "tools.brush_mode.star": "Stars",
     "tools.brush_mode.shape": "Shapes",
+    "tools.choose_shape": "Choose a shape:",
+    "shape.circle": "Circle",
+    "shape.rect": "Rectangle",
+    "shape.line": "Line",
+    "shape.heart": "Heart",
     "tools.stamps": "Magic Stamps",
     "tools.opacity": "Opacity",
-    "tools.bg_color": "Canvas Bg",
+    "tools.bg_color": "🎨 Canvas background:",
+
+    // Backgrounds
+    "bg.white": "White",
+    "bg.sky": "Blue Sky",
+    "bg.grass": "Green Grass",
+    "bg.sunset": "Sunset",
+    "bg.night": "Starry Night",
 
     // Animations Bar
     "anim.dance": "Dance",
@@ -338,6 +410,15 @@ const translations = {
     "action.share": "Share",
     "action.download": "Download",
     "action.reset": "Start Over",
+
+    // Split mode
+    "split.ayham": "👑 Ayham's side",
+    "split.laith": "⚡ Laith's side",
+
+    // Animals & Feedback
+    "animal.bunny": "Hello Ayham & Laith! 🐰✨",
+    "animal.cat": "Meow! Awesome drawing! 🐱💖",
+    "sidebar.tip": "👦 Ayham & Laith 👦 Try the coloring book! 🎨",
 
     // Clear Modal
     "modal.clear.title": "Clear the whole canvas?",

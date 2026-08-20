@@ -17,8 +17,18 @@
             }
 
             body {
-                font-family: "Changa", sans-serif;
+                font-family: "Changa", "Fredoka", sans-serif;
                 user-select: none;
                 -webkit-user-select: none;
+            }
+
+            html[dir="rtl"] body,
+            html[dir="rtl"] .font-dynamic {
+                font-family: "Changa", sans-serif;
+            }
+
+            html[dir="ltr"] body,
+            html[dir="ltr"] .font-dynamic {
+                font-family: "Fredoka", "Nunito", sans-serif;
             }
 

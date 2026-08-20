@@ -28,9 +28,10 @@
         <!-- Canvas Confetti for celebrations -->
         <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-        <!-- Google Fonts: Changa for a playful Arabic look -->
+        <!-- Google Fonts: Changa & Fredoka for playful Arabic and Latin looks -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;600;700;800;900&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
         <!-- PWA and Favicon -->
         <link rel="icon" type="image/svg+xml" href="./icon.svg" />
@@ -123,32 +124,34 @@
                 </div>
                 <div class="flex flex-col">
                     <div class="flex items-center gap-1">
-                        <h1 id="app-title" class="text-xs sm:text-sm md:text-2xl font-black tracking-wider text-slate-800 font-changa">
+                        <h1 id="app-title" data-i18n="app.title" class="text-xs sm:text-sm md:text-2xl font-black tracking-wider text-slate-800 font-dynamic">
                             ارسم وحرّك!
                         </h1>
                         <span
-                            data-ui-click="celebrate-name" data-ui-name="أيهم"
+                            data-ui-click="celebrate-name" data-ui-name="ayham"
                             class="bg-gradient-to-r from-amber-400 to-orange-400 text-slate-900 text-[10px] md:text-sm font-black px-1.5 md:px-2.5 py-0.5 rounded-full border border-slate-800 shadow-cartoon-sm hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer inline-flex items-center gap-0.5 md:gap-1 select-none"
                             title="اضغط لتحية أيهم! ⚡"
+                            data-i18n-title="hero.ayham.title"
                         >
                             <span>⚡</span>
-                            <span>أيهم</span>
+                            <span data-i18n="hero.ayham">أيهم</span>
                         </span>
                         <span data-role="separator" class="text-slate-500 font-black text-xs md:text-xl mx-0.5">&amp;</span>
                         <span
-                            data-ui-click="celebrate-name" data-ui-name="ليث"
+                            data-ui-click="celebrate-name" data-ui-name="laith"
                             class="bg-gradient-to-r from-cyan-400 to-blue-400 text-slate-900 text-[10px] md:text-sm font-black px-1.5 md:px-2.5 py-0.5 rounded-full border border-slate-800 shadow-cartoon-sm hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer inline-flex items-center gap-0.5 md:gap-1 select-none"
                             title="اضغط لتحية ليث! 🦁"
+                            data-i18n-title="hero.laith.title"
                         >
                             <span>⚡</span>
-                            <span>ليث</span>
+                            <span data-i18n="hero.laith">ليث</span>
                         </span>
                         <span
                             id="draw-badge"
                             class="hidden xl:inline-flex bg-gradient-to-r from-pink-400 to-rose-400 text-white text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full border border-slate-800 shadow-cartoon-sm items-center gap-1 select-none"
                         >
                             <span>✨</span>
-                            <span>رسم</span>
+                            <span data-i18n="app.draw_badge">رسم</span>
                         </span>
                         <!-- Dynamic Guest Badges container (Loaded from LocalStorage) -->
                         <div id="guest-badges" class="hidden 2xl:flex items-center gap-1 flex-wrap"></div>
@@ -376,18 +379,18 @@
                 </div>
                 <!-- Shape Sub-panel (hidden unless shape mode active) -->
                 <div id="shape-sub-panel" class="hidden bg-white/70 border-2 border-slate-800 rounded-xl p-1.5 shadow-cartoon-sm">
-                    <p class="text-[10px] font-bold text-slate-700 text-right mb-1.5">اختر الشكل:</p>
+                    <p data-i18n="tools.choose_shape" class="text-[10px] font-bold text-slate-700 text-right mb-1.5">اختر الشكل:</p>
                     <div class="grid grid-cols-4 gap-1">
-                        <button id="shape-circle" data-ui-click="select-shape" data-ui-shape="circle" class="bubble-btn p-1.5 bg-blue-200 rounded-lg border-2 border-slate-700 text-center text-sm transition-all hover:scale-110" title="دائرة">⭕</button>
-                        <button id="shape-rect" data-ui-click="select-shape" data-ui-shape="rect" class="bubble-btn p-1.5 bg-green-200 rounded-lg border-2 border-slate-700 text-center text-sm transition-all hover:scale-110" title="مستطيل">▭</button>
-                        <button id="shape-line" data-ui-click="select-shape" data-ui-shape="line" class="bubble-btn p-1.5 bg-orange-200 rounded-lg border-2 border-slate-700 text-center text-sm transition-all hover:scale-110" title="خط مستقيم">╱</button>
-                        <button id="shape-heart" data-ui-click="select-shape" data-ui-shape="heart" class="bubble-btn p-1.5 bg-pink-200 rounded-lg border-2 border-slate-700 text-center text-sm transition-all hover:scale-110" title="قلب">❤️</button>
+                        <button id="shape-circle" data-ui-click="select-shape" data-ui-shape="circle" class="bubble-btn p-1.5 bg-blue-200 rounded-lg border-2 border-slate-700 text-center text-sm transition-all hover:scale-110" title="دائرة" data-i18n-title="shape.circle">⭕</button>
+                        <button id="shape-rect" data-ui-click="select-shape" data-ui-shape="rect" class="bubble-btn p-1.5 bg-green-200 rounded-lg border-2 border-slate-700 text-center text-sm transition-all hover:scale-110" title="مستطيل" data-i18n-title="shape.rect">▭</button>
+                        <button id="shape-line" data-ui-click="select-shape" data-ui-shape="line" class="bubble-btn p-1.5 bg-orange-200 rounded-lg border-2 border-slate-700 text-center text-sm transition-all hover:scale-110" title="خط مستقيم" data-i18n-title="shape.line">╱</button>
+                        <button id="shape-heart" data-ui-click="select-shape" data-ui-shape="heart" class="bubble-btn p-1.5 bg-pink-200 rounded-lg border-2 border-slate-700 text-center text-sm transition-all hover:scale-110" title="قلب" data-i18n-title="shape.heart">❤️</button>
                     </div>
                 </div>
 
                 <!-- Custom color picker -->
                 <div class="bg-white/70 border-2 border-slate-800 p-1.5 lg:p-2 rounded-xl shadow-cartoon-sm block">
-                    <label class="block text-right font-bold text-slate-700 mb-1 text-[11px] lg:text-xs">🎨 لون مخصص:</label>
+                    <label data-i18n="tools.custom_color" class="block text-right font-bold text-slate-700 mb-1 text-[11px] lg:text-xs">🎨 لون مخصص:</label>
                     <div class="flex items-center gap-1.5">
                         <input
                             type="color"
@@ -396,8 +399,9 @@
                             class="w-8 h-8 lg:w-9 lg:h-9 rounded-full border-2 border-slate-800 cursor-pointer shadow-cartoon-sm shrink-0"
                             data-ui-input="custom-color"
                             title="اختر لوناً مخصصاً"
+                            data-i18n-title="tools.custom_color"
                         />
-                        <span class="text-[10px] font-bold text-slate-600 leading-tight">اضغط لاختيار أي لون تريده!</span>
+                        <span data-i18n="tools.custom_color_hint" class="text-[10px] font-bold text-slate-600 leading-tight">اضغط لاختيار أي لون تريده!</span>
                     </div>
                 </div>
 
@@ -409,7 +413,7 @@
                         class="bubble-btn py-1 px-1 bg-blue-300 hover:bg-blue-200 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1 text-center text-[10px] lg:text-xs"
                     >
                         <span class="text-sm lg:text-base">↩️</span>
-                        <span class="inline">تراجع</span>
+                        <span data-i18n="action.undo" class="inline">تراجع</span>
                     </button>
 
                     <button
@@ -418,19 +422,20 @@
                         class="bubble-btn py-1 px-1 bg-blue-300 hover:bg-blue-200 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1 text-center text-[10px] lg:text-xs"
                     >
                         <span class="text-sm lg:text-base">↪️</span>
-                        <span class="inline">إعادة</span>
+                        <span data-i18n="action.redo" class="inline">إعادة</span>
                     </button>
                 </div>
 
                 <!-- Canvas Background Selector -->
                 <div class="bg-white/70 border-2 border-slate-800 p-1.5 lg:p-2 rounded-xl shadow-cartoon-sm block">
-                    <label class="block text-right font-bold text-slate-700 mb-1 text-[11px] lg:text-xs">🎨 خلفية اللوحة:</label>
+                    <label data-i18n="tools.bg_color" class="block text-right font-bold text-slate-700 mb-1 text-[11px] lg:text-xs">🎨 خلفية اللوحة:</label>
                     <div class="grid grid-cols-5 gap-1" id="bg-selector">
                         <button
                             data-ui-click="select-canvas-bg" data-ui-bg="white"
                             class="bg-selector-btn w-full aspect-square rounded-full border-2 border-slate-800 shadow-cartoon-sm bubble-btn bg-white"
                             data-bg="white"
                             title="أبيض"
+                            data-i18n-title="bg.white"
                         >
                             ⬜
                         </button>
@@ -439,24 +444,28 @@
                             class="bg-selector-btn w-full aspect-square rounded-full border-2 border-slate-800 shadow-cartoon-sm bubble-btn bg-sky-200"
                             data-bg="sky"
                             title="سماء زرقاء"
+                            data-i18n-title="bg.sky"
                         ></button>
                         <button
                             data-ui-click="select-canvas-bg" data-ui-bg="grass"
                             class="bg-selector-btn w-full aspect-square rounded-full border-2 border-slate-800 shadow-cartoon-sm bubble-btn bg-emerald-200"
                             data-bg="grass"
                             title="عشب أخضر"
+                            data-i18n-title="bg.grass"
                         ></button>
                         <button
                             data-ui-click="select-canvas-bg" data-ui-bg="sunset"
                             class="bg-selector-btn w-full aspect-square rounded-full border-2 border-slate-800 shadow-cartoon-sm bubble-btn bg-gradient-to-br from-orange-200 to-pink-200"
                             data-bg="sunset"
                             title="غروب شمس"
+                            data-i18n-title="bg.sunset"
                         ></button>
                         <button
                             data-ui-click="select-canvas-bg" data-ui-bg="dark"
                             class="bg-selector-btn w-full aspect-square rounded-full border-2 border-slate-800 shadow-cartoon-sm bubble-btn bg-slate-700"
                             data-bg="dark"
                             title="ليلي"
+                            data-i18n-title="bg.night"
                         ></button>
                     </div>
                 </div>
@@ -464,6 +473,7 @@
                 <!-- Fun notification banner inside sidebar -->
                 <div
                     id="encouragement-sidebar"
+                    data-i18n="sidebar.tip"
                     role="status"
                     aria-live="polite"
                     aria-atomic="true"
@@ -517,13 +527,13 @@
                                 <!-- Left half (Ayham) header -->
                                 <div class="absolute top-2 left-[25%] -translate-x-1/2 pointer-events-auto">
                                     <div class="bg-amber-100 text-amber-800 border-2 border-slate-800 rounded-full px-4 py-1 font-black text-xs md:text-sm shadow-cartoon-sm flex items-center gap-1 select-none animate-bounce" style="animation-duration: 2s;">
-                                        👑 قسم أيهم
+                                        <span data-i18n="split.ayham">👑 قسم أيهم</span>
                                     </div>
                                 </div>
                                 <!-- Right half (Laith) header -->
                                 <div class="absolute top-2 right-[25%] translate-x-1/2 pointer-events-auto">
                                     <div class="bg-cyan-100 text-cyan-800 border-2 border-slate-800 rounded-full px-4 py-1 font-black text-xs md:text-sm shadow-cartoon-sm flex items-center gap-1 select-none animate-bounce" style="animation-duration: 2.5s;">
-                                        ⚡ قسم ليث
+                                        <span data-i18n="split.laith">⚡ قسم ليث</span>
                                     </div>
                                 </div>
                                 <!-- Center line divider -->
@@ -765,13 +775,14 @@
         </main>
 
         <!-- Peeking Animals Footer Decorators (fixed over the layout, very small) -->
-        <div class="fixed bottom-0 left-2 z-20 pointer-events-auto select-none group hidden sm:block">
+        <div class="fixed bottom-0 left-2 z-20 pointer-events-none select-none group hidden sm:block">
             <div
-                class="relative cursor-pointer transition-transform duration-300 hover:translate-y-[-4px]"
+                class="relative cursor-pointer transition-transform duration-300 hover:translate-y-[-4px] pointer-events-auto"
                 data-ui-click="animal-react" data-ui-animal="bunny"
             >
                 <div
                     id="bunny-bubble"
+                    data-i18n="animal.bunny"
                     class="absolute -top-10 left-4 bg-white border border-slate-800 py-0.5 px-2 rounded-full text-[10px] font-extrabold text-slate-700 opacity-0 transition-opacity duration-300 pointer-events-none whitespace-nowrap shadow-sm"
                 >
                     أهلاً أيهم و ليث! 🐰✨
@@ -796,14 +807,15 @@
             </div>
         </div>
 
-        <div class="fixed bottom-0 right-2 z-20 pointer-events-auto select-none group hidden sm:block">
+        <div class="fixed bottom-0 right-2 z-20 pointer-events-none select-none group hidden sm:block">
             <div
-                class="relative cursor-pointer transition-transform duration-300 hover:translate-y-[-10px]"
+                class="relative cursor-pointer transition-transform duration-300 hover:translate-y-[-10px] pointer-events-auto"
                 data-ui-click="animal-react" data-ui-animal="cat"
             >
                 <!-- Cat dialogue -->
                 <div
                     id="cat-bubble"
+                    data-i18n="animal.cat"
                     class="absolute -top-12 right-6 bg-white border-2 border-slate-800 py-1 px-3 rounded-full text-xs font-extrabold text-slate-700 opacity-0 transition-opacity duration-300 pointer-events-none whitespace-nowrap shadow-sm"
                 >
                     مياو! رسمة أيهم و ليث مذهلة! 🐱💖
