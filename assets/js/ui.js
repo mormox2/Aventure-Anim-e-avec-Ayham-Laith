@@ -35,10 +35,12 @@ import {
 import {
   animalReact,
   copyQrLink,
+  selectLanguage,
   setAnimationSpeed,
   setTemplateOpacity,
   toggleFullscreen,
   toggleHelpModal,
+  toggleLangModal,
   toggleQrModal,
 } from "./settings.js";
 import { saveDrawing, shareDrawing } from "./export-particles.js";
@@ -71,6 +73,7 @@ const actions = Object.freeze({
   "toggle-give-life": toggleGiveLife,
   "toggle-help-modal": toggleHelpModal,
   "toggle-hero-modal": toggleHeroModal,
+  "toggle-lang-modal": toggleLangModal,
   "toggle-mirror": toggleMirror,
   "toggle-mobile-drawer": toggleMobileDrawer,
   "toggle-music": toggleMusic,
@@ -91,6 +94,7 @@ const mobileTools = Object.freeze({
   "select-spray": selectSpray,
   "share-drawing": shareDrawing,
   "toggle-fullscreen": toggleFullscreen,
+  "toggle-lang-modal": () => toggleLangModal(true),
   "toggle-mirror": toggleMirror,
   "toggle-qr-modal": () => toggleQrModal(true),
   "toggle-stamps-modal": () => toggleStampsModal(true),
@@ -130,6 +134,8 @@ function handleClick(event) {
   }
   if (action === "celebrate-name") {
     celebrateName(element.dataset.uiName);
+  } else if (action === "select-language") {
+    selectLanguage(element.dataset.uiLang);
   } else if (action === "trigger-animation") {
     triggerAnimation(element.dataset.uiAnimation, element.dataset.uiSelf ? element : null);
   } else if (action === "set-animation-speed") {

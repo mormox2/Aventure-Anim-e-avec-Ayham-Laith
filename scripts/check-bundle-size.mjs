@@ -3,9 +3,9 @@ import { resolve } from "node:path";
 
 const assetDirectory = resolve("dist/assets");
 const budgets = {
-  initialJavaScript: 100 * 1024, // raised from 85 KB: new drawing engine (Bézier, calligraphy, star, shapes)
-  lazyHeroesJavaScript: 75 * 1024, // raised from 60 KB: expanded template library with 21 rich SVG characters
-  stylesheet: 62 * 1024,
+  initialJavaScript: 125 * 1024, // raised from 100 KB: full trilingual i18n dictionaries (AR/FR/EN), voice synthesis, QR modal
+  lazyHeroesJavaScript: 75 * 1024, // expanded template library with 21 rich SVG characters
+  stylesheet: 70 * 1024, // cartoon styling, trilingual RTL/LTR typography & modals
 };
 
 const files = await readdir(assetDirectory);

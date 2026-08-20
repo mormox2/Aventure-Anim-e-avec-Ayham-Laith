@@ -1,0 +1,525 @@
+/**
+ * ToonDraw Internationalization (i18n) Module
+ * Supports: Arabic (ar), French (fr), English (en)
+ */
+
+import { synth } from "./synth.js";
+import { state } from "./state.js";
+
+const translations = {
+  ar: {
+    // Header & Global
+    "app.title": "ارسم وحرّك!",
+    "app.subtitle": "استوديو الرسوم المتحركة للأطفال",
+    "btn.music": "موسيقى",
+    "btn.theme.day": "النهار",
+    "btn.theme.night": "الليل",
+    "btn.fullscreen": "شاشة",
+    "btn.heroes": "رسومات",
+    "btn.friends": "أصدقاء",
+    "btn.gallery": "معرض",
+    "btn.duo": "ثنائي",
+    "btn.qr": "QR كود",
+    "btn.help": "كيف",
+    "btn.lang": "العربية",
+
+    // Left Toolbar - Drawing Tools
+    "tools.title": "أدوات الرسم 🖌️",
+    "tools.choose_color": "اختر لونك السحري:",
+    "tools.custom_color": "لون مخصص:",
+    "tools.brush_size": "حجم الفرشاة:",
+    "tools.eraser": "الممحاة",
+    "tools.spray": "بخاخ",
+    "tools.paint_bucket": "دهان سحري",
+    "tools.magic_mirror": "مرآة سحرية",
+    "tools.brush_mode.calligraphy": "خط عربي",
+    "tools.brush_mode.star": "نجوم",
+    "tools.brush_mode.shape": "أشكال",
+    "tools.stamps": "طوابع سحرية",
+    "tools.opacity": "شفافية",
+    "tools.bg_color": "خلفية",
+
+    // Animations Bar
+    "anim.dance": "ارقص",
+    "anim.jump": "اقفز",
+    "anim.spin": "دُر",
+    "anim.shake": "اهتز",
+    "anim.grow": "كبّر",
+    "anim.shrink": "صغّر",
+    "anim.bounce": "ارتد",
+    "anim.give_life": "أعطِ الحياة",
+    "speed.slow": "بطيء",
+    "speed.normal": "عادي",
+    "speed.fast": "سريع",
+
+    // Right Sidebar - Stickers
+    "stickers.title": "✨ ملصقات",
+    "stickers.tab.all": "الكل",
+    "stickers.tab.eyes": "عيون",
+    "stickers.tab.hats": "قبعات",
+    "stickers.tab.other": "أخرى",
+    "stickers.tab.faces": "وجوه",
+
+    // Bottom Actions
+    "action.undo": "تراجع",
+    "action.redo": "إعادة",
+    "action.clear": "مسح الكل",
+    "action.save": "حفظ",
+    "action.share": "مشاركة",
+    "action.download": "تحميل",
+    "action.reset": "ابدأ من جديد",
+
+    // Clear Modal
+    "modal.clear.title": "مسح اللوحة بالكامل؟",
+    "modal.clear.description": "هل أنت متأكد من مسح كل ما رسمته والبدء من جديد؟ 🌟 سيتم حفظ نسخة تلقائياً في المعرض ويمكنك التراجع في أي وقت!",
+    "modal.clear.btn_confirm": "نعم، امسح وابدأ من جديد!",
+    "modal.clear.btn_cancel": "لا، احتفظ برسمتي!",
+
+    // Stamps Modal
+    "modal.stamps.title": "الطوابع السحرية ⭐✨",
+    "modal.stamps.subtitle": "اضغط على شكل، ثم انقر على اللوحة لوضعه!",
+
+    // Gallery Modal
+    "modal.gallery.title": "🖼️ معرض رسوماتي",
+    "modal.gallery.subtitle": "اضغط على رسمة لإعادة تحميلها، أو احذفها!",
+    "modal.gallery.empty": "لا توجد رسومات محفوظة بعد! 🎨 ارسم شيئاً رائعاً واحفظه!",
+
+    // Friends Modal
+    "modal.friends.title": "👥 أصدقاء أيهم وليث 👥",
+    "modal.friends.subtitle": "أضف أسماء أصدقائك لظهورهم بجانبكما! 🎉",
+    "modal.friends.placeholder": "اكتب اسم الصديق...",
+    "modal.friends.btn_add": "أضف",
+    "modal.friends.empty": "لا يوجد أصدقاء بعد 🤔\nأضف صديقاً جديداً!",
+    "modal.friends.btn_delete_all": "🗑️ حذف الكل",
+    "modal.friends.btn_sample": "🎲 إضافة أصدقاء تجريبيين",
+
+    // Heroes Modal
+    "modal.heroes.title": "اختر رسمة ولوّنها! 🎨✨",
+    "modal.heroes.subtitle": "اختر بطلاً، ديناصوراً أو كائناً سحرياً وابدأ بتلوينه بألوانك المفضلة! 🌈",
+    "modal.heroes.tab.all": "الكل",
+    "modal.heroes.tab.hero": "أبطال",
+    "modal.heroes.tab.dino": "ديناصورات",
+    "modal.heroes.tab.fantasy": "سحر وخيال",
+    "modal.heroes.tip": "💡 نصيحة: بعد اختيار الرسمة، استخدم الألوان لتلوينها وأضف الملصقات لتجعلها مضحكة! 🎨",
+
+    // Help Modal
+    "modal.help.title": "كيف ألعب وأرسم؟ 🎨✨",
+    "modal.help.step1": "ارسم بيدك أو بالفأرة داخل اللوحة. استخدم الألوان السحرية والفرشاة كما تحب!",
+    "modal.help.step2": "اضغط على 'رسومات' لاختيار بطل جاهز للتلوين، ثم لوّنه وأضف لمستك الخاصة!",
+    "modal.help.step3": "أضف ملصقات مضحكة مثل العيون والنظارات والقبعات. يمكنك جرها وتكبيرها وتدويرها بسهولة!",
+    "modal.help.step4": "اضغط على أزرار التحريك لجعل رسمتك ترقص، تقفز، تدور، أو تهتز فوراً!",
+    "modal.help.step5": "اضغط على 'أعطِ الحياة للرسمة' لتبدأ بالطفو، وتتحدث إليك بفقاعات الكلام المرحة!",
+    "modal.help.btn_start": "هيا بنا نبدأ الرسم! 🚀",
+
+    // QR Modal
+    "modal.qr.title": "العب على التابلت أو الهاتف! 📲",
+    "modal.qr.subtitle": "امسح الرمز بكاميرا جهازك للبدء بالرسم فوراً وبشكل مجاني 🎨✨",
+    "modal.qr.btn_copy": "📋 نسخ رابط التطبيق للمشاركة",
+    "modal.qr.btn_download": "📥 تحميل رمز QR للطباعة والمشاركة",
+
+    // Language Modal
+    "modal.lang.title": "🌐 اختر لغتك / Langue / Language",
+    "modal.lang.subtitle": "اختر لغتك المفضلة للرسم واللعب والتشجيع الصوتي!",
+
+    // Mobile Drawer
+    "mobile.tab.tools": "🎨 الأدوات",
+    "mobile.tab.stickers": "✨ الملصقات",
+    "mobile.tab.backgrounds": "🖼️ خلفيات ومزيد",
+    "mobile.palette.title": "🎨 اختر اللون:",
+    "mobile.palette.custom": "مخصص:",
+    "mobile.opacity.template": "شفافية النموذج:",
+    "mobile.bg.title": "🌄 لون خلفية اللوحة:",
+    "mobile.bg.white": "أبيض",
+    "mobile.bg.sky": "سماء",
+    "mobile.bg.garden": "حديقة",
+    "mobile.bg.sunset": "غروب",
+    "mobile.bg.night": "ليل",
+    "mobile.btn.open_stamps": "فتح قائمة الطوابع والأشكال السحرية",
+    "mobile.btn.show_qr": "عرض QR Code لمشاركة التطبيق",
+
+    // Toast and voice
+    "welcome.toast": "أهلاً أيهم و ليث! 🎨✨ هيا نبدأ مغامرة الرسم الممتعة!",
+    "welcome.voice": "أهلاً بكم في تون درو! هيا نرسم ونستمتع معاً!",
+  },
+
+  fr: {
+    // Header & Global
+    "app.title": "ToonDraw !",
+    "app.subtitle": "Studio de dessin animé pour enfants",
+    "btn.music": "Musique",
+    "btn.theme.day": "Jour",
+    "btn.theme.night": "Nuit",
+    "btn.fullscreen": "Plein écran",
+    "btn.heroes": "Dessins",
+    "btn.friends": "Amis",
+    "btn.gallery": "Galerie",
+    "btn.duo": "Duo",
+    "btn.qr": "QR Code",
+    "btn.help": "Aide",
+    "btn.lang": "Français",
+
+    // Left Toolbar - Drawing Tools
+    "tools.title": "Outils de dessin 🖌️",
+    "tools.choose_color": "Choisissez votre couleur magique :",
+    "tools.custom_color": "Couleur personnalisée :",
+    "tools.brush_size": "Taille du pinceau :",
+    "tools.eraser": "Gomme",
+    "tools.spray": "Spray",
+    "tools.paint_bucket": "Peinture magique",
+    "tools.magic_mirror": "Miroir magique",
+    "tools.brush_mode.calligraphy": "Calligraphie",
+    "tools.brush_mode.star": "Étoiles",
+    "tools.brush_mode.shape": "Formes",
+    "tools.stamps": "Tampons magiques",
+    "tools.opacity": "Transparence",
+    "tools.bg_color": "Fond",
+
+    // Animations Bar
+    "anim.dance": "Danser",
+    "anim.jump": "Sauter",
+    "anim.spin": "Tourner",
+    "anim.shake": "Secouer",
+    "anim.grow": "Agrandir",
+    "anim.shrink": "Rétrécir",
+    "anim.bounce": "Rebondir",
+    "anim.give_life": "Donner vie",
+    "speed.slow": "Lent",
+    "speed.normal": "Normal",
+    "speed.fast": "Rapide",
+
+    // Right Sidebar - Stickers
+    "stickers.title": "✨ Stickers",
+    "stickers.tab.all": "Tous",
+    "stickers.tab.eyes": "Yeux",
+    "stickers.tab.hats": "Chapeaux",
+    "stickers.tab.other": "Autres",
+    "stickers.tab.faces": "Visages",
+
+    // Bottom Actions
+    "action.undo": "Annuler",
+    "action.redo": "Rétablir",
+    "action.clear": "Tout effacer",
+    "action.save": "Sauvegarder",
+    "action.share": "Partager",
+    "action.download": "Télécharger",
+    "action.reset": "Recommencer",
+
+    // Clear Modal
+    "modal.clear.title": "Effacer toute la toile ?",
+    "modal.clear.description": "Êtes-vous sûr de vouloir tout effacer et recommencer à zéro ? 🌟 Une sauvegarde automatique sera conservée dans la galerie !",
+    "modal.clear.btn_confirm": "Oui, nouvelle toile !",
+    "modal.clear.btn_cancel": "Non, garder mon dessin !",
+
+    // Stamps Modal
+    "modal.stamps.title": "Tampons Magiques ⭐✨",
+    "modal.stamps.subtitle": "Cliquez sur une forme, puis touchez la toile pour la tamponner !",
+
+    // Gallery Modal
+    "modal.gallery.title": "🖼️ Galerie de mes dessins",
+    "modal.gallery.subtitle": "Cliquez sur un dessin pour le charger ou le supprimer !",
+    "modal.gallery.empty": "Aucun dessin sauvegardé pour l'instant ! 🎨 Créez votre premier chef-d'œuvre !",
+
+    // Friends Modal
+    "modal.friends.title": "👥 Les amis d'Ayham & Laith 👥",
+    "modal.friends.subtitle": "Ajoutez les prénoms de vos amis pour afficher leurs badges ! 🎉",
+    "modal.friends.placeholder": "Nom de l'ami...",
+    "modal.friends.btn_add": "Ajouter",
+    "modal.friends.empty": "Pas encore d'amis 🤔\nAjoutez un nouvel ami !",
+    "modal.friends.btn_delete_all": "🗑️ Tout supprimer",
+    "modal.friends.btn_sample": "🎲 Ajouter des exemples",
+
+    // Heroes Modal
+    "modal.heroes.title": "Choisissez un coloriage ! 🎨✨",
+    "modal.heroes.subtitle": "Choisissez un héros, un dinosaure ou une créature magique et coloriez-le ! 🌈",
+    "modal.heroes.tab.all": "Tous",
+    "modal.heroes.tab.hero": "Héros",
+    "modal.heroes.tab.dino": "Dinosaures",
+    "modal.heroes.tab.fantasy": "Magie & Contes",
+    "modal.heroes.tip": "💡 Astuce : après avoir choisi un dessin, utilisez les couleurs pour le colorier et ajoutez des stickers rigolos ! 🎨",
+
+    // Help Modal
+    "modal.help.title": "Comment jouer et dessiner ? 🎨✨",
+    "modal.help.step1": "Dessinez avec le doigt ou la souris sur la toile. Utilisez toutes les couleurs magiques !",
+    "modal.help.step2": "Cliquez sur 'Dessins' pour choisir un modèle prêt à colorier et apportez votre touche !",
+    "modal.help.step3": "Ajoutez des stickers rigolos comme des yeux, lunettes et chapeaux. Déplacez-les facilement !",
+    "modal.help.step4": "Appuyez sur les boutons d'animation pour faire danser, sauter ou tourner votre dessin !",
+    "modal.help.step5": "Cliquez sur 'Donner vie' pour voir votre personnage flotter et vous parler avec humour !",
+    "modal.help.btn_start": "C'est parti, dessinons ! 🚀",
+
+    // QR Modal
+    "modal.qr.title": "Jouez sur Tablette ou Mobile ! 📲",
+    "modal.qr.subtitle": "Scannez le QR code avec votre appareil pour jouer immédiatement et gratuitement ! 🎨✨",
+    "modal.qr.btn_copy": "📋 Copier le lien du jeu",
+    "modal.qr.btn_download": "📥 Télécharger le QR code",
+
+    // Language Modal
+    "modal.lang.title": "🌐 Choisissez votre langue",
+    "modal.lang.subtitle": "Sélectionnez votre langue préférée pour le jeu et les voix !",
+
+    // Mobile Drawer
+    "mobile.tab.tools": "🎨 Outils",
+    "mobile.tab.stickers": "✨ Stickers",
+    "mobile.tab.backgrounds": "🖼️ Fonds & Plus",
+    "mobile.palette.title": "🎨 Choisir la couleur :",
+    "mobile.palette.custom": "Perso :",
+    "mobile.opacity.template": "Transparence modèle :",
+    "mobile.bg.title": "🌄 Couleur de fond :",
+    "mobile.bg.white": "Blanc",
+    "mobile.bg.sky": "Ciel",
+    "mobile.bg.garden": "Jardin",
+    "mobile.bg.sunset": "Coucher",
+    "mobile.bg.night": "Nuit",
+    "mobile.btn.open_stamps": "Ouvrir les tampons et formes magiques",
+    "mobile.btn.show_qr": "Afficher le QR Code de partage",
+
+    // Toast and voice
+    "welcome.toast": "Bienvenue sur ToonDraw ! 🎨✨ Amusez-vous bien !",
+    "welcome.voice": "Bienvenue sur ToonDraw ! C'est parti pour le dessin !",
+  },
+
+  en: {
+    // Header & Global
+    "app.title": "ToonDraw!",
+    "app.subtitle": "Interactive Cartoon Studio for Kids",
+    "btn.music": "Music",
+    "btn.theme.day": "Day",
+    "btn.theme.night": "Night",
+    "btn.fullscreen": "Fullscreen",
+    "btn.heroes": "Drawings",
+    "btn.friends": "Friends",
+    "btn.gallery": "Gallery",
+    "btn.duo": "Duo",
+    "btn.qr": "QR Code",
+    "btn.help": "Help",
+    "btn.lang": "English",
+
+    // Left Toolbar - Drawing Tools
+    "tools.title": "Drawing Tools 🖌️",
+    "tools.choose_color": "Pick your magic color:",
+    "tools.custom_color": "Custom color:",
+    "tools.brush_size": "Brush Size:",
+    "tools.eraser": "Eraser",
+    "tools.spray": "Spray",
+    "tools.paint_bucket": "Magic Fill",
+    "tools.magic_mirror": "Magic Mirror",
+    "tools.brush_mode.calligraphy": "Calligraphy",
+    "tools.brush_mode.star": "Stars",
+    "tools.brush_mode.shape": "Shapes",
+    "tools.stamps": "Magic Stamps",
+    "tools.opacity": "Opacity",
+    "tools.bg_color": "Canvas Bg",
+
+    // Animations Bar
+    "anim.dance": "Dance",
+    "anim.jump": "Jump",
+    "anim.spin": "Spin",
+    "anim.shake": "Shake",
+    "anim.grow": "Grow",
+    "anim.shrink": "Shrink",
+    "anim.bounce": "Bounce",
+    "anim.give_life": "Give Life",
+    "speed.slow": "Slow",
+    "speed.normal": "Normal",
+    "speed.fast": "Fast",
+
+    // Right Sidebar - Stickers
+    "stickers.title": "✨ Stickers",
+    "stickers.tab.all": "All",
+    "stickers.tab.eyes": "Eyes",
+    "stickers.tab.hats": "Hats",
+    "stickers.tab.other": "Other",
+    "stickers.tab.faces": "Faces",
+
+    // Bottom Actions
+    "action.undo": "Undo",
+    "action.redo": "Redo",
+    "action.clear": "Clear All",
+    "action.save": "Save",
+    "action.share": "Share",
+    "action.download": "Download",
+    "action.reset": "Start Over",
+
+    // Clear Modal
+    "modal.clear.title": "Clear the whole canvas?",
+    "modal.clear.description": "Are you sure you want to clear your drawing and start fresh? 🌟 A copy will automatically be saved to your gallery!",
+    "modal.clear.btn_confirm": "Yes, clear and restart!",
+    "modal.clear.btn_cancel": "No, keep my drawing!",
+
+    // Stamps Modal
+    "modal.stamps.title": "Magic Stamps ⭐✨",
+    "modal.stamps.subtitle": "Click any shape, then tap on the canvas to place it!",
+
+    // Gallery Modal
+    "modal.gallery.title": "🖼️ My Drawings Gallery",
+    "modal.gallery.subtitle": "Click a drawing to reload it, or delete it!",
+    "modal.gallery.empty": "No saved drawings yet! 🎨 Create and save your first masterpiece!",
+
+    // Friends Modal
+    "modal.friends.title": "👥 Ayham & Laith's Friends 👥",
+    "modal.friends.subtitle": "Add your friends' names to display their creator badges! 🎉",
+    "modal.friends.placeholder": "Friend's name...",
+    "modal.friends.btn_add": "Add",
+    "modal.friends.empty": "No friends added yet 🤔\nAdd a new friend!",
+    "modal.friends.btn_delete_all": "🗑️ Delete All",
+    "modal.friends.btn_sample": "🎲 Add Sample Friends",
+
+    // Heroes Modal
+    "modal.heroes.title": "Pick a drawing & color it! 🎨✨",
+    "modal.heroes.subtitle": "Choose a superhero, dinosaur, or magical creature and color it with rainbow colors! 🌈",
+    "modal.heroes.tab.all": "All",
+    "modal.heroes.tab.hero": "Heroes",
+    "modal.heroes.tab.dino": "Dinosaurs",
+    "modal.heroes.tab.fantasy": "Magic & Tales",
+    "modal.heroes.tip": "💡 Tip: After picking a template, use colors to paint it and add funny stickers! 🎨",
+
+    // Help Modal
+    "modal.help.title": "How to Play & Draw? 🎨✨",
+    "modal.help.step1": "Draw with your finger or mouse inside the canvas. Use any magical rainbow colors!",
+    "modal.help.step2": "Click 'Drawings' to choose a hero or dinosaur coloring template ready to paint!",
+    "modal.help.step3": "Add funny stickers like eyes, sunglasses, and hats. Easily move, scale, and rotate them!",
+    "modal.help.step4": "Click animation buttons to make your drawing dance, jump, spin, or shake instantly!",
+    "modal.help.step5": "Click 'Give Life' to watch your character float and speak funny speech bubbles!",
+    "modal.help.btn_start": "Let's Start Drawing! 🚀",
+
+    // QR Modal
+    "modal.qr.title": "Play on Tablet or Smartphone! 📲",
+    "modal.qr.subtitle": "Scan the QR code with your camera to start drawing instantly for free! 🎨✨",
+    "modal.qr.btn_copy": "📋 Copy App Link",
+    "modal.qr.btn_download": "📥 Download QR Code",
+
+    // Language Modal
+    "modal.lang.title": "🌐 Choose Your Language",
+    "modal.lang.subtitle": "Pick your favorite language for the UI and voice cheers!",
+
+    // Mobile Drawer
+    "mobile.tab.tools": "🎨 Tools",
+    "mobile.tab.stickers": "✨ Stickers",
+    "mobile.tab.backgrounds": "🖼️ Backgrounds & More",
+    "mobile.palette.title": "🎨 Pick Color:",
+    "mobile.palette.custom": "Custom:",
+    "mobile.opacity.template": "Template Opacity:",
+    "mobile.bg.title": "🌄 Canvas Background:",
+    "mobile.bg.white": "White",
+    "mobile.bg.sky": "Sky",
+    "mobile.bg.garden": "Garden",
+    "mobile.bg.sunset": "Sunset",
+    "mobile.bg.night": "Night",
+    "mobile.btn.open_stamps": "Open Magic Stamps & Shapes",
+    "mobile.btn.show_qr": "Show QR Code to Share",
+
+    // Toast and voice
+    "welcome.toast": "Welcome to ToonDraw! 🎨✨ Let's make some art!",
+    "welcome.voice": "Welcome to ToonDraw! Let's draw together!",
+  }
+};
+
+let currentLang = "ar";
+
+function getInitialLanguage() {
+  if (typeof localStorage !== "undefined") {
+    const saved = localStorage.getItem("toondraw_lang");
+    if (saved && ["ar", "fr", "en"].includes(saved)) {
+      return saved;
+    }
+  }
+  return "ar";
+}
+
+function t(key, fallback = "") {
+  const langDict = translations[currentLang] || translations.ar;
+  return langDict[key] || translations.ar[key] || fallback || key;
+}
+
+function getCurrentLanguage() {
+  return currentLang;
+}
+
+function updateDOM(lang = currentLang) {
+  if (typeof document === "undefined") return;
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = (lang === "ar" ? "rtl" : "ltr");
+
+  // Update all elements with data-i18n
+  const elements = document.querySelectorAll("[data-i18n]");
+  elements.forEach((el) => {
+    const key = el.getAttribute("data-i18n");
+    const translation = t(key);
+    if (translation) {
+      el.textContent = translation;
+    }
+  });
+
+  // Update all elements with data-i18n-title
+  const titleElements = document.querySelectorAll("[data-i18n-title]");
+  titleElements.forEach((el) => {
+    const key = el.getAttribute("data-i18n-title");
+    const translation = t(key);
+    if (translation) {
+      el.setAttribute("title", translation);
+    }
+  });
+
+  // Update all elements with data-i18n-placeholder
+  const placeholderElements = document.querySelectorAll("[data-i18n-placeholder]");
+  placeholderElements.forEach((el) => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    const translation = t(key);
+    if (translation) {
+      el.setAttribute("placeholder", translation);
+    }
+  });
+
+  // Update current lang label in the header
+  const langLabel = document.getElementById("lang-current-label");
+  if (langLabel) {
+    if (lang === "ar") langLabel.textContent = "العربية";
+    else if (lang === "fr") langLabel.textContent = "Français";
+    else langLabel.textContent = "English";
+  }
+
+  // Update active highlight in lang modal
+  ["ar", "fr", "en"].forEach((l) => {
+    const btn = document.getElementById(`lang-choice-${l}`);
+    if (btn) {
+      if (l === lang) {
+        btn.classList.add("ring-4", "ring-yellow-400", "scale-105", "shadow-cartoon");
+        btn.classList.remove("opacity-80");
+      } else {
+        btn.classList.remove("ring-4", "ring-yellow-400", "scale-105", "shadow-cartoon");
+        btn.classList.add("opacity-80");
+      }
+    }
+  });
+}
+
+function setLanguage(lang) {
+  if (!["ar", "fr", "en"].includes(lang)) lang = "ar";
+  currentLang = lang;
+  state.language = lang;
+
+  if (typeof localStorage !== "undefined") {
+    localStorage.setItem("toondraw_lang", lang);
+  }
+
+  updateDOM(lang);
+  return currentLang;
+}
+
+function initializeI18n() {
+  const initial = getInitialLanguage();
+  setLanguage(initial);
+  return initial;
+}
+
+export {
+  translations,
+  currentLang,
+  getInitialLanguage,
+  getCurrentLanguage,
+  setLanguage,
+  updateDOM,
+  initializeI18n,
+  t
+};
+

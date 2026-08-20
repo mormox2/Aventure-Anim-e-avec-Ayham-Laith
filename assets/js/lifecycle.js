@@ -6,12 +6,16 @@ import { setAnimationSpeed } from "./settings.js";
 import { deselectAllStickers, renderStickers } from "./stickers.js";
 import { renderFriendBadges, saveCurrentDrawingToGallery } from "./utilities-gallery.js";
 import { state } from "./state.js";
+import { initializeI18n, t } from "./i18n.js";
 
 /* DOM lifecycle, canvas sizing and application bootstrap. */
             /************************************************************
              * 4. Initializer / Lifecycle
              ************************************************************/
             window.addEventListener("DOMContentLoaded", () => {
+                // Initialize Internationalization
+                initializeI18n();
+
                 state.canvas = document.getElementById("drawing-canvas");
                 state.ctx = state.canvas.getContext("2d");
 
@@ -94,7 +98,7 @@ import { state } from "./state.js";
 
                 // Personal welcome message for the kids
                 setTimeout(() => {
-                    showEncouragement("أهلاً أيهم و ليث! 🎨✨ هيا نبدأ مغامرة الرسم الممتعة!");
+                    showEncouragement(t("welcome.toast"));
                 }, 1200);
 
                 // Render guest badges from localStorage
@@ -109,7 +113,7 @@ import { state } from "./state.js";
                         deselectAllStickers();
                         state.activeStamp = null;
                         // close any open modal
-                        ["stamps-modal","gallery-modal","friends-modal","hero-modal","help-modal","qr-modal"].forEach(id => {
+                        ["stamps-modal","gallery-modal","friends-modal","hero-modal","help-modal","qr-modal","lang-modal"].forEach(id => {
                             const el = document.getElementById(id);
                             if (el && !el.classList.contains("hidden")) {
                                 el.classList.add("opacity-0");

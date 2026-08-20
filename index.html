@@ -159,12 +159,21 @@
             <!-- Top Action Buttons -->
             <div class="flex items-center gap-1 md:gap-1.5 flex-nowrap overflow-x-auto max-w-[68%] md:max-w-none">
                 <button
+                    id="btn-lang"
+                    data-ui-click="toggle-lang-modal" data-ui-value="true"
+                    class="bubble-btn px-1.5 md:px-2.5 py-1 md:py-1.5 min-w-[34px] md:min-w-[38px] bg-gradient-to-r from-blue-400 to-indigo-400 hover:from-blue-300 hover:to-indigo-300 text-white font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-0.5 md:gap-1 text-[10px] md:text-xs shrink-0"
+                    title="Changer de langue / تغيير اللغة / Change language"
+                >
+                    <span class="text-sm md:text-lg">🌐</span>
+                    <span id="lang-current-label" data-i18n="btn.lang" class="hidden xl:inline">العربية</span>
+                </button>
+                <button
                     id="btn-music"
                     data-ui-click="toggle-music"
                     class="bubble-btn px-1.5 md:px-2.5 py-1 md:py-1.5 min-w-[34px] md:min-w-[38px] bg-purple-300 hover:bg-purple-200 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-0.5 md:gap-1 text-[10px] md:text-xs shrink-0"
                 >
                     <span id="music-icon" class="text-sm md:text-lg">🔇</span>
-                    <span id="music-text" class="hidden xl:inline">موسيقى</span>
+                    <span id="music-text" data-i18n="btn.music" class="hidden xl:inline">موسيقى</span>
                 </button>
                 <button
                     id="btn-theme"
@@ -172,16 +181,17 @@
                     class="bubble-btn px-1.5 md:px-2.5 py-1 md:py-1.5 min-w-[34px] md:min-w-[38px] bg-yellow-300 hover:bg-yellow-200 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-0.5 md:gap-1 text-[10px] md:text-xs shrink-0"
                 >
                     <span id="theme-icon" class="text-sm md:text-lg">☀️</span>
-                    <span id="theme-text" class="hidden xl:inline">النهار</span>
+                    <span id="theme-text" data-i18n="btn.theme.day" class="hidden xl:inline">النهار</span>
                 </button>
                 <button
                     id="btn-fullscreen"
                     data-ui-click="toggle-fullscreen"
                     class="bubble-btn px-1.5 md:px-2.5 py-1 md:py-1.5 min-w-[34px] md:min-w-[38px] bg-emerald-300 hover:bg-emerald-200 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-0.5 md:gap-1 text-[10px] md:text-xs shrink-0"
                     title="ملء الشاشة"
+                    data-i18n-title="btn.fullscreen"
                 >
                     <span class="text-sm md:text-lg">⛶</span>
-                    <span class="hidden xl:inline">شاشة</span>
+                    <span data-i18n="btn.fullscreen" class="hidden xl:inline">شاشة</span>
                 </button>
                 <button
                     data-ui-click="toggle-hero-modal" data-ui-value="true"
@@ -189,21 +199,21 @@
                     style="animation-duration: 2s"
                 >
                     <span class="text-sm md:text-lg">🦸</span>
-                    <span class="hidden xl:inline">رسومات</span>
+                    <span data-i18n="btn.heroes" class="hidden xl:inline">رسومات</span>
                 </button>
                 <button
                     data-ui-click="toggle-friends-modal" data-ui-value="true"
                     class="bubble-btn px-1.5 md:px-2.5 py-1 md:py-1.5 min-w-[34px] md:min-w-[38px] bg-gradient-to-r from-pink-400 to-purple-400 text-white font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-0.5 md:gap-1 text-[10px] md:text-xs shrink-0"
                 >
                     <span class="text-sm md:text-lg">👥</span>
-                    <span class="hidden xl:inline">أصدقاء</span>
+                    <span data-i18n="btn.friends" class="hidden xl:inline">أصدقاء</span>
                 </button>
                 <button
                     data-ui-click="toggle-gallery-modal" data-ui-value="true"
                     class="bubble-btn px-1.5 md:px-2.5 py-1 md:py-1.5 min-w-[34px] md:min-w-[38px] bg-amber-400 hover:bg-amber-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-0.5 md:gap-1 text-[10px] md:text-xs shrink-0"
                 >
                     <span class="text-sm md:text-lg">🖼️</span>
-                    <span class="hidden xl:inline">معرض</span>
+                    <span data-i18n="btn.gallery" class="hidden xl:inline">معرض</span>
                 </button>
                 <button
                     id="btn-split-mode"
@@ -211,22 +221,23 @@
                     class="bubble-btn px-1.5 md:px-2.5 py-1 md:py-1.5 min-w-[34px] md:min-w-[38px] bg-gradient-to-r from-amber-400 to-cyan-400 hover:from-amber-300 hover:to-cyan-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-0.5 md:gap-1 text-[10px] md:text-xs shrink-0"
                 >
                     <span class="text-sm md:text-lg">🤝</span>
-                    <span class="hidden xl:inline">ثنائي</span>
+                    <span data-i18n="btn.duo" class="hidden xl:inline">ثنائي</span>
                 </button>
                 <button
                     data-ui-click="toggle-qr-modal" data-ui-value="true"
                     class="bubble-btn px-1.5 md:px-2.5 py-1 md:py-1.5 min-w-[34px] md:min-w-[38px] bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-slate-900 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-0.5 md:gap-1 text-[10px] md:text-xs shrink-0"
                     title="رمز QR للعب على التابلت أو الهاتف"
+                    data-i18n-title="btn.qr"
                 >
                     <span class="text-sm md:text-lg">📲</span>
-                    <span class="hidden xl:inline">QR كود</span>
+                    <span data-i18n="btn.qr" class="hidden xl:inline">QR كود</span>
                 </button>
                 <button
                     data-ui-click="toggle-help-modal" data-ui-value="true"
                     class="bubble-btn px-1.5 md:px-2.5 py-1 md:py-1.5 min-w-[34px] md:min-w-[38px] bg-cyan-400 hover:bg-cyan-300 text-slate-800 font-extrabold rounded-xl border-2 md:border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-0.5 md:gap-1 text-[10px] md:text-xs shrink-0"
                 >
                     <span class="text-sm md:text-lg">❓</span>
-                    <span class="hidden xl:inline">كيف</span>
+                    <span data-i18n="btn.help" class="hidden xl:inline">كيف</span>
                 </button>
             </div>
         </header>
@@ -240,12 +251,12 @@
                 <div
                     class="text-center bg-amber-300/80 border border-slate-800 py-0.5 px-1 rounded-full font-extrabold text-slate-800 text-xs lg:text-sm shadow-cartoon-sm whitespace-nowrap"
                 >
-                    <span class="inline">أدوات الرسم</span> 🖌️
+                    <span data-i18n="tools.title" class="inline">أدوات الرسم 🖌️</span>
                 </div>
 
                 <!-- Color Palette Grid -->
                 <div>
-                    <label class="block text-right font-bold text-slate-700 mb-1 text-[11px] lg:text-xs">اختر لونك السحري:</label>
+                    <label data-i18n="tools.choose_color" class="block text-right font-bold text-slate-700 mb-1 text-[11px] lg:text-xs">اختر لونك السحري:</label>
                     <div class="grid grid-cols-4 gap-1 lg:gap-1.5" id="color-palette">
                         <!-- Dynamic Colors inserted via JS -->
                     </div>
@@ -256,7 +267,7 @@
                     <label
                         class="block text-right font-bold text-slate-700 mb-0.5 text-xs flex justify-between items-center"
                     >
-                        <span>حجم الفرشاة:</span>
+                        <span data-i18n="tools.brush_size">حجم الفرشاة:</span>
                         <span
                             id="brush-size-val"
                             class="bg-pink-100 text-pink-600 px-1.5 py-0.5 rounded-md font-extrabold border border-pink-200 text-xs"
@@ -293,7 +304,7 @@
                         class="bubble-btn py-1 px-1 bg-pink-300 hover:bg-pink-200 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1 text-center text-[10px] lg:text-xs"
                     >
                         <span class="text-sm lg:text-base">🧽</span>
-                        <span class="inline">الممحاة</span>
+                        <span data-i18n="tools.eraser" class="inline">الممحاة</span>
                     </button>
 
                     <button
@@ -301,7 +312,7 @@
                         class="bubble-btn py-1 px-1 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1 text-center text-[10px] lg:text-xs"
                     >
                         <span class="text-sm lg:text-base">💣</span>
-                        <span class="inline">مسح الكل</span>
+                        <span data-i18n="action.clear" class="inline">مسح الكل</span>
                     </button>
 
                     <!-- Spray paint brush -->
@@ -311,7 +322,7 @@
                         class="bubble-btn py-1 px-1 bg-emerald-300 hover:bg-emerald-200 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1 text-center text-[10px] lg:text-xs"
                     >
                         <span class="text-sm lg:text-base">🫧</span>
-                        <span class="inline">بخاخ</span>
+                        <span data-i18n="tools.spray" class="inline">بخاخ</span>
                     </button>
 
                     <!-- Fill Bucket (Flood Fill) -->
@@ -321,7 +332,7 @@
                         class="bubble-btn py-1 px-1 bg-purple-300 hover:bg-purple-200 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1 text-center text-[10px] lg:text-xs"
                     >
                         <span class="text-sm lg:text-base">🪣</span>
-                        <span class="inline">دهان سحري</span>
+                        <span data-i18n="tools.paint_bucket" class="inline">دهان سحري</span>
                     </button>
                 </div>
 
@@ -333,7 +344,7 @@
                         class="bubble-btn py-1 px-1 bg-teal-300 hover:bg-teal-200 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1 text-center text-[10px] lg:text-xs"
                     >
                         <span class="text-sm lg:text-base">🪞</span>
-                        <span class="inline">مرآة سحرية</span>
+                        <span data-i18n="tools.magic_mirror" class="inline">مرآة سحرية</span>
                     </button>
 
                     <button
@@ -341,7 +352,7 @@
                         class="bubble-btn py-1 px-1 bg-cyan-300 hover:bg-cyan-200 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1 text-center text-[10px] lg:text-xs"
                     >
                         <span class="text-sm lg:text-base">⭐</span>
-                        <span class="inline">طوابع سحرية</span>
+                        <span data-i18n="tools.stamps" class="inline">طوابع سحرية</span>
                     </button>
                 </div>
 
@@ -349,18 +360,18 @@
                 <div class="grid grid-cols-3 gap-1">
                     <button id="btn-calligraphy" data-ui-click="select-brush-mode" data-ui-mode="calligraphy"
                         class="bubble-btn py-1 px-0.5 bg-indigo-300 hover:bg-indigo-200 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center justify-center gap-0.5 text-center text-[9px] lg:text-[10px] transition-all"
-                        title="فرشاة الخط العربي">
-                        <span class="text-sm lg:text-base">✒️</span><span>خط عربي</span>
+                        title="فرشاة الخط العربي" data-i18n-title="tools.brush_mode.calligraphy">
+                        <span class="text-sm lg:text-base">✒️</span><span data-i18n="tools.brush_mode.calligraphy">خط عربي</span>
                     </button>
                     <button id="btn-star-brush" data-ui-click="select-brush-mode" data-ui-mode="star"
                         class="bubble-btn py-1 px-0.5 bg-amber-300 hover:bg-amber-200 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center justify-center gap-0.5 text-center text-[9px] lg:text-[10px] transition-all"
-                        title="فرشاة النجوم">
-                        <span class="text-sm lg:text-base">⭐</span><span>نجوم</span>
+                        title="فرشاة النجوم" data-i18n-title="tools.brush_mode.star">
+                        <span class="text-sm lg:text-base">⭐</span><span data-i18n="tools.brush_mode.star">نجوم</span>
                     </button>
                     <button id="btn-shape" data-ui-click="select-brush-mode" data-ui-mode="shape"
                         class="bubble-btn py-1 px-0.5 bg-cyan-300 hover:bg-cyan-200 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center justify-center gap-0.5 text-center text-[9px] lg:text-[10px] transition-all"
-                        title="رسم الأشكال">
-                        <span class="text-sm lg:text-base">📐</span><span>أشكال</span>
+                        title="رسم الأشكال" data-i18n-title="tools.brush_mode.shape">
+                        <span class="text-sm lg:text-base">📐</span><span data-i18n="tools.brush_mode.shape">أشكال</span>
                     </button>
                 </div>
                 <!-- Shape Sub-panel (hidden unless shape mode active) -->
@@ -555,49 +566,49 @@
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-rose-400 hover:bg-rose-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">💃</span>
-                        <span class="hidden md:inline">ارقص</span>
+                        <span data-i18n="anim.dance" class="hidden md:inline">ارقص</span>
                     </button>
                     <button
                         data-ui-click="trigger-animation" data-ui-animation="jump" data-ui-self="true"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-amber-400 hover:bg-amber-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">🦘</span>
-                        <span class="hidden md:inline">اقفز</span>
+                        <span data-i18n="anim.jump" class="hidden md:inline">اقفز</span>
                     </button>
                     <button
                         data-ui-click="trigger-animation" data-ui-animation="spin" data-ui-self="true"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-indigo-400 hover:bg-indigo-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">🔄</span>
-                        <span class="hidden md:inline">دُر</span>
+                        <span data-i18n="anim.spin" class="hidden md:inline">دُر</span>
                     </button>
                     <button
                         data-ui-click="trigger-animation" data-ui-animation="shake" data-ui-self="true"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-teal-400 hover:bg-teal-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">🫨</span>
-                        <span class="hidden md:inline">اهتز</span>
+                        <span data-i18n="anim.shake" class="hidden md:inline">اهتز</span>
                     </button>
                     <button
                         data-ui-click="trigger-animation" data-ui-animation="grow" data-ui-self="true"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-green-400 hover:bg-green-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">📈</span>
-                        <span class="hidden md:inline">كبّر</span>
+                        <span data-i18n="anim.grow" class="hidden md:inline">كبّر</span>
                     </button>
                     <button
                         data-ui-click="trigger-animation" data-ui-animation="shrink" data-ui-self="true"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-orange-400 hover:bg-orange-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">📉</span>
-                        <span class="hidden md:inline">صغّر</span>
+                        <span data-i18n="anim.shrink" class="hidden md:inline">صغّر</span>
                     </button>
                     <button
                         data-ui-click="trigger-animation" data-ui-animation="bounce-squish" data-ui-self="true"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-purple-400 hover:bg-purple-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg">🏀</span>
-                        <span class="hidden md:inline">ارتد</span>
+                        <span data-i18n="anim.bounce" class="hidden md:inline">ارتد</span>
                     </button>
 
                     <div class="w-0.5 h-6 md:h-8 bg-sky-300 shrink-0 mx-1 md:mx-2"></div>
@@ -606,6 +617,7 @@
                         id="speed-slow"
                         data-ui-click="set-animation-speed" data-ui-speed="0.6"
                         class="speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-pink-200 hover:bg-pink-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon-sm transition-all"
+                        title="بطيء" data-i18n-title="speed.slow"
                     >
                         🐢
                     </button>
@@ -613,6 +625,7 @@
                         id="speed-normal"
                         data-ui-click="set-animation-speed" data-ui-speed="1"
                         class="speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-amber-400 text-slate-900 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon scale-110 ring-4 ring-yellow-400 z-10 transition-all"
+                        title="عادي" data-i18n-title="speed.normal"
                     >
                         ⚡
                     </button>
@@ -620,6 +633,7 @@
                         id="speed-fast"
                         data-ui-click="set-animation-speed" data-ui-speed="1.5"
                         class="speed-btn bubble-btn text-lg md:text-xl w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-emerald-200 hover:bg-emerald-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon-sm transition-all"
+                        title="سريع" data-i18n-title="speed.fast"
                     >
                         🚀
                     </button>
@@ -632,32 +646,32 @@
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-gradient-to-r from-yellow-400 to-pink-400 hover:from-yellow-300 hover:to-pink-300 text-slate-900 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
                     >
                         <span class="text-base md:text-lg animate-spin" style="animation-duration: 3s">🪄</span>
-                        <span id="give-life-text" class="hidden md:inline">أعطِ الحياة</span>
+                        <span id="give-life-text" data-i18n="anim.give_life" class="hidden md:inline">أعطِ الحياة</span>
                     </button>
                     <!-- Save / Download buttons -->
                     <button
                         data-ui-click="save-drawing"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-emerald-400 hover:bg-emerald-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
-                        title="حفظ الرسمة"
+                        title="حفظ الرسمة" data-i18n-title="action.save"
                     >
                         <span class="text-base md:text-lg">💾</span>
-                        <span class="hidden md:inline">حفظ</span>
+                        <span data-i18n="action.save" class="hidden md:inline">حفظ</span>
                     </button>
                     <button
                         data-ui-click="share-drawing"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-pink-400 hover:bg-pink-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
-                        title="مشاركة الرسمة"
+                        title="مشاركة الرسمة" data-i18n-title="action.share"
                     >
                         <span class="text-base md:text-lg">📤</span>
-                        <span class="hidden md:inline">مشاركة</span>
+                        <span data-i18n="action.share" class="hidden md:inline">مشاركة</span>
                     </button>
                     <button
                         data-ui-click="download-drawing-png"
                         class="bubble-btn py-1.5 md:py-2 px-2.5 md:px-3.5 bg-sky-400 hover:bg-sky-300 text-slate-800 font-extrabold rounded-xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1 md:gap-1.5 shrink-0 whitespace-nowrap transition-all active:scale-95 text-xs md:text-sm"
-                        title="تحميل كصورة PNG"
+                        title="تحميل كصورة PNG" data-i18n-title="action.download"
                     >
                         <span class="text-base md:text-lg">📥</span>
-                        <span class="hidden md:inline">تحميل</span>
+                        <span data-i18n="action.download" class="hidden md:inline">تحميل</span>
                     </button>
                 </div>
             </section>
@@ -680,7 +694,7 @@
                 <div
                     class="text-center bg-pink-300/80 border border-slate-800 py-0.5 px-1 rounded-full font-extrabold text-slate-800 text-xs lg:text-sm shadow-cartoon-sm whitespace-nowrap"
                 >
-                    ✨ ملصقات
+                    <span data-i18n="stickers.title" class="inline">✨ ملصقات</span>
                 </div>
                 <div
                     class="grid grid-cols-2 gap-1.5 bg-white/80 p-1.5 rounded-2xl border-2 border-slate-800 text-[10px] lg:text-xs font-bold shadow-cartoon-sm"
@@ -691,7 +705,7 @@
                         class="bubble-btn py-1.5 lg:py-2 px-1 rounded-xl border-2 border-slate-800 shadow-none flex items-center justify-center gap-1.5 font-black text-center text-[10px] md:text-xs bg-amber-400 text-slate-900 ring-2 ring-yellow-300 scale-105"
                     >
                         <span class="text-base lg:text-lg">🌟</span>
-                        <span class="inline">الكل</span>
+                        <span data-i18n="stickers.tab.all" class="inline">الكل</span>
                     </button>
                     <button
                         data-ui-click="filter-stickers" data-ui-category="eyes"
@@ -699,7 +713,7 @@
                         class="bubble-btn py-1.5 lg:py-2 px-1 rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1.5 font-black text-center text-[10px] md:text-xs bg-sky-100 text-slate-800 hover:bg-sky-200"
                     >
                         <span class="text-base lg:text-lg">👀</span>
-                        <span class="inline">عيون</span>
+                        <span data-i18n="stickers.tab.eyes" class="inline">عيون</span>
                     </button>
                     <button
                         data-ui-click="filter-stickers" data-ui-category="hats"
@@ -707,7 +721,7 @@
                         class="bubble-btn py-1.5 lg:py-2 px-1 rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1.5 font-black text-center text-[10px] md:text-xs bg-purple-100 text-slate-800 hover:bg-purple-200"
                     >
                         <span class="text-base lg:text-lg">🎩</span>
-                        <span class="inline">قبعات</span>
+                        <span data-i18n="stickers.tab.hats" class="inline">قبعات</span>
                     </button>
                     <button
                         data-ui-click="filter-stickers" data-ui-category="faces"
@@ -715,7 +729,7 @@
                         class="bubble-btn py-1.5 lg:py-2 px-1 rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-1.5 font-black text-center text-[10px] md:text-xs bg-emerald-100 text-slate-800 hover:bg-emerald-200"
                     >
                         <span class="text-base lg:text-lg">✨</span>
-                        <span class="inline">أخرى</span>
+                        <span data-i18n="stickers.tab.other" class="inline">أخرى</span>
                     </button>
                 </div>
                 <div
@@ -723,7 +737,7 @@
                     id="stickers-gallery"
                 ></div>
                 <div class="bg-white/70 border border-slate-800 p-1 rounded-xl shadow-cartoon-sm">
-                    <label class="block text-right font-bold text-slate-700 text-[8px] lg:text-[10px] mb-0.5">
+                    <label data-i18n="tools.opacity" class="block text-right font-bold text-slate-700 text-[8px] lg:text-[10px] mb-0.5">
                         🔍 شفافية
                     </label>
                     <div class="flex items-center gap-1">
@@ -745,7 +759,7 @@
                     class="bubble-btn p-2 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon flex items-center justify-center gap-1 text-[10px] md:text-xs"
                 >
                     <span class="text-sm">🔄</span>
-                    <span class="inline">ابدأ من جديد</span>
+                    <span data-i18n="action.reset" class="inline">ابدأ من جديد</span>
                 </button>
             </section>
         </main>
@@ -848,11 +862,11 @@
                     🧹
                 </div>
 
-                <h3 id="clear-modal-title" class="text-2xl md:text-3xl font-black text-slate-800 mb-2">
+                <h3 id="clear-modal-title" data-i18n="modal.clear.title" class="text-2xl md:text-3xl font-black text-slate-800 mb-2">
                     مسح اللوحة بالكامل؟
                 </h3>
 
-                <p id="clear-modal-description" class="text-xs md:text-sm font-bold text-slate-700 mb-5 bg-white/80 p-3 rounded-2xl border-2 border-slate-700 shadow-sm leading-relaxed">
+                <p id="clear-modal-description" data-i18n="modal.clear.description" class="text-xs md:text-sm font-bold text-slate-700 mb-5 bg-white/80 p-3 rounded-2xl border-2 border-slate-700 shadow-sm leading-relaxed">
                     هل أنت متأكد من مسح كل ما رسمته والبدء من جديد؟ 🌟<br>
                     <span class="text-emerald-700 font-black">🛡️ أمان: سيتم حفظ نسخة تلقائياً في المعرض ويمكنك التراجع في أي وقت!</span>
                 </p>
@@ -863,14 +877,14 @@
                         class="bubble-btn py-3 px-5 bg-red-400 hover:bg-red-300 text-slate-900 font-black rounded-2xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-2 text-sm md:text-base active:scale-95 transition-all"
                     >
                         <span>💣</span>
-                        <span>نعم، امسح وابدأ من جديد!</span>
+                        <span data-i18n="modal.clear.btn_confirm">نعم، امسح وابدأ من جديد!</span>
                     </button>
                     <button
                         data-ui-click="toggle-clear-modal" data-ui-value="false"
                         class="bubble-btn py-3 px-5 bg-emerald-300 hover:bg-emerald-200 text-slate-900 font-black rounded-2xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-2 text-sm md:text-base active:scale-95 transition-all"
                     >
                         <span>💖</span>
-                        <span>لا، احتفظ برسمتي!</span>
+                        <span data-i18n="modal.clear.btn_cancel">لا، احتفظ برسمتي!</span>
                     </button>
                 </div>
             </div>
@@ -898,8 +912,8 @@
                 >
                     ❌
                 </button>
-                <h3 id="stamps-modal-title" class="text-2xl md:text-3xl font-extrabold text-center mb-3">الطوابع السحرية ⭐✨</h3>
-                <p id="stamps-modal-description" class="text-center text-sm font-bold text-slate-600 mb-3 bg-white/60 py-1 px-3 rounded-full">
+                <h3 id="stamps-modal-title" data-i18n="modal.stamps.title" class="text-2xl md:text-3xl font-extrabold text-center mb-3">الطوابع السحرية ⭐✨</h3>
+                <p id="stamps-modal-description" data-i18n="modal.stamps.subtitle" class="text-center text-sm font-bold text-slate-600 mb-3 bg-white/60 py-1 px-3 rounded-full">
                     اضغط على شكل، ثم انقر على اللوحة لوضعه!
                 </p>
                 <div class="grid grid-cols-4 gap-2" id="stamps-gallery">
@@ -930,11 +944,11 @@
                 >
                     ❌
                 </button>
-                <h3 id="gallery-modal-title" class="text-2xl md:text-3xl font-extrabold text-center mb-2">🖼️ معرض رسوماتي</h3>
-                <p id="gallery-modal-description" class="text-center text-sm font-bold text-slate-600 mb-3 bg-white/60 py-1 px-3 rounded-full">
+                <h3 id="gallery-modal-title" data-i18n="modal.gallery.title" class="text-2xl md:text-3xl font-extrabold text-center mb-2">🖼️ معرض رسوماتي</h3>
+                <p id="gallery-modal-description" data-i18n="modal.gallery.subtitle" class="text-center text-sm font-bold text-slate-600 mb-3 bg-white/60 py-1 px-3 rounded-full">
                     اضغط على رسمة لإعادة تحميلها، أو احذفها!
                 </p>
-                <div id="gallery-empty" class="text-center py-8 text-slate-500 font-extrabold text-lg hidden">
+                <div id="gallery-empty" data-i18n="modal.gallery.empty" class="text-center py-8 text-slate-500 font-extrabold text-lg hidden">
                     لا توجد رسومات محفوظة بعد! 🎨 ارسم شيئاً رائعاً واحفظه!
                 </div>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="gallery-grid">
@@ -967,12 +981,14 @@
                 </button>
                 <h3
                     id="friends-modal-title"
+                    data-i18n="modal.friends.title"
                     class="text-3xl md:text-4xl font-extrabold text-center mb-2 bg-gradient-to-r from-pink-500 via-yellow-500 to-cyan-500 bg-clip-text text-transparent"
                 >
                     👥 أصدقاء أيهم وليث 👥
                 </h3>
                 <p
                     id="friends-modal-description"
+                    data-i18n="modal.friends.subtitle"
                     class="text-center text-sm font-bold text-slate-600 mb-4 bg-white/70 py-2 px-4 rounded-full inline-block w-full"
                 >
                     أضف أسماء أصدقائك لظهورهم بجانبكما! 🎉
@@ -985,6 +1001,7 @@
                         id="friend-name-input"
                         aria-label="اسم الصديق"
                         placeholder="اكتب اسم الصديق..."
+                        data-i18n-placeholder="modal.friends.placeholder"
                         maxlength="12"
                         class="flex-grow px-4 py-3 border-3 border-slate-800 rounded-2xl font-extrabold text-slate-700 text-center bg-white shadow-cartoon-sm focus:outline-none focus:ring-4 focus:ring-yellow-400"
                     />
@@ -993,7 +1010,7 @@
                         class="bubble-btn px-4 py-3 bg-green-400 hover:bg-green-300 text-slate-800 font-extrabold rounded-2xl border-3 border-slate-800 shadow-cartoon flex items-center gap-1"
                     >
                         <span class="text-2xl">➕</span>
-                        <span class="hidden md:inline">أضف</span>
+                        <span data-i18n="modal.friends.btn_add" class="hidden md:inline">أضف</span>
                     </button>
                 </div>
 
@@ -1002,7 +1019,7 @@
                     id="friend-list-container"
                     class="bg-white/80 border-2 border-slate-800 rounded-3xl p-4 min-h-[120px]"
                 >
-                    <div class="text-center text-slate-400 font-extrabold" id="friend-list-empty">
+                    <div class="text-center text-slate-400 font-extrabold" id="friend-list-empty" data-i18n="modal.friends.empty">
                         لا يوجد أصدقاء بعد 🤔
                         <br />
                         أضف صديقاً جديداً!
@@ -1015,13 +1032,13 @@
                         data-ui-click="reset-friends"
                         class="bubble-btn flex-1 py-2 bg-red-300 hover:bg-red-200 text-slate-800 font-extrabold rounded-2xl border-3 border-slate-800 shadow-cartoon text-sm"
                     >
-                        🗑️ حذف الكل
+                        <span data-i18n="modal.friends.btn_delete_all">🗑️ حذف الكل</span>
                     </button>
                     <button
                         data-ui-click="add-sample-friends"
                         class="bubble-btn flex-1 py-2 bg-cyan-300 hover:bg-cyan-200 text-slate-800 font-extrabold rounded-2xl border-3 border-slate-800 shadow-cartoon text-sm"
                     >
-                        🎲 إضافة أصدقاء تجريبيين
+                        <span data-i18n="modal.friends.btn_sample">🎲 إضافة أصدقاء تجريبيين</span>
                     </button>
                 </div>
             </div>
@@ -1052,6 +1069,7 @@
 
                 <h3
                     id="hero-modal-title"
+                    data-i18n="modal.heroes.title"
                     class="text-2xl md:text-4xl font-black text-center mb-1.5 bg-gradient-to-r from-pink-500 via-purple-500 to-sky-500 bg-clip-text text-transparent flex items-center justify-center gap-2"
                 >
                     <span>🎨</span>
@@ -1060,6 +1078,7 @@
                 </h3>
                 <p
                     id="hero-modal-description"
+                    data-i18n="modal.heroes.subtitle"
                     class="text-center text-xs md:text-sm font-extrabold text-slate-700 mb-3 bg-white/80 py-1.5 px-4 rounded-full border border-slate-200 shadow-xs inline-block w-full"
                 >
                     اختر بطلاً، ديناصوراً أو كائناً سحرياً وابدأ بتلوينه بألوانك المفضلة! 🌈
@@ -1073,7 +1092,7 @@
                         class="flex-1 py-2 px-2.5 rounded-xl bg-gradient-to-r from-pink-500 via-purple-500 to-sky-500 text-white font-black text-xs md:text-sm flex items-center justify-center gap-1 shadow-cartoon-sm border-2 border-slate-800 transition-all"
                     >
                         <span>🌟</span>
-                        الكل
+                        <span data-i18n="modal.heroes.tab.all">الكل</span>
                     </button>
                     <button
                         data-ui-click="filter-templates" data-ui-category="hero"
@@ -1081,7 +1100,7 @@
                         class="flex-1 py-2 px-2 md:px-3 rounded-xl text-slate-700 font-extrabold text-xs md:text-sm flex items-center justify-center gap-1 hover:bg-white/80 transition-all border-2 border-transparent"
                     >
                         <span>🦸</span>
-                        أبطال
+                        <span data-i18n="modal.heroes.tab.hero">أبطال</span>
                     </button>
                     <button
                         data-ui-click="filter-templates" data-ui-category="dino"
@@ -1089,7 +1108,7 @@
                         class="flex-1 py-2 px-2 md:px-3 rounded-xl text-slate-700 font-extrabold text-xs md:text-sm flex items-center justify-center gap-1 hover:bg-white/80 transition-all border-2 border-transparent"
                     >
                         <span>🦕</span>
-                        ديناصورات
+                        <span data-i18n="modal.heroes.tab.dino">ديناصورات</span>
                     </button>
                     <button
                         data-ui-click="filter-templates" data-ui-category="fantasy"
@@ -1097,7 +1116,7 @@
                         class="flex-1 py-2 px-2 md:px-3 rounded-xl text-slate-700 font-extrabold text-xs md:text-sm flex items-center justify-center gap-1 hover:bg-white/80 transition-all border-2 border-transparent"
                     >
                         <span>🔮</span>
-                        سحر وخيال
+                        <span data-i18n="modal.heroes.tab.fantasy">سحر وخيال</span>
                     </button>
                 </div>
 
@@ -1106,7 +1125,7 @@
                 </div>
 
                 <div class="mt-5 p-3 bg-yellow-100 border-2 border-dashed border-yellow-500 rounded-2xl text-center">
-                    <p class="text-xs md:text-sm font-bold text-slate-700">
+                    <p data-i18n="modal.heroes.tip" class="text-xs md:text-sm font-bold text-slate-700">
                         💡
                         <strong>نصيحة:</strong>
                         بعد اختيار الرسمة، استخدم الألوان لتلوينها وأضف الملصقات لتجعلها مضحكة! 🎨
@@ -1139,6 +1158,7 @@
 
                 <h3
                     id="help-modal-title"
+                    data-i18n="modal.help.title"
                     class="text-3xl font-extrabold text-slate-800 text-center mb-4 border-b-4 border-dashed border-yellow-400 pb-2"
                 >
                     كيف ألعب وأرسم؟ 🎨✨
@@ -1147,7 +1167,7 @@
                 <div class="space-y-4 text-right font-bold text-slate-700">
                     <div class="flex items-center gap-3 bg-amber-50 p-3 rounded-2xl border-2 border-amber-200">
                         <span class="text-3xl">🎨</span>
-                        <p class="text-sm">
+                        <p data-i18n="modal.help.step1" class="text-sm">
                             ارسم بيدك أو بالفأرة داخل اللوحة. استخدم الألوان السحرية والفرشاة كما تحب!
                         </p>
                     </div>
@@ -1156,7 +1176,7 @@
                         class="flex items-center gap-3 bg-gradient-to-r from-red-50 to-blue-50 p-3 rounded-2xl border-2 border-red-200"
                     >
                         <span class="text-3xl">🦸</span>
-                        <p class="text-sm">
+                        <p data-i18n="modal.help.step2" class="text-sm">
                             اضغط على
                             <strong>"أبطال خارقون"</strong>
                             لاختيار بطل جاهز للتلوين، ثم لوّنه وأضف لمستك الخاصة!
@@ -1165,21 +1185,21 @@
 
                     <div class="flex items-center gap-3 bg-pink-50 p-3 rounded-2xl border-2 border-pink-200">
                         <span class="text-3xl">👑</span>
-                        <p class="text-sm">
+                        <p data-i18n="modal.help.step3" class="text-sm">
                             أضف ملصقات مضحكة مثل العيون والنظارات والقبعات. يمكنك جرها وتكبيرها وتدويرها بسهولة!
                         </p>
                     </div>
 
                     <div class="flex items-center gap-3 bg-purple-50 p-3 rounded-2xl border-2 border-purple-200">
                         <span class="text-3xl">🚀</span>
-                        <p class="text-sm">اضغط على أزرار التحريك لجعل رسمتك ترقص، تقفز، تدور، أو تهتز فوراً!</p>
+                        <p data-i18n="modal.help.step4" class="text-sm">اضغط على أزرار التحريك لجعل رسمتك ترقص، تقفز، تدور، أو تهتز فوراً!</p>
                     </div>
 
                     <div
                         class="flex items-center gap-3 bg-gradient-to-r from-yellow-100 to-pink-100 p-3 rounded-2xl border-2 border-pink-300"
                     >
                         <span class="text-3xl">🪄</span>
-                        <p class="text-sm">
+                        <p data-i18n="modal.help.step5" class="text-sm">
                             اضغط على
                             <strong>"أعطِ الحياة للرسمة"</strong>
                             لتبدأ بالطفو، وتتحدث إليك بفقاعات الكلام المرحة!
@@ -1191,7 +1211,7 @@
                     data-ui-click="toggle-help-modal" data-ui-value="false"
                     class="bubble-btn w-full mt-6 py-3 bg-yellow-400 hover:bg-yellow-300 text-slate-800 font-extrabold rounded-2xl border-3 border-slate-800 shadow-cartoon text-lg"
                 >
-                    هيا بنا نبدأ الرسم! 🚀
+                    <span data-i18n="modal.help.btn_start">هيا بنا نبدأ الرسم! 🚀</span>
                 </button>
             </div>
         </div>
@@ -1220,13 +1240,14 @@
 
                 <h3
                     id="qr-modal-title"
+                    data-i18n="modal.qr.title"
                     class="text-2xl md:text-3xl font-extrabold text-slate-800 mb-2 border-b-4 border-dashed border-emerald-400 pb-2 flex items-center justify-center gap-2"
                 >
                     <span>📲</span>
                     <span>العب على التابلت أو الهاتف!</span>
                 </h3>
 
-                <p class="text-xs md:text-sm font-extrabold text-slate-600 mb-4 bg-emerald-50 py-1.5 px-3 rounded-full border border-emerald-200">
+                <p data-i18n="modal.qr.subtitle" class="text-xs md:text-sm font-extrabold text-slate-600 mb-4 bg-emerald-50 py-1.5 px-3 rounded-full border border-emerald-200">
                     امسح الرمز بكاميرا جهازك للبدء بالرسم فوراً وبشكل مجاني 🎨✨
                 </p>
 
@@ -1249,7 +1270,7 @@
                         class="bubble-btn w-full py-2.5 px-4 bg-yellow-400 hover:bg-yellow-300 text-slate-900 font-extrabold rounded-2xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-2 text-xs md:text-sm"
                     >
                         <span>📋</span>
-                        <span>نسخ رابط التطبيق للمشاركة</span>
+                        <span data-i18n="modal.qr.btn_copy">نسخ رابط التطبيق للمشاركة</span>
                     </button>
 
                     <a
@@ -1258,8 +1279,88 @@
                         class="bubble-btn w-full py-2.5 px-4 bg-emerald-300 hover:bg-emerald-200 text-slate-900 font-extrabold rounded-2xl border-3 border-slate-800 shadow-cartoon flex items-center justify-center gap-2 text-xs md:text-sm"
                     >
                         <span>📥</span>
-                        <span>تحميل رمز QR للطباعة والمشاركة</span>
+                        <span data-i18n="modal.qr.btn_download">تحميل رمز QR للطباعة والمشاركة</span>
                     </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- LANGUAGE SELECTION MODAL -->
+        <div
+            id="lang-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="lang-modal-title"
+            aria-hidden="true"
+            class="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300"
+            data-ui-backdrop="lang-modal" data-ui-close="toggle-lang-modal"
+        >
+            <div
+                class="bg-white border-4 border-slate-800 rounded-[36px] max-w-md w-full p-6 shadow-cartoon-lg relative transform scale-95 transition-transform duration-300 text-center"
+                id="lang-modal-content"
+            >
+                <button
+                    data-ui-click="toggle-lang-modal" data-ui-value="false"
+                    aria-label="Fermer / إغلاق"
+                    class="absolute -top-3 -right-3 w-10 h-10 bg-red-400 hover:bg-red-300 text-slate-800 font-extrabold rounded-full border-4 border-slate-800 shadow-cartoon-sm flex items-center justify-center text-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all"
+                >
+                    ❌
+                </button>
+
+                <h3
+                    id="lang-modal-title"
+                    data-i18n="modal.lang.title"
+                    class="text-2xl md:text-3xl font-extrabold text-slate-800 mb-2 border-b-4 border-dashed border-blue-400 pb-2 flex items-center justify-center gap-2"
+                >
+                    🌐 اختر لغتك / Langue / Language
+                </h3>
+
+                <p
+                    data-i18n="modal.lang.subtitle"
+                    class="text-xs md:text-sm font-extrabold text-slate-600 mb-5 bg-blue-50 py-1.5 px-3 rounded-full border border-blue-200"
+                >
+                    اختر لغتك المفضلة للرسم واللعب والتشجيع الصوتي!
+                </p>
+
+                <div class="grid grid-cols-1 gap-3">
+                    <!-- Arabic Option -->
+                    <button
+                        id="lang-choice-ar"
+                        data-ui-click="select-language" data-ui-lang="ar"
+                        class="bubble-btn p-3.5 bg-gradient-to-r from-amber-200 to-yellow-300 hover:from-amber-100 hover:to-yellow-200 text-slate-900 font-black rounded-2xl border-3 border-slate-800 flex items-center justify-between text-base md:text-lg transition-all"
+                    >
+                        <div class="flex items-center gap-3">
+                            <span class="text-3xl">🇸🇦</span>
+                            <span class="font-changa">العربية</span>
+                        </div>
+                        <span class="text-xs bg-slate-800 text-white font-bold px-2 py-0.5 rounded-full">افتراضي (RTL)</span>
+                    </button>
+
+                    <!-- French Option -->
+                    <button
+                        id="lang-choice-fr"
+                        data-ui-click="select-language" data-ui-lang="fr"
+                        class="bubble-btn p-3.5 bg-gradient-to-r from-sky-200 to-blue-300 hover:from-sky-100 hover:to-blue-200 text-slate-900 font-black rounded-2xl border-3 border-slate-800 flex items-center justify-between text-base md:text-lg transition-all"
+                    >
+                        <div class="flex items-center gap-3">
+                            <span class="text-3xl">🇫🇷</span>
+                            <span>Français</span>
+                        </div>
+                        <span class="text-xs bg-slate-800 text-white font-bold px-2 py-0.5 rounded-full">LTR</span>
+                    </button>
+
+                    <!-- English Option -->
+                    <button
+                        id="lang-choice-en"
+                        data-ui-click="select-language" data-ui-lang="en"
+                        class="bubble-btn p-3.5 bg-gradient-to-r from-emerald-200 to-teal-300 hover:from-emerald-100 hover:to-teal-200 text-slate-900 font-black rounded-2xl border-3 border-slate-800 flex items-center justify-between text-base md:text-lg transition-all"
+                    >
+                        <div class="flex items-center gap-3">
+                            <span class="text-3xl">🇬🇧</span>
+                            <span>English</span>
+                        </div>
+                        <span class="text-xs bg-slate-800 text-white font-bold px-2 py-0.5 rounded-full">LTR</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -1283,21 +1384,21 @@
                             data-ui-click="switch-mobile-tab" data-ui-tab="tools"
                             class="flex-1 py-1.5 px-2 text-center font-black text-xs md:text-sm rounded-xl border-2 border-slate-800 bg-amber-400 text-slate-900 shadow-cartoon-sm transition-all"
                         >
-                            🎨 الأدوات
+                            <span data-i18n="mobile.tab.tools">🎨 الأدوات</span>
                         </button>
                         <button
                             id="tab-btn-stickers"
                             data-ui-click="switch-mobile-tab" data-ui-tab="stickers"
                             class="flex-1 py-1.5 px-2 text-center font-bold text-xs md:text-sm rounded-xl border-2 border-slate-800 bg-white/80 text-slate-700 hover:bg-white transition-all"
                         >
-                            ✨ الملصقات
+                            <span data-i18n="mobile.tab.stickers">✨ الملصقات</span>
                         </button>
                         <button
                             id="tab-btn-backgrounds"
                             data-ui-click="switch-mobile-tab" data-ui-tab="backgrounds"
                             class="flex-1 py-1.5 px-2 text-center font-bold text-xs md:text-sm rounded-xl border-2 border-slate-800 bg-white/80 text-slate-700 hover:bg-white transition-all"
                         >
-                            🖼️ خلفيات ومزيد
+                            <span data-i18n="mobile.tab.backgrounds">🖼️ خلفيات ومزيد</span>
                         </button>
                     </div>
                     <button
@@ -1314,9 +1415,9 @@
                     <!-- Color Palette -->
                     <div class="bg-white/80 p-2.5 rounded-2xl border-2 border-slate-800 shadow-cartoon-sm">
                         <div class="flex items-center justify-between mb-1.5">
-                            <span class="text-xs font-black text-slate-700">🎨 اختر اللون:</span>
+                            <span data-i18n="mobile.palette.title" class="text-xs font-black text-slate-700">🎨 اختر اللون:</span>
                             <div class="flex items-center gap-1.5">
-                                <span class="text-[11px] font-bold text-slate-600">مخصص:</span>
+                                <span data-i18n="mobile.palette.custom" class="text-[11px] font-bold text-slate-600">مخصص:</span>
                                 <input
                                     type="color"
                                     id="mobile-custom-color"
@@ -1332,7 +1433,7 @@
 
                     <!-- Brush Size Slider -->
                     <div class="bg-white/80 p-2.5 rounded-2xl border-2 border-slate-800 shadow-cartoon-sm flex items-center gap-2">
-                        <span class="text-xs font-bold text-slate-700 shrink-0">حجم الفرشاة:</span>
+                        <span data-i18n="tools.brush_size" class="text-xs font-bold text-slate-700 shrink-0">حجم الفرشاة:</span>
                         <input
                             type="range"
                             id="mobile-brush-size"
@@ -1346,38 +1447,38 @@
 
                     <!-- Quick Tools Grid -->
                     <div class="grid grid-cols-4 sm:grid-cols-8 gap-1.5">
-                        <button data-ui-click="mobile-tool" data-ui-tool="select-eraser" class="bubble-btn p-2 bg-pink-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="ممحاة">
-                            <span class="text-lg">🧽</span>ممحاة
+                        <button data-ui-click="mobile-tool" data-ui-tool="select-eraser" class="bubble-btn p-2 bg-pink-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="ممحاة" data-i18n-title="tools.eraser">
+                            <span class="text-lg">🧽</span><span data-i18n="tools.eraser">ممحاة</span>
                         </button>
-                        <button data-ui-click="mobile-tool" data-ui-tool="select-spray" class="bubble-btn p-2 bg-emerald-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="بخاخ">
-                            <span class="text-lg">🫧</span>بخاخ
+                        <button data-ui-click="mobile-tool" data-ui-tool="select-spray" class="bubble-btn p-2 bg-emerald-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="بخاخ" data-i18n-title="tools.spray">
+                            <span class="text-lg">🫧</span><span data-i18n="tools.spray">بخاخ</span>
                         </button>
-                        <button data-ui-click="mobile-tool" data-ui-tool="select-fill-tool" class="bubble-btn p-2 bg-purple-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="تعبئة دهان">
-                            <span class="text-lg">🪣</span>دهان
+                        <button data-ui-click="mobile-tool" data-ui-tool="select-fill-tool" class="bubble-btn p-2 bg-purple-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="تعبئة دهان" data-i18n-title="tools.paint_bucket">
+                            <span class="text-lg">🪣</span><span data-i18n="tools.paint_bucket">دهان</span>
                         </button>
-                        <button data-ui-click="mobile-tool" data-ui-tool="toggle-mirror" class="bubble-btn p-2 bg-teal-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="مرآة سحرية">
-                            <span class="text-lg">🪞</span>مرآة
+                        <button data-ui-click="mobile-tool" data-ui-tool="toggle-mirror" class="bubble-btn p-2 bg-teal-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="مرآة سحرية" data-i18n-title="tools.magic_mirror">
+                            <span class="text-lg">🪞</span><span data-i18n="tools.magic_mirror">مرآة</span>
                         </button>
-                        <button data-ui-click="undo" class="bubble-btn p-2 bg-blue-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="تراجع">
-                            <span class="text-lg">↩️</span>تراجع
+                        <button data-ui-click="undo" class="bubble-btn p-2 bg-blue-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="تراجع" data-i18n-title="action.undo">
+                            <span class="text-lg">↩️</span><span data-i18n="action.undo">تراجع</span>
                         </button>
-                        <button data-ui-click="redo" class="bubble-btn p-2 bg-blue-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="إعادة">
-                            <span class="text-lg">↪️</span>إعادة
+                        <button data-ui-click="redo" class="bubble-btn p-2 bg-blue-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="إعادة" data-i18n-title="action.redo">
+                            <span class="text-lg">↪️</span><span data-i18n="action.redo">إعادة</span>
                         </button>
-                        <button data-ui-click="mobile-tool" data-ui-tool="clear-canvas" class="bubble-btn p-2 bg-red-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="مسح الكل">
-                            <span class="text-lg">💣</span>مسح
+                        <button data-ui-click="mobile-tool" data-ui-tool="clear-canvas" class="bubble-btn p-2 bg-red-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="مسح الكل" data-i18n-title="action.clear">
+                            <span class="text-lg">💣</span><span data-i18n="action.clear">مسح</span>
                         </button>
-                        <button data-ui-click="mobile-tool" data-ui-tool="toggle-fullscreen" class="bubble-btn p-2 bg-emerald-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="ملء الشاشة">
-                            <span class="text-lg">⛶</span>شاشة
+                        <button data-ui-click="mobile-tool" data-ui-tool="toggle-fullscreen" class="bubble-btn p-2 bg-emerald-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="ملء الشاشة" data-i18n-title="btn.fullscreen">
+                            <span class="text-lg">⛶</span><span data-i18n="btn.fullscreen">شاشة</span>
                         </button>
-                        <button data-ui-click="select-brush-mode" data-ui-mode="calligraphy" class="bubble-btn p-2 bg-indigo-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="خط عربي">
-                            <span class="text-lg">✒️</span>خط
+                        <button data-ui-click="select-brush-mode" data-ui-mode="calligraphy" class="bubble-btn p-2 bg-indigo-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="خط عربي" data-i18n-title="tools.brush_mode.calligraphy">
+                            <span class="text-lg">✒️</span><span data-i18n="tools.brush_mode.calligraphy">خط</span>
                         </button>
-                        <button data-ui-click="select-brush-mode" data-ui-mode="star" class="bubble-btn p-2 bg-amber-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="فرشاة نجوم">
-                            <span class="text-lg">⭐</span>نجوم
+                        <button data-ui-click="select-brush-mode" data-ui-mode="star" class="bubble-btn p-2 bg-amber-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="فرشاة نجوم" data-i18n-title="tools.brush_mode.star">
+                            <span class="text-lg">⭐</span><span data-i18n="tools.brush_mode.star">نجوم</span>
                         </button>
-                        <button data-ui-click="select-brush-mode" data-ui-mode="shape" class="bubble-btn p-2 bg-cyan-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="أشكال">
-                            <span class="text-lg">📐</span>أشكال
+                        <button data-ui-click="select-brush-mode" data-ui-mode="shape" class="bubble-btn p-2 bg-cyan-300 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="أشكال" data-i18n-title="tools.brush_mode.shape">
+                            <span class="text-lg">📐</span><span data-i18n="tools.brush_mode.shape">أشكال</span>
                         </button>
                     </div>
                 </div>
@@ -1391,28 +1492,28 @@
                             id="mobile-tab-all"
                             class="bubble-btn py-1.5 px-2 rounded-xl border-2 border-slate-800 font-black text-xs bg-amber-400 text-slate-900 ring-2 ring-yellow-300 scale-105"
                         >
-                            🌟 الكل
+                            🌟 <span data-i18n="stickers.tab.all">الكل</span>
                         </button>
                         <button
                             data-ui-click="filter-mobile-stickers" data-ui-category="eyes"
                             id="mobile-tab-eyes"
                             class="bubble-btn py-1.5 px-2 rounded-xl border-2 border-slate-800 font-bold text-xs bg-white text-slate-700 hover:bg-slate-100"
                         >
-                            👀 عيون
+                            👀 <span data-i18n="stickers.tab.eyes">عيون</span>
                         </button>
                         <button
                             data-ui-click="filter-mobile-stickers" data-ui-category="hats"
                             id="mobile-tab-hats"
                             class="bubble-btn py-1.5 px-2 rounded-xl border-2 border-slate-800 font-bold text-xs bg-white text-slate-700 hover:bg-slate-100"
                         >
-                            🎩 قبعات
+                            🎩 <span data-i18n="stickers.tab.hats">قبعات</span>
                         </button>
                         <button
                             data-ui-click="filter-mobile-stickers" data-ui-category="faces"
                             id="mobile-tab-faces"
                             class="bubble-btn py-1.5 px-2 rounded-xl border-2 border-slate-800 font-bold text-xs bg-white text-slate-700 hover:bg-slate-100"
                         >
-                            🦁 وجوه
+                            🦁 <span data-i18n="stickers.tab.faces">وجوه</span>
                         </button>
                     </div>
 
@@ -1426,7 +1527,7 @@
 
                     <!-- Template Opacity Slider -->
                     <div class="bg-white/80 p-2 rounded-2xl border-2 border-slate-800 flex items-center gap-2 text-xs font-bold text-slate-700">
-                        <span>شفافية النموذج:</span>
+                        <span data-i18n="mobile.opacity.template">شفافية النموذج:</span>
                         <input
                             type="range"
                             id="mobile-template-opacity"
@@ -1443,37 +1544,37 @@
                 <div id="panel-backgrounds" class="hidden flex flex-col gap-2.5">
                     <!-- Canvas Background Colors -->
                     <div class="bg-white/80 p-2.5 rounded-2xl border-2 border-slate-800 shadow-cartoon-sm">
-                        <span class="text-xs font-black text-slate-700 block mb-1.5">🌄 لون خلفية اللوحة:</span>
+                        <span data-i18n="mobile.bg.title" class="text-xs font-black text-slate-700 block mb-1.5">🌄 لون خلفية اللوحة:</span>
                         <div class="grid grid-cols-5 gap-1.5">
                             <button
                                 data-ui-click="select-canvas-bg" data-ui-bg="#FFFFFF"
                                 class="bubble-btn py-2 bg-white border-2 border-slate-800 rounded-xl font-black text-[10px] text-slate-800 flex flex-col items-center shadow-xs"
                             >
-                                ⚪ أبيض
+                                ⚪ <span data-i18n="mobile.bg.white">أبيض</span>
                             </button>
                             <button
                                 data-ui-click="select-canvas-bg" data-ui-bg="#E0F2FE"
                                 class="bubble-btn py-2 bg-sky-100 border-2 border-slate-800 rounded-xl font-black text-[10px] text-slate-800 flex flex-col items-center shadow-xs"
                             >
-                                🌤️ سماء
+                                🌤️ <span data-i18n="mobile.bg.sky">سماء</span>
                             </button>
                             <button
                                 data-ui-click="select-canvas-bg" data-ui-bg="#DCFCE7"
                                 class="bubble-btn py-2 bg-green-100 border-2 border-slate-800 rounded-xl font-black text-[10px] text-slate-800 flex flex-col items-center shadow-xs"
                             >
-                                🌿 حديقة
+                                🌿 <span data-i18n="mobile.bg.garden">حديقة</span>
                             </button>
                             <button
                                 data-ui-click="select-canvas-bg" data-ui-bg="#FFEDD5"
                                 class="bubble-btn py-2 bg-orange-100 border-2 border-slate-800 rounded-xl font-black text-[10px] text-slate-800 flex flex-col items-center shadow-xs"
                             >
-                                🌅 غروب
+                                🌅 <span data-i18n="mobile.bg.sunset">غروب</span>
                             </button>
                             <button
                                 data-ui-click="select-canvas-bg" data-ui-bg="#1E293B"
                                 class="bubble-btn py-2 bg-slate-800 border-2 border-slate-800 rounded-xl font-black text-[10px] text-white flex flex-col items-center shadow-xs"
                             >
-                                🌙 ليل
+                                🌙 <span data-i18n="mobile.bg.night">ليل</span>
                             </button>
                         </div>
                     </div>
@@ -1484,7 +1585,7 @@
                         class="bubble-btn py-2.5 px-3 bg-gradient-to-r from-yellow-300 via-pink-300 to-cyan-300 text-slate-900 font-black rounded-2xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-2 text-xs"
                     >
                         <span>⭐</span>
-                        <span>فتح قائمة الطوابع والأشكال السحرية</span>
+                        <span data-i18n="mobile.btn.open_stamps">فتح قائمة الطوابع والأشكال السحرية</span>
                         <span>✨</span>
                     </button>
                     <button
@@ -1492,20 +1593,28 @@
                         class="bubble-btn py-2.5 px-3 bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 text-slate-900 font-black rounded-2xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-2 text-xs"
                     >
                         <span>📲</span>
-                        <span>عرض QR Code لمشاركة التطبيق</span>
+                        <span data-i18n="mobile.btn.show_qr">عرض QR Code لمشاركة التطبيق</span>
+                        <span>✨</span>
+                    </button>
+                    <button
+                        data-ui-click="mobile-tool" data-ui-tool="toggle-lang-modal"
+                        class="bubble-btn py-2.5 px-3 bg-gradient-to-r from-blue-300 via-indigo-300 to-purple-300 text-slate-900 font-black rounded-2xl border-2 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-2 text-xs"
+                    >
+                        <span>🌐</span>
+                        <span data-i18n="modal.lang.title">اختر لغتك / Langue / Language</span>
                         <span>✨</span>
                     </button>
 
                     <!-- Export & Reset Actions -->
                     <div class="grid grid-cols-3 gap-1.5">
-                        <button data-ui-click="mobile-tool" data-ui-tool="save-drawing" class="bubble-btn py-2 bg-amber-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="حفظ">
-                            <span class="text-lg">💾</span>حفظ بالمعرض
+                        <button data-ui-click="mobile-tool" data-ui-tool="save-drawing" class="bubble-btn py-2 bg-amber-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="حفظ" data-i18n-title="action.save">
+                            <span class="text-lg">💾</span><span data-i18n="action.save">حفظ</span>
                         </button>
-                        <button data-ui-click="mobile-tool" data-ui-tool="share-drawing" class="bubble-btn py-2 bg-pink-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="مشاركة">
-                            <span class="text-lg">📤</span>مشاركة
+                        <button data-ui-click="mobile-tool" data-ui-tool="share-drawing" class="bubble-btn py-2 bg-pink-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="مشاركة" data-i18n-title="action.share">
+                            <span class="text-lg">📤</span><span data-i18n="action.share">مشاركة</span>
                         </button>
-                        <button data-ui-click="mobile-tool" data-ui-tool="download-drawing-png" class="bubble-btn py-2 bg-sky-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="تحميل صورة">
-                            <span class="text-lg">📥</span>تحميل PNG
+                        <button data-ui-click="mobile-tool" data-ui-tool="download-drawing-png" class="bubble-btn py-2 bg-sky-400 font-extrabold rounded-xl border-2 border-slate-800 shadow-cartoon-sm flex flex-col items-center text-[10px]" title="تحميل صورة" data-i18n-title="action.download">
+                            <span class="text-lg">📥</span><span data-i18n="action.download">تحميل PNG</span>
                         </button>
                     </div>
 
@@ -1514,7 +1623,7 @@
                         class="bubble-btn py-2 px-3 bg-red-200 hover:bg-red-300 text-red-900 font-bold rounded-xl border-2 border-slate-800 text-[11px] flex items-center justify-center gap-1.5"
                     >
                         <span>🔄</span>
-                        <span>إعادة ضبط التطبيق بالكامل</span>
+                        <span data-i18n="action.reset">إعادة ضبط التطبيق بالكامل</span>
                     </button>
                 </div>
             </div>

@@ -40,10 +40,12 @@ const { drawingMocks, animationMocks, galleryMocks, settingsMocks } = vi.hoisted
   settingsMocks: {
     animalReact: vi.fn(),
     copyQrLink: vi.fn(),
+    selectLanguage: vi.fn(),
     setAnimationSpeed: vi.fn(),
     setTemplateOpacity: vi.fn(),
     toggleFullscreen: vi.fn(),
     toggleHelpModal: vi.fn(),
+    toggleLangModal: vi.fn(),
     toggleQrModal: vi.fn(),
   },
 }));
@@ -111,5 +113,23 @@ describe("délégation des actions UI", () => {
     copyBtn.click();
 
     expect(settingsMocks.copyQrLink).toHaveBeenCalledTimes(1);
+  });
+
+  it("délègue toggle-lang-modal et select-language", () => {
+    const langBtn = document.createElement("button");
+    langBtn.dataset.uiClick = "toggle-lang-modal";
+    langBtn.dataset.uiValue = "true";
+    document.body.appendChild(langBtn);
+    langBtn.click();
+
+    expect(settingsMocks.toggleLangModal).toHaveBeenCalledWith(true);
+
+    const choiceFr = document.createElement("button");
+    choiceFr.dataset.uiClick = "select-language";
+    choiceFr.dataset.uiLang = "fr";
+    document.body.appendChild(choiceFr);
+    choiceFr.click();
+
+    expect(settingsMocks.selectLanguage).toHaveBeenCalledWith("fr");
   });
 });

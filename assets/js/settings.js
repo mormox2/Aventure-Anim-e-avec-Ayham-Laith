@@ -2,6 +2,8 @@ import { setAnimationSpeedValue } from "./animation-state.js";
 import { showEncouragement, triggerConfetti } from "./feedback.js";
 import { toggleModal } from "./modal-service.js";
 import { synth } from "./synth.js";
+import { setLanguage, t } from "./i18n.js";
+import { speakText } from "./voice-duo.js";
 
 /* Animation settings, help, encouragement and confetti helpers. */
             /************************************************************
@@ -71,6 +73,22 @@ import { synth } from "./synth.js";
                 toggleModal("qr-modal", "qr-modal-content", show);
             }
 
+            function toggleLangModal(show) {
+                toggleModal("lang-modal", "lang-modal-content", show);
+            }
+
+            function selectLanguage(lang) {
+                synth.playTada();
+                triggerConfetti();
+                setLanguage(lang);
+                toggleLangModal(false);
+
+                const toast = t("welcome.toast");
+                const voice = t("welcome.voice");
+                showEncouragement(toast);
+                speakText(voice, lang);
+            }
+
             function copyQrLink() {
                 const url = "https://toondraw.vercel.app";
                 if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -133,5 +151,6 @@ import { synth } from "./synth.js";
                 }
             }
 
-export { setAnimationSpeed, setTemplateOpacity, toggleHelpModal, toggleQrModal, copyQrLink, animalReact, toggleFullscreen };
+export { setAnimationSpeed, setTemplateOpacity, toggleHelpModal, toggleQrModal, toggleLangModal, selectLanguage, copyQrLink, animalReact, toggleFullscreen };
+
 
